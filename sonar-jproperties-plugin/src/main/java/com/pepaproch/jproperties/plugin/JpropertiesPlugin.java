@@ -1,4 +1,11 @@
 package com.pepaproch.jproperties.plugin;
 
-public class JpropertiesPlugin {
+import org.sonar.api.Plugin;
+
+public class JpropertiesPlugin implements Plugin {
+
+    @Override
+    public void define(Context context) {
+
+    }
 }

@@ -12,6 +12,8 @@ dependencies {
     compile project(':slang-plugin')
     compileOnly 'org.sonarsource.sonarqube:sonar-plugin-api'
     compile 'org.sonarsource.analyzer-commons:sonar-analyzer-commons'
+    compile group: 'org.sonarsource.sslr', name: 'sslr', version: '1.23', ext: 'pom'
+    compile group: 'org.sonarsource.sslr', name: 'sslr-core', version: '1.23'
     testCompile 'junit:junit'
     testCompile 'org.assertj:assertj-core'
     testCompile 'org.mockito:mockito-core'
