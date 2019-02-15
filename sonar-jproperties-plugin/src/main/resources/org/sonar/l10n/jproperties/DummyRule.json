@@ -1,0 +1,14 @@
+[
+  {
+    "key": "DummyRule",
+    "name": "Dummy rule",
+    "type": "CODE_SMELL",
+    "severity": "INFO",
+    "description": "A dummy rule for development",
+    "url": "https://dummy.org",
+    "tags": [
+      "style"
+    ],
+    "constantDebtMinutes": 5
+  }
+]

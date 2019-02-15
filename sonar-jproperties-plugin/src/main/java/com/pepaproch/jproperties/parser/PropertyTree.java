@@ -12,11 +12,13 @@ public class PropertyTree implements Tree {
 
     public final PropertyKeyTree key;
     public final PropertyValueTree value;
+    public final TreeMetaData md;
 
+    public PropertyTree(TreeMetaData md, PropertyKeyTree key, SeparatorTree separator, PropertyValueTree value) {
 
-    public PropertyTree(PropertyKeyTree key, SeparatorTree separator, PropertyValueTree value) {
         this.key = key;
         this.value = value;
+        this.md = md;
 
         switch (separator.token.text()) {
             case ":":
@@ -48,7 +50,7 @@ public class PropertyTree implements Tree {
 
     @Override
     public TreeMetaData metaData() {
-        return null;
+        return md;
     }
 
 }

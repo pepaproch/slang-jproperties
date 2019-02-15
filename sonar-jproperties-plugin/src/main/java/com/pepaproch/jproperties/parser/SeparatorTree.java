@@ -11,11 +11,14 @@ public class SeparatorTree implements Tree {
 
     final Token token;
     final JpropertiesLexicalGrammar separator;
+    final TreeMetaData metaData;
 
-    public SeparatorTree(SyntaxToken token, JpropertiesLexicalGrammar separator) {
+    public SeparatorTree(TreeMetaData metaData, SyntaxToken token, JpropertiesLexicalGrammar separator) {
         this.token = token;
         this.separator = separator;
+        this.metaData = metaData;
     }
+
 
     @Override
     public List<Tree> children() {
@@ -24,6 +27,6 @@ public class SeparatorTree implements Tree {
 
     @Override
     public TreeMetaData metaData() {
-        return null;
+        return metaData;
     }
 }

@@ -32,8 +32,10 @@ public class JpNodeBuilder implements NodeBuilder {
 
     @Override
     public Object createTerminal(Input input, int startIndex, int endIndex, List<Trivia> trivias, TokenType type) {
-
-        return new SyntaxToken(textRange(input, startIndex, endIndex), input.substring(startIndex, endIndex), null);
+        if (!trivias.isEmpty()) {
+            System.out.println("sd");
+        }
+        return new SyntaxToken(textRange(input, startIndex, endIndex), input.substring(startIndex, endIndex), null, trivias);
     }
 
     private static TextPointer textPointer(Input input, int index) {
