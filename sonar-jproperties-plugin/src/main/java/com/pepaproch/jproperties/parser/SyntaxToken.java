@@ -8,7 +8,7 @@ import org.sonarsource.slang.impl.TokenImpl;
 import java.util.List;
 
 public class SyntaxToken extends TokenImpl {
-    List<Trivia> trivias;
+    public List<Trivia> trivias;
 
     public SyntaxToken(TextRange textRange, String text, Type type, List<Trivia> trivias) {
         super(textRange, text, type);

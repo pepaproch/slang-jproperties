@@ -1,6 +1,7 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.sslr;
 
 
+import com.pepaproch.jproperties.parser.*;
 import com.sonar.sslr.api.Trivia;
 import com.sonar.sslr.api.typed.Optional;
 import org.sonarsource.slang.api.*;
@@ -21,9 +22,9 @@ public class JTreeFactory {
     }
 
     public PropertiesTree properties(Optional<Token> byteOrderMark, Optional<List<PropertyTree>> properties, Token eof) {
-
-
-        return new PropertiesTree(byteOrderMark.orNull(), properties.orNull(), eof);
+        PropertyTree[] propertiesTrees = properties.get().toArray(new PropertyTree[]{});
+        TreeMetaData treeMetaData = metaDataMerge(propertiesTrees);
+        return new PropertiesTree(treeMetaData, byteOrderMark.orNull(), properties.orNull(), eof);
     }
 
     public PropertyTree property(PropertyKeyTree key, SeparatorTree separator, Optional<PropertyValueTree> value) {
@@ -35,9 +36,7 @@ public class JTreeFactory {
 
 
     public PropertyKeyTree key(SyntaxToken key) {
-        if (key.trivias.size() > 0) {
-            System.out.println("");
-        }
+
         return new PropertyKeyTree(metaData(Collections.singletonList(key), key.textRange()), key);
     }
 

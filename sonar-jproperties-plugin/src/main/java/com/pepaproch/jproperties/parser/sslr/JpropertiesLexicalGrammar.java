@@ -1,4 +1,4 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.sslr;
 
 
 import com.sonar.sslr.api.GenericTokenType;

@@ -3,6 +3,7 @@ package com.pepaproch.jproperties.parser;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,9 +28,6 @@ public class PropertyTree implements Tree {
             case "=":
                 op = Operator.EQUALS;
                 break;
-            case " ":
-                op = Operator.SPACE;
-                break;
             default:
                 op = null;
                 break;
@@ -45,7 +43,7 @@ public class PropertyTree implements Tree {
 
     @Override
     public List<Tree> children() {
-        return Collections.emptyList();
+        return Arrays.asList(key, value);
     }
 
     @Override

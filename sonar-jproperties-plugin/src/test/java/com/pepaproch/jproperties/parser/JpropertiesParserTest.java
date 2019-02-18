@@ -1,6 +1,9 @@
 package com.pepaproch.jproperties.parser;
 
 
+import com.pepaproch.jproperties.parser.sslr.JTreeFactory;
+import com.pepaproch.jproperties.parser.sslr.JpNodeBuilder;
+import com.pepaproch.jproperties.parser.sslr.JpropertiesParser;
 import com.sonar.sslr.api.typed.ActionParser;
 import org.junit.Test;
 import org.sonarsource.slang.api.Tree;
@@ -14,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 
-public class JpropertiesParserTest {
+public class JpropertiesParserTest extends JpropertiesTestBase {
 
 
     @Test
@@ -47,7 +50,7 @@ public class JpropertiesParserTest {
         visitor.register(Tree.class, (ctx, tree) -> visited.add(tree));
         visitor.scan(new TreeContext(), parse);
 
-        assertEquals(1, parse.children().size());
+        assertEquals(6, parse.children().size());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.pepaproch.jproperties.parser;
 
+import com.pepaproch.jproperties.parser.sslr.JpropertiesLexicalGrammar;
 import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;

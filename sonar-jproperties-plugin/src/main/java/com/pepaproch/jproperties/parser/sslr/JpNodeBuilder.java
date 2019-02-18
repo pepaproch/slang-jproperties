@@ -1,5 +1,7 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.sslr;
 
+import com.pepaproch.jproperties.parser.ShouldSkipToken;
+import com.pepaproch.jproperties.parser.SyntaxToken;
 import com.sonar.sslr.api.Rule;
 import com.sonar.sslr.api.TokenType;
 import com.sonar.sslr.api.Trivia;
@@ -11,7 +13,7 @@ import org.sonarsource.slang.api.TextRange;
 import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.impl.TextPointerImpl;
 import org.sonarsource.slang.impl.TextRangeImpl;
-import org.sonarsource.slang.impl.TokenImpl;
+
 
 import java.util.List;
 
@@ -32,9 +34,6 @@ public class JpNodeBuilder implements NodeBuilder {
 
     @Override
     public Object createTerminal(Input input, int startIndex, int endIndex, List<Trivia> trivias, TokenType type) {
-        if (!trivias.isEmpty()) {
-            System.out.println("sd");
-        }
         return new SyntaxToken(textRange(input, startIndex, endIndex), input.substring(startIndex, endIndex), null, trivias);
     }
 
@@ -45,6 +44,6 @@ public class JpNodeBuilder implements NodeBuilder {
 
     private static TextRange textRange(Input input, int startIndex, int endIndex) {
 
-        return new TextRangeImpl(textPointer(input, startIndex), textPointer(input, endIndex));
+        return new TextRangeImpl(textPointer(input, startIndex), textPointer(input, endIndex - 1));
     }
 }
