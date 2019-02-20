@@ -1,14 +1,14 @@
-[
-  {
-    "key": "dummyCheck",
-    "name": "Dummy rule for testing.",
-    "type": "CODE_SMELL",
-    "severity": "INFO",
-    "description": "A dummy rule for used for early development stage",
-    "url": "https://dummy.org",
-    "tags": [
-      "style"
-    ],
-    "constantDebtMinutes": 5
-  }
-]
+{
+  "title": "A dummy rule for used for early development stage",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "tags": [
+    "convention"
+  ],
+  "defaultSeverity": "Minor",
+  "scope": "All"
+}

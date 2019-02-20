@@ -20,6 +20,8 @@
 package org.sonarsource.slang;
 
 import java.util.List;
+import java.util.Scanner;
+
 import org.junit.Test;
 import org.sonar.wsclient.issue.Issue;
 
@@ -91,5 +93,14 @@ public class MeasuresTest extends TestBase {
     List<Issue> issuesForRule = getIssuesForRule("scala:S1135");
     assertThat(issuesForRule).extracting(Issue::line).containsExactly(9);
     assertThat(issuesForRule).extracting(Issue::componentKey).containsExactly(PROJECT_KEY + ":file.scala");
+  }
+
+
+  @Test
+  public void jproperties_measures() {
+    ORCHESTRATOR.executeBuild(getSonarScanner(BASE_DIRECTORY, "jpropertiesslang"));
+    assertThat(getMeasureAsInt("dummy.properties", "ncloc")).isEqualTo(2);
+
+
   }
 }

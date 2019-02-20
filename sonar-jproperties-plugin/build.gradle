@@ -36,7 +36,7 @@ jar {
                 'Plugin-BuildDate': buildDate,
                 'Plugin-ChildFirstClassLoader': 'false',
                 'Plugin-Class': 'com.pepaproch.jproperties.plugin.JpropertiesPlugin',
-                'Plugin-Description': 'Code Analyzer for Jpropertie',
+                'Plugin-Description': 'Code Analyzer for Jproperties',
                 'Plugin-Developers': 'pepaproch@gmail.com',
                 'Plugin-Display-Version': displayVersion,
                 'Plugin-Key': 'slangjprop',

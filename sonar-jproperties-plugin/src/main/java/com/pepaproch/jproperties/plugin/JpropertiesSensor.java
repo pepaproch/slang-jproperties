@@ -17,7 +17,7 @@ public class JpropertiesSensor extends SlangSensor {
 
     private final Checks<SlangCheck> checks;
 
-    public JpropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, Language language) {
+    public JpropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, JpropertiesLanguage language) {
         super(noSonarFilter, fileLinesContextFactory, language);
 
         checks = checkFactory.create(REPOSITORY_KEY);

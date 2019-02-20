@@ -25,9 +25,9 @@ public class JpropertiesSensorTest extends AbstractSensorTest {
                 "dummy=dummykey\n" +
                         "notdummykey=notdummyvalue");
         context.fileSystem().add(f);
-        CheckFactory checkFactory = checkFactory("DummyCheck");
+        CheckFactory checkFactory = checkFactory("dummyCheck");
 
-        Sensor jpropertiesSensor = new JpropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, language());
+        Sensor jpropertiesSensor = new JpropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new JpropertiesLanguage(new MapSettings().asConfig()));
         jpropertiesSensor.execute(context);
         Collection<Issue> issues = context.allIssues();
         assertThat(issues).hasSize(1);

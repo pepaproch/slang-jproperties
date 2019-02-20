@@ -8,7 +8,7 @@ import org.sonarsource.slang.checks.api.SlangCheck;
 
 import java.util.function.BiConsumer;
 
-@Rule(key = "DummyCheck")
+@Rule(key = "dummyCheck")
 public class DummyCheck implements SlangCheck {
 
 

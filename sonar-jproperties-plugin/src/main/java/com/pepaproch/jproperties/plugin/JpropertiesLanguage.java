@@ -11,7 +11,7 @@ public class JpropertiesLanguage extends AbstractLanguage {
     public static final String JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE = ".properties";
 
     public static final String JPROPERTIES_LANG_KEY = "jpropertiesslang";
-    public static final String JPROPERTIES_LANG_NAME = "jpropertieslang";
+    public static final String JPROPERTIES_LANG_NAME = "jpropertiesslang";
 
 
     public JpropertiesLanguage(String key, String name) {

@@ -39,11 +39,11 @@ public class JpNodeBuilder implements NodeBuilder {
 
     private static TextPointer textPointer(Input input, int index) {
         int[] lc = input.lineAndColumnAt(index);
-        return new TextPointerImpl(lc[0], lc[1]);
+        return new TextPointerImpl(lc[0], lc[1] - 1);
     }
 
     private static TextRange textRange(Input input, int startIndex, int endIndex) {
 
-        return new TextRangeImpl(textPointer(input, startIndex), textPointer(input, endIndex - 1));
+        return new TextRangeImpl(textPointer(input, startIndex), textPointer(input, endIndex));
     }
 }

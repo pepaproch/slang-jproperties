@@ -26,8 +26,10 @@ import com.sonar.orchestrator.locator.FileLocation;
 import com.sonar.orchestrator.locator.Location;
 import com.sonar.orchestrator.locator.MavenLocation;
 import java.io.File;
+import java.util.Scanner;
 import java.util.Set;
 import org.apache.commons.lang.StringUtils;
+import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -44,18 +46,18 @@ public class Tests {
   static final String SQ_VERSION_PROPERTY = "sonar.runtimeVersion";
   static final String DEFAULT_SQ_VERSION = "LATEST_RELEASE";
 
-  private static final Set<String> LANGUAGES = ImmutableSet.of("kotlin", "ruby", "scala");
+  private static final Set<String> LANGUAGES = ImmutableSet.of("kotlin", "ruby", "scala", "jproperties");
 
   @ClassRule
   public static final Orchestrator ORCHESTRATOR;
+  private static boolean keepSonarqubeRunning = true;
 
   static {
     OrchestratorBuilder orchestratorBuilder = Orchestrator.builderEnv();
     addLanguagePlugins(orchestratorBuilder);
     ORCHESTRATOR = orchestratorBuilder
       .setSonarVersion(System.getProperty(SQ_VERSION_PROPERTY, DEFAULT_SQ_VERSION))
-      .restoreProfileAtStartup(FileLocation.of("src/test/resources/nosonar.xml"))
-      .restoreProfileAtStartup(FileLocation.of("src/test/resources/norule.xml"))
+
       .build();
   }
 
@@ -77,4 +79,12 @@ public class Tests {
     });
   }
 
+
+  @AfterClass
+  public static void after() {
+    if (keepSonarqubeRunning) {
+      // keep server running, use CTRL-C to stop it
+      new Scanner(System.in).next();
+    }
+  }
 }
