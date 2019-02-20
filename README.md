@@ -1,3 +1,8 @@
+
+SonarQube Jproperties plugin (Slang)
+
+this is a rewrite of https://github.com/racodond/sonar-jproperties-plugin using SLang a sslr
+
 # SLang
 
 [![Build Status](https://travis-ci.org/SonarSource/slang.svg?branch=master)](https://travis-ci.org/SonarSource/slang)
