@@ -1,43 +1,43 @@
 package com.pepaproch.jproperties.parser.sslr;
 
 
-import com.pepaproch.jproperties.parser.*;
+import com.pepaproch.jproperties.parser.slang.tree.*;
+import com.pepaproch.jproperties.parser.slang.visitor.TokensAndComentsVisitor;
 import com.sonar.sslr.api.Trivia;
 import com.sonar.sslr.api.typed.Optional;
 import org.sonarsource.slang.api.*;
 import org.sonarsource.slang.impl.TextRangeImpl;
 import org.sonarsource.slang.impl.TreeMetaDataProvider;
+import org.sonarsource.slang.visitors.TreeContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JTreeFactory {
-
+    private final TokensAndComentsVisitor v;
 
     public JTreeFactory() {
+        v = new TokensAndComentsVisitor();
     }
 
     public PropertiesTree properties(Optional<Token> byteOrderMark, Optional<List<PropertyTree>> properties, Token eof) {
         PropertyTree[] propertiesTrees = properties.get().toArray(new PropertyTree[]{});
-        TreeMetaData treeMetaData = metaDataMerge(propertiesTrees);
+        TreeMetaData treeMetaData = metaData(propertiesTrees);
         return new PropertiesTree(treeMetaData, byteOrderMark.orNull(), properties.orNull(), eof);
     }
 
     public PropertyTree property(PropertyKeyTree key, SeparatorTree separator, Optional<PropertyValueTree> value) {
-
-        TreeMetaData treeMetaData = metaDataMerge((Tree) key, (Tree) separator, (Tree) value.orNull());
-
+        TreeMetaData treeMetaData = metaData(key, separator, value.orNull());
         return new PropertyTree(treeMetaData, key, separator, value.orNull());
     }
 
 
     public PropertyKeyTree key(SyntaxToken key) {
-
-        return new PropertyKeyTree(metaData(Collections.singletonList(key), key.textRange()), key);
+        return new PropertyKeyTree(metaData(key), key);
     }
 
     public PropertyValueTree value(SyntaxToken value) {
@@ -66,30 +66,38 @@ public class JTreeFactory {
     }
 
     private TreeMetaData metaData(SyntaxToken token) {
+        List<HasTextRange> ranges = new ArrayList<>();
+        ranges.add(token);
+
         List<Comment> triviasComments = token.trivias.stream().map(triviaToComent).collect(Collectors.toList());
+        ranges.addAll(token.trivias.stream().map(triviaToComent).collect(Collectors.toList()));
+        HasTextRange[] hasTextRanges = ranges.toArray(new HasTextRange[]{});
 
-        return new TreeMetaDataProvider(triviasComments, Collections.singletonList(token)).metaData(token.textRange());
+        return new TreeMetaDataProvider(triviasComments, Collections.singletonList(token)).metaData(TextRangeUtils.wholeRange(hasTextRanges));
 
     }
 
-    private TreeMetaData metaData(List<SyntaxToken> tokens, TextRange range) {
-        List<Comment> collect = tokens.stream().map(t -> t.trivias).flatMap(l -> l.stream()).map(triviaToComent).collect(Collectors.toList());
-        return new TreeMetaDataProvider(collect, new ArrayList<>(tokens)).metaData(range);
-    }
 
-    private <T extends Tree> TreeMetaData metaDataMerge(T... trees) {
-        List<Comment> comments = Arrays.stream(trees).flatMap(st -> st.metaData().commentsInside().stream()).collect(Collectors.toList());
-        List<Token> tokens = Arrays.stream(trees).flatMap(st -> st.metaData().tokens().stream()).collect(Collectors.toList());
+    private <T extends Tree> TreeMetaData metaData(T... trees) {
+
+        List<Comment> comments = new ArrayList<>();
+        List<Token> tokens = new ArrayList<>();
+        Stream.of(trees).forEach(t -> {
+                    v.scan(new TreeContext(), t);
+                    comments.addAll(v.getComments());
+                    tokens.addAll(v.getTokens());
+                }
+        );
+
         TreeMetaDataProvider provider = new TreeMetaDataProvider(comments, tokens);
-        TextRange range = new TextRangeImpl(provider.allTokens().get(0).textRange().start(), provider.allTokens().get(provider.allTokens().size() - 1).textRange().end());
-        return provider.metaData(range);
+        return provider.metaData(TextRangeUtils.wholeRange(trees));
 
     }
 
 
     private Function<Trivia, Comment> triviaToComent = (Trivia t) -> {
         if (t.isComment()) {
-            return new SyntaxTrivia(t.getToken().getOriginalValue(), commentRange(t));
+            return new CommentImpl(t.getToken().getOriginalValue(), commentRange(t));
         }
         return null;
 

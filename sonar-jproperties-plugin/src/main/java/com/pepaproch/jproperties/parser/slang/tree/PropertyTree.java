@@ -1,10 +1,9 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.slang.tree;
 
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PropertyTree implements Tree {

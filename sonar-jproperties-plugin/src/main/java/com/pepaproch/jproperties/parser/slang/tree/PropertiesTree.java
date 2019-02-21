@@ -1,13 +1,13 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.slang.tree;
 
-import org.sonarsource.slang.api.Token;
-import org.sonarsource.slang.api.Tree;
-import org.sonarsource.slang.api.TreeMetaData;
+import org.sonarsource.slang.api.*;
 
+import javax.annotation.CheckForNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class PropertiesTree implements Tree {
+public class PropertiesTree implements TopLevelTree {
 
 
     private final Token byteOrderMark;
@@ -47,5 +47,21 @@ public class PropertiesTree implements Tree {
 
     public List<PropertyTree> getChildren() {
         return children;
+    }
+
+    @Override
+    public List<Tree> declarations() {
+        return children.stream().map(p -> p).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Comment> allComments() {
+        return metaData.commentsInside();
+    }
+
+    @CheckForNull
+    @Override
+    public Token firstCpdToken() {
+        return null;
     }
 }

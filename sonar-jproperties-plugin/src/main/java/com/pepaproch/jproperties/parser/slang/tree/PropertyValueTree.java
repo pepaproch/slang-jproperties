@@ -1,22 +1,21 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.slang.tree;
 
 
 import org.sonarsource.slang.api.Tree;
 
 
 import org.sonarsource.slang.api.TreeMetaData;
-import org.sonarsource.slang.impl.LiteralTreeImpl;
 import org.sonarsource.slang.impl.StringLiteralTreeImpl;
-import org.sonarsource.slang.impl.TreeMetaDataProvider;
 
 import java.util.Collections;
 import java.util.List;
 
-public class PropertyValueTree extends LiteralTreeImpl {
+public class PropertyValueTree extends StringLiteralTreeImpl {
 
 
     public PropertyValueTree(TreeMetaData metaData, SyntaxToken value) {
-        super(metaData, value.text());
+        //TODO
+        super(metaData, value.text(), value.text());
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.pepaproch.jproperties.parser;
 
 import com.pepaproch.jproperties.parser.slang.JpropertiesConverter;
 import com.pepaproch.jproperties.parser.sslr.JTreeFactory;
-import com.pepaproch.jproperties.parser.sslr.JpNodeBuilder;
+import com.pepaproch.jproperties.parser.slang.JpNodeBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonarsource.slang.api.Tree;
@@ -32,7 +32,7 @@ public class JpropertiesConverterTest {
         List<Tree> visited = new ArrayList<>();
         visitor.register(Tree.class, (ctx, tree) -> visited.add(tree));
         visitor.scan(new TreeContext(), parsedTree);
-
+        int size = parsedTree.metaData().commentsInside().size();
         assertEquals(6, parsedTree.children().size());
     }
 

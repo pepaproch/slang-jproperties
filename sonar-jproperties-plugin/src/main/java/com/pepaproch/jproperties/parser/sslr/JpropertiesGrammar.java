@@ -1,7 +1,7 @@
 package com.pepaproch.jproperties.parser.sslr;
 
 
-import com.pepaproch.jproperties.parser.*;
+import com.pepaproch.jproperties.parser.slang.tree.*;
 import com.sonar.sslr.api.typed.GrammarBuilder;
 
 public class JpropertiesGrammar {

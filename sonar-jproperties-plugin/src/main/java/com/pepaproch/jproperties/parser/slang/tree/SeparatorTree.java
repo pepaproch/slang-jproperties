@@ -1,4 +1,4 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.slang.tree;
 
 import com.pepaproch.jproperties.parser.sslr.JpropertiesLexicalGrammar;
 import org.sonarsource.slang.api.Token;

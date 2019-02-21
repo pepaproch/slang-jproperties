@@ -1,6 +1,6 @@
 package com.pepaproch.jproperties.checks;
 
-import com.pepaproch.jproperties.parser.PropertiesTree;
+import com.pepaproch.jproperties.parser.slang.tree.PropertiesTree;
 import org.sonar.check.Rule;
 import org.sonarsource.slang.checks.api.CheckContext;
 import org.sonarsource.slang.checks.api.InitContext;

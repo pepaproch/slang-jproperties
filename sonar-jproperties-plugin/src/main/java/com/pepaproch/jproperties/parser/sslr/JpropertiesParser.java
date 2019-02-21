@@ -1,7 +1,8 @@
 package com.pepaproch.jproperties.parser.sslr;
 
 
-import com.pepaproch.jproperties.parser.PropertiesTree;
+import com.pepaproch.jproperties.parser.slang.JpNodeBuilder;
+import com.pepaproch.jproperties.parser.slang.tree.PropertiesTree;
 
 import com.sonar.sslr.api.typed.ActionParser;
 

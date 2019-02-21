@@ -23,14 +23,14 @@ public class JpropertiesSensorTest extends AbstractSensorTest {
     public void testDummyRule() {
         InputFile f = createInputFile("dummy_file" + JpropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
                 "dummy=dummykey\n" +
-                        "notdummykey=notdummyvalue");
+                        "notdummykey=77.75.77.53");
         context.fileSystem().add(f);
-        CheckFactory checkFactory = checkFactory("dummyCheck");
+        CheckFactory checkFactory = checkFactory("dummyCheck", "S1313");
 
         Sensor jpropertiesSensor = new JpropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new JpropertiesLanguage(new MapSettings().asConfig()));
         jpropertiesSensor.execute(context);
         Collection<Issue> issues = context.allIssues();
-        assertThat(issues).hasSize(1);
+        assertThat(issues).hasSize(2);
 
     }
 

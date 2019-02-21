@@ -1,7 +1,7 @@
-package com.pepaproch.jproperties.parser.sslr;
+package com.pepaproch.jproperties.parser.slang;
 
-import com.pepaproch.jproperties.parser.ShouldSkipToken;
-import com.pepaproch.jproperties.parser.SyntaxToken;
+import com.pepaproch.jproperties.parser.slang.tree.ShouldSkipToken;
+import com.pepaproch.jproperties.parser.slang.tree.SyntaxToken;
 import com.sonar.sslr.api.Rule;
 import com.sonar.sslr.api.TokenType;
 import com.sonar.sslr.api.Trivia;

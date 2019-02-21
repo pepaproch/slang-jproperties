@@ -1,4 +1,4 @@
-package com.pepaproch.jproperties.parser;
+package com.pepaproch.jproperties.parser.slang.tree;
 
 import org.sonarsource.slang.api.TextRange;
 import org.sonarsource.slang.impl.TokenImpl;

@@ -99,7 +99,9 @@ public class MeasuresTest extends TestBase {
   @Test
   public void jproperties_measures() {
     ORCHESTRATOR.executeBuild(getSonarScanner(BASE_DIRECTORY, "jpropertiesslang"));
-    assertThat(getMeasureAsInt("dummy.properties", "ncloc")).isEqualTo(2);
+    assertThat(getMeasureAsInt("dummy.properties", "files")).isEqualTo(1);
+    assertThat(getMeasureAsInt("dummy.properties", "ncloc")).isEqualTo(11);
+    assertThat(getMeasureAsInt("dummy.properties", "comment_lines")).isEqualTo(11);
 
 
   }

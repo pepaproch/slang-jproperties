@@ -1,7 +1,6 @@
 package com.pepaproch.jproperties.parser.slang;
 
 import com.pepaproch.jproperties.parser.sslr.JTreeFactory;
-import com.pepaproch.jproperties.parser.sslr.JpNodeBuilder;
 import com.pepaproch.jproperties.parser.sslr.JpropertiesParser;
 import org.sonarsource.slang.api.ASTConverter;
 import org.sonarsource.slang.api.Tree;

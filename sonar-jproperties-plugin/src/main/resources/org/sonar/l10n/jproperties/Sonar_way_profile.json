@@ -1,6 +1,7 @@
 {
   "name": "Sonar way",
   "ruleKeys": [
-    "dummyCheck"
+    "dummyCheck",
+    "S1313"
   ]
 }
