@@ -19,7 +19,7 @@ public class JpropertiesProfileDefinitionTest {
         BuiltInQualityProfilesDefinition.Context context = new BuiltInQualityProfilesDefinition.Context();
         new JpropertiesProfileDefinition().define(context);
         BuiltInQualityProfilesDefinition.BuiltInQualityProfile profile = context.profile(JpropertiesLanguage.JPROPERTIES_LANG_KEY, "Sonar way");
-        assertThat(profile.rules().size()).isEqualTo(2);
+        assertThat(profile.rules().size()).isEqualTo(4);
         assertThat(profile.rules()).extracting(BuiltInQualityProfilesDefinition.BuiltInActiveRule::ruleKey).contains("dummyCheck");
     }
 

@@ -2,6 +2,6 @@
   "name": "Sonar way",
   "ruleKeys": [
     "dummyCheck",
-    "S1313"
+    "S1313", "S1192", "S1313" , "S2068"
   ]
 }
