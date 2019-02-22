@@ -19,6 +19,7 @@ public class JpSensorTestBase extends AbstractSensorTest {
     public static  final String R_HARDCODED_IP_CHECK = "S1313";
     public static final String R_STRING_LITERAL_DUPLICATE_CHECK = "S1192";
 
+
     @Override
     protected String repositoryKey() {
         return JpropertiesPlugin.REPOSITORY_KEY;

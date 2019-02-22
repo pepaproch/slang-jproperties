@@ -1,7 +1,26 @@
 
-SonarQube Jproperties plugin (Slang)
+# SonarQube Properties plugin (Slang)
 
 this is a rewrite of https://github.com/racodond/sonar-jproperties-plugin using SLang a sslr
+
+## Properties 
+
+
+simple sslr parser [JpropertiesPlugin](https://docs.sonarqube.org/display/PLUG/SonarKotlin) and Slang tree api is used to produce Slang Tree with following structure:
+
+    properties{TopLevelTree}[
+    ?comment{Coment},
+    property [ key{LiteralTree}, sep {}, val {StringLiterealTree} ] ,
+    property [ key{LiteralTree}, sep {}, val {StringLiterealTree} ] ,
+    ]
+
+I consider property files as key value database where the key and the value are both "String type".
+
+Just because we are using StringLiteralTree  as a Tree type for the value part, we get some of the slang default rules as HardCodedIp and DuplicatedStringLiterals (more coming) for free. 
+These rules are pretty useful even for the properties files. 
+
+
+For easier development process Slang repo was forked.
 
 # SLang
 
