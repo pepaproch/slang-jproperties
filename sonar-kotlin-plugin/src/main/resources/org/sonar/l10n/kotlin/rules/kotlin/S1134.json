@@ -8,7 +8,7 @@
   "standards": [
     "CWE"
   ],
-  "defaultSeverity": "Major",
+  "defaultSeverity": "Info",
   "ruleSpecification": "RSPEC-1134",
   "sqKey": "S1134",
   "scope": "All",

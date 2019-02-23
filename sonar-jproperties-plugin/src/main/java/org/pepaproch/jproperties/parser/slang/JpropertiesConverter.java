@@ -1,9 +1,14 @@
 package org.pepaproch.jproperties.parser.slang;
 
+import com.sonar.sslr.api.RecognitionException;
+import com.sonar.sslr.api.typed.ActionParser;
+import org.pepaproch.jproperties.parser.slang.tree.PropertiesTree;
 import org.pepaproch.jproperties.parser.sslr.JTreeFactory;
 import org.pepaproch.jproperties.parser.sslr.JpropertiesParser;
 import org.sonarsource.slang.api.ASTConverter;
+import org.sonarsource.slang.api.ParseException;
 import org.sonarsource.slang.api.Tree;
+import org.sonarsource.slang.impl.TextPointerImpl;
 
 public class JpropertiesConverter implements ASTConverter {
 
@@ -22,6 +27,12 @@ public class JpropertiesConverter implements ASTConverter {
 
     @Override
     public Tree parse(String content) {
-        return JpropertiesParser.create(factory, nodeBUilder).parse(content);
+        ActionParser<PropertiesTree> propertiesTreeActionParser = JpropertiesParser.create(factory, nodeBUilder);
+        try {
+            return propertiesTreeActionParser.parse(content);
+        } catch (RecognitionException e) {
+            throw new ParseException( e.getMessage() , new TextPointerImpl(e.getLine(),0));
+        }
+
     }
 }

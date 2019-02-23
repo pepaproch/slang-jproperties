@@ -1,9 +1,7 @@
 package org.pepaproch.jproperties.plugin;
 
 import org.pepaproch.jproperties.checks.DummyCheck;
-import org.sonarsource.slang.checks.HardcodedCredentialsCheck;
-import org.sonarsource.slang.checks.HardcodedIpCheck;
-import org.sonarsource.slang.checks.StringLiteralDuplicatedCheck;
+import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +19,8 @@ public class JpropertiesCheckList {
                 DummyCheck.class,
                 HardcodedIpCheck.class,
                 HardcodedCredentialsCheck.class,
-                StringLiteralDuplicatedCheck.class));
+                StringLiteralDuplicatedCheck.class,
+                TodoCommentCheck.class,
+                ParsingErrorCheck.class));
     }
 }

@@ -19,10 +19,9 @@ import java.util.stream.Stream;
 
 
 public class JTreeFactory {
-    private final TokensAndComentsVisitor v;
+
 
     public JTreeFactory() {
-        v = new TokensAndComentsVisitor();
     }
 
     public PropertiesTree properties(Optional<Token> byteOrderMark, Optional<List<PropertyTree>> properties, Token eof) {
@@ -84,6 +83,7 @@ public class JTreeFactory {
         List<Comment> comments = new ArrayList<>();
         List<Token> tokens = new ArrayList<>();
         Stream.of(trees).forEach(t -> {
+            TokensAndComentsVisitor v =  new TokensAndComentsVisitor();
                     v.scan(new TreeContext(), t);
                     comments.addAll(v.getComments());
                     tokens.addAll(v.getTokens());

@@ -9,7 +9,7 @@
   "tags": [
     "cert"
   ],
-  "defaultSeverity": "Minor",
+  "defaultSeverity": "Info",
   "ruleSpecification": "RSPEC-1313",
   "sqKey": "S1313",
   "scope": "Main"

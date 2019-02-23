@@ -35,7 +35,7 @@ jar {
                 'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim(),
                 'Plugin-BuildDate': buildDate,
                 'Plugin-ChildFirstClassLoader': 'false',
-                'Plugin-Class': 'com.pepaproch.jproperties.plugin.JpropertiesPlugin',
+                'Plugin-Class': 'org.pepaproch.jproperties.plugin.JpropertiesPlugin',
                 'Plugin-Description': 'Code Analyzer for Jproperties',
                 'Plugin-Developers': 'pepaproch@gmail.com',
                 'Plugin-Display-Version': displayVersion,
