@@ -5,6 +5,8 @@ import org.sonarsource.slang.api.TreeMetaData;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PropertyTree implements Tree {
 
@@ -42,7 +44,7 @@ public class PropertyTree implements Tree {
 
     @Override
     public List<Tree> children() {
-        return Arrays.asList(key, value);
+       return  Stream.of(key,value).filter(i-> null!=i).collect(Collectors.toList());
     }
 
     @Override

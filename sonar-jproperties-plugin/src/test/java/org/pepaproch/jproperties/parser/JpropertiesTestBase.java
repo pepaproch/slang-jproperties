@@ -36,7 +36,7 @@ public class JpropertiesTestBase {
                     "language = English\n" +
                     "# The backslash below tells the application to continue reading\n" +
                     "# the value onto the next line.\n" +
-                    "# \\TODO change the welcome message\n" +
+                    "# \\\\ TODO change the welcome message\n" +
                     "message = Welcome to \\\n" +
                     "          Wikipedia!\n" +
                     "# Add spaces to the key\n" +
@@ -68,4 +68,8 @@ public class JpropertiesTestBase {
                     "# If you want your property to include a backslash, it should be escaped by another backslash\n" +
                     "path=c:\\wiki\\templates\n" +
                     "# However, some editors will handle this automatically";
+
+    public  static String parsingErrorAST = "publishChannel=\n" +
+            "\n" +
+            "ideaArtifactName=181-EAP-SNAPSHOT";
 }

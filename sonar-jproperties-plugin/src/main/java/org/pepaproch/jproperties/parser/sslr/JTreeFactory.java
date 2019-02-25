@@ -4,13 +4,14 @@ package org.pepaproch.jproperties.parser.sslr;
 import com.sonar.sslr.api.Trivia;
 import com.sonar.sslr.api.typed.Optional;
 import org.pepaproch.jproperties.parser.slang.tree.*;
-import org.pepaproch.jproperties.parser.slang.visitor.TokensAndComentsVisitor;
 import org.sonarsource.slang.api.*;
 import org.sonarsource.slang.impl.TextRangeImpl;
+import org.sonarsource.slang.impl.TokenImpl;
 import org.sonarsource.slang.impl.TreeMetaDataProvider;
-import org.sonarsource.slang.visitors.TreeContext;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -25,13 +26,19 @@ public class JTreeFactory {
     }
 
     public PropertiesTree properties(Optional<Token> byteOrderMark, Optional<List<PropertyTree>> properties, Token eof) {
-        PropertyTree[] propertiesTrees = properties.get().toArray(new PropertyTree[]{});
-        TreeMetaData treeMetaData = metaData(propertiesTrees);
-        return new PropertiesTree(treeMetaData, byteOrderMark.orNull(), properties.orNull(), eof);
+
+        List<Comment> comentsTrivia = comments((SyntaxToken) eof);
+
+
+
+
+        TreeMetaData treeMetaData = metaData(comentsTrivia, properties.or(Collections.emptyList()).toArray(new Tree[]{}));
+        return new PropertiesTree(treeMetaData, byteOrderMark.orNull(), properties, eof);
     }
 
+
     public PropertyTree property(PropertyKeyTree key, SeparatorTree separator, Optional<PropertyValueTree> value) {
-        TreeMetaData treeMetaData = metaData(key, separator, value.orNull());
+        TreeMetaData treeMetaData = metaData(null, key, separator, value.orNull());
         return new PropertyTree(treeMetaData, key, separator, value.orNull());
     }
 
@@ -68,8 +75,7 @@ public class JTreeFactory {
     private TreeMetaData metaData(SyntaxToken token) {
         List<HasTextRange> ranges = new ArrayList<>();
         ranges.add(token);
-
-        List<Comment> triviasComments = token.trivias.stream().map(triviaToComent).collect(Collectors.toList());
+        List<Comment> triviasComments = comments(token);
         ranges.addAll(token.trivias.stream().map(triviaToComent).collect(Collectors.toList()));
         HasTextRange[] hasTextRanges = ranges.toArray(new HasTextRange[]{});
 
@@ -78,20 +84,35 @@ public class JTreeFactory {
     }
 
 
-    private <T extends Tree> TreeMetaData metaData(T... trees) {
+    private List<Comment> comments(SyntaxToken token) {
 
-        List<Comment> comments = new ArrayList<>();
+        return token.trivias.stream().map(triviaToComent).collect(Collectors.toList());
+    }
+
+    //TODO handle token better
+    private <T extends Tree> TreeMetaData metaData(@Nullable List<Comment> aditionalTokens, T... trees) {
+
+        List<Comment> comments = java.util.Optional.ofNullable(aditionalTokens).orElse(new ArrayList<>());
+
         List<Token> tokens = new ArrayList<>();
-        Stream.of(trees).forEach(t -> {
-            TokensAndComentsVisitor v =  new TokensAndComentsVisitor();
-                    v.scan(new TreeContext(), t);
-                    comments.addAll(v.getComments());
-                    tokens.addAll(v.getTokens());
+
+        Stream.of(trees).filter(t -> t != null).forEach(t -> {
+                    comments.addAll(t.metaData().commentsInside());
+                    tokens.addAll(t.metaData().tokens());
                 }
         );
 
+
+        List<HasTextRange> ranges = Stream.concat(
+                java.util.Optional.ofNullable(aditionalTokens).orElse(Collections.emptyList()).stream().map(ac -> (HasTextRange) ac),
+                        comments.stream().map(c -> (HasTextRange) c)).collect(Collectors.toList());
+        ranges.addAll(tokens);
+
+
         TreeMetaDataProvider provider = new TreeMetaDataProvider(comments, tokens);
-        return provider.metaData(TextRangeUtils.wholeRange(trees));
+
+
+        return provider.metaData(TextRangeUtils.wholeRange(ranges.toArray(new HasTextRange[]{})));
 
     }
 

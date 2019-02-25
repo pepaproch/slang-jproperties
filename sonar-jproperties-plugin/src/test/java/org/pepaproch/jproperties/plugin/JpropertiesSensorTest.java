@@ -33,6 +33,43 @@ public class JpropertiesSensorTest extends AbstractSensorTest {
 
     }
 
+    @Test
+    public void testOnlyComments() {
+        InputFile f = createInputFile("onlycomments_file" + JpropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "#\n" +
+                        "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
+                        "#");
+        context.fileSystem().add(f);
+        CheckFactory checkFactory = checkFactory("dummyCheck", "S1313");
+
+        Sensor jpropertiesSensor = new JpropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new JpropertiesLanguage(new MapSettings().asConfig()));
+        jpropertiesSensor.execute(context);
+        Collection<Issue> issues = context.allIssues();
+
+        assertThat(issues).hasSize(0);
+
+    }
+
+
+    @Test
+    public void testError() {
+        InputFile f = createInputFile("onlycomments_file" + JpropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                parseError);
+        context.fileSystem().add(f);
+        CheckFactory checkFactory = checkFactory("dummyCheck", "S1313");
+
+        Sensor jpropertiesSensor = new JpropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new JpropertiesLanguage(new MapSettings().asConfig()));
+        jpropertiesSensor.execute(context);
+        Collection<Issue> issues = context.allIssues();
+
+        assertThat(issues).hasSize(0);
+
+    }
+
+ String parseError = "#\n" +
+         "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
+         "#";
+
 
     @Override
     protected String repositoryKey() {

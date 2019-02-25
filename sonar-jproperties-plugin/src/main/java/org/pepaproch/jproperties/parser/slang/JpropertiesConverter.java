@@ -10,6 +10,8 @@ import org.sonarsource.slang.api.ParseException;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.impl.TextPointerImpl;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class JpropertiesConverter implements ASTConverter {
 
 
@@ -27,12 +29,13 @@ public class JpropertiesConverter implements ASTConverter {
 
     @Override
     public Tree parse(String content) {
+
         ActionParser<PropertiesTree> propertiesTreeActionParser = JpropertiesParser.create(factory, nodeBUilder);
+
         try {
             return propertiesTreeActionParser.parse(content);
         } catch (RecognitionException e) {
             throw new ParseException( e.getMessage() , new TextPointerImpl(e.getLine(),0));
         }
-
     }
 }

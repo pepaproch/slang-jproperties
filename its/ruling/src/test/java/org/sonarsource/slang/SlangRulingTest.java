@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SlangRulingTest {
 
     private static final String SQ_VERSION_PROPERTY = "sonar.runtimeVersion";
-    private static final String DEFAULT_SQ_VERSION = "7.6";
+    private static final String DEFAULT_SQ_VERSION = "6.7";
 
     private static Orchestrator orchestrator;
     private static boolean keepSonarqubeRunning = "true".equals(System.getProperty("keepSonarqubeRunning"));
@@ -53,8 +53,8 @@ public class SlangRulingTest {
     public static void setUp() {
         OrchestratorBuilder builder = Orchestrator.builderEnv()
                 .setSonarVersion(System.getProperty(SQ_VERSION_PROPERTY, DEFAULT_SQ_VERSION))
-                .addPlugin(MavenLocation.of("org.sonarsource.java", "sonar-java-plugin", "5.9.2.16552"));
-      // .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin", "sonar-lits-plugin", "0.8.0.1209"));
+                .addPlugin(MavenLocation.of("org.sonarsource.java", "sonar-java-plugin", "5.9.2.16552"))
+                .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin", "sonar-lits-plugin", "0.7.0.961"));
 
         addLanguagePlugins(builder);
 
@@ -162,7 +162,7 @@ public class SlangRulingTest {
     @Test
     public void test_properties() throws IOException {
         Map<String, String> properties = new HashMap<>();
-        properties.put("sonar.inclusions", "ruling/src/test/resources/sources/jproperties/**/*.properties");
+        properties.put("sonar.inclusions", "ruling/src/test/resources/sources/jproperties/**/*.properties, sources/**/*.properties");
         run_ruling_test("jpropertiesslang", properties);
     }
 
@@ -188,9 +188,9 @@ public class SlangRulingTest {
                 .setDebugLogs(true)
                 .setProperties(properties)
                 .setScannerVersion("2.8")
-               // .setProperty("dump.old", FileLocation.of("src/test/resources/expected/" + language).getFile().getAbsolutePath())
-               //      .setProperty("dump.new", actualDirectory.getAbsolutePath())
-           //     .setProperty("lits.differences", litsDifferencesFile.getAbsolutePath() )
+                .setProperty("dump.old", FileLocation.of("src/test/resources/expected/" + language).getFile().getAbsolutePath())
+                .setProperty("dump.new", actualDirectory.getAbsolutePath())
+                .setProperty("lits.differences", litsDifferencesFile.getAbsolutePath() )
                 .setProperty("sonar.cpd.skip", "true")
                 .setProperty("sonar.scm.disabled", "true")
                 .setProperty("sonar.language", language)
@@ -200,9 +200,9 @@ public class SlangRulingTest {
 
         orchestrator.executeBuild(build);
 
-      // String litsDifference = new String(Files.readAllBytes(litsDifferencesFile.toPath()));
-      //  assertThat(litsDifference).isEmpty();
-        System.out.println("s");
+     String litsDifference = new String(Files.readAllBytes(litsDifferencesFile.toPath()));
+        assertThat(litsDifference).isEmpty();
+
     }
 
     @AfterClass

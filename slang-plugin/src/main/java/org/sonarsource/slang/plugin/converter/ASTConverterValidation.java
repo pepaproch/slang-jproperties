@@ -28,6 +28,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.sonar.api.config.Configuration;
 import org.sonar.api.internal.google.common.annotations.VisibleForTesting;
 import org.sonar.api.utils.log.Logger;
@@ -93,6 +95,7 @@ public class ASTConverterValidation implements ASTConverter {
   public void terminate() {
     List<String> errors = errors();
     if (!errors.isEmpty()) {
+      LOG.error("CUST: ");
       LOG.error("AST Converter Validation:\n  [AST ERROR] " + String.join("\n  [AST ERROR] ", errors));
     }
     wrapped.terminate();
@@ -175,6 +178,7 @@ public class ASTConverterValidation implements ASTConverter {
         assertChildTokens(parentTokens, childByToken, tree, child);
       }
     }
+
     parentTokens.removeAll(childByToken.keySet());
     assertUnexpectedTokenKind(tree, parentTokens);
   }
@@ -199,7 +203,7 @@ public class ASTConverterValidation implements ASTConverter {
         .sorted(Comparator.comparing(token -> token.textRange().start()))
         .map(Token::text)
         .collect(Collectors.joining("', '"));
-      raiseError("Unexpected tokens in " + kind(tree), ": '" + tokenList + "'", tree.textRange().start());
+      raiseError("Unexpected tokens in " + kind(tree)  , ": '" + tokenList + "'", tree.textRange().start());
     }
   }
 
@@ -288,6 +292,7 @@ public class ASTConverterValidation implements ASTConverter {
     }
 
     private void assertEqualTo(String expectedCode) {
+
       String[] actualLines = lines(this.code.toString());
       String[] expectedLines = lines(expectedCode);
       for (int i = 0; i < actualLines.length && i < expectedLines.length; i++) {

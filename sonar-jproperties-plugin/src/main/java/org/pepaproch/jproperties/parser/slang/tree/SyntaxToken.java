@@ -15,5 +15,6 @@ public class SyntaxToken extends TokenImpl {
         super(textRange, text, type);
         this.trivias = trivias.stream().collect(Collectors.toList());
 
+
     }
 }

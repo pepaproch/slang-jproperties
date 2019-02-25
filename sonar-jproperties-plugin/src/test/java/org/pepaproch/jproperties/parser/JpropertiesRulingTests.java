@@ -26,6 +26,15 @@ public class JpropertiesRulingTests extends JpSensorTestBase {
         executeAndConfirm(f,1);
 
     }
+
+    @Test
+    public void testParsingErrorAST() {
+        CheckFactory f = checkFactory("ParsingError");
+        addFile("error.properties", JpropertiesTestBase.parsingErrorAST );
+        executeAndConfirm(f,0);
+
+    }
+
     @Test
     public void testDuplicatedStrings() {
         CheckFactory f = checkFactory(R_STRING_LITERAL_DUPLICATE_CHECK);
@@ -38,6 +47,14 @@ public class JpropertiesRulingTests extends JpSensorTestBase {
         CheckFactory f = checkFactory(R_HARDCODED_IP_CHECK);
         addFile("ip.properties", JpropertiesTestBase.HARDCODED_IP);
         executeAndConfirm(f,2);
+
+    }
+
+    @Test
+    public void testComment() {
+        CheckFactory f = checkFactory(R_TODO_COMMENT_CHECK);
+        addFile("ip.properties", JpropertiesTestBase.WIKY_PROP_TODO_COMENT);
+        executeAndConfirm(f,1);
 
     }
 

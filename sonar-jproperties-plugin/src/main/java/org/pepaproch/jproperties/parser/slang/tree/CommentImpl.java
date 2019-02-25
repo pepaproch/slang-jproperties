@@ -2,7 +2,9 @@ package org.pepaproch.jproperties.parser.slang.tree;
 
 import org.sonarsource.slang.api.Comment;
 import org.sonarsource.slang.api.TextRange;
+import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.impl.TextRangeImpl;
+import org.sonarsource.slang.impl.TokenImpl;
 
 
 public class CommentImpl implements Comment {
@@ -11,12 +13,17 @@ public class CommentImpl implements Comment {
     private final TextRange range;
     private final TextRange rangeText;
 
+
     public CommentImpl(String text, TextRange range) {
         this.text = text;
         this.range = range;
         rangeText = new TextRangeImpl(range.start().line(), range.start().lineOffset(),
-                range.end().line(), range.end().lineOffset());
+        range.end().line(), range.end().lineOffset());
+
+
     }
+
+
 
     @Override
     public String contentText() {
@@ -37,4 +44,6 @@ public class CommentImpl implements Comment {
     public TextRange textRange() {
         return rangeText;
     }
+
+
 }

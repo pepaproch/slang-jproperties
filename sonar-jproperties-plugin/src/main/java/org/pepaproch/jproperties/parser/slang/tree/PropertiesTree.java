@@ -1,10 +1,15 @@
 package org.pepaproch.jproperties.parser.slang.tree;
 
+import com.sonar.sslr.api.typed.Optional;
 import org.sonarsource.slang.api.*;
+import org.sonarsource.slang.impl.TreeMetaDataProvider;
 
 import javax.annotation.CheckForNull;
-import java.util.ArrayList;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 public class PropertiesTree implements TopLevelTree {
@@ -16,20 +21,16 @@ public class PropertiesTree implements TopLevelTree {
     private final TreeMetaData metaData;
 
 
-    public PropertiesTree(TreeMetaData metaData, Token byteOrderMark, List<PropertyTree> children, Token eof) {
+    public PropertiesTree(TreeMetaData metaData, Token byteOrderMark, Optional<List<PropertyTree>> children, Token eof) {
         this.metaData = metaData;
-        this.children = children;
+        this.children = children.or(Collections.emptyList());
         this.eof = eof;
         this.byteOrderMark = byteOrderMark;
     }
 
     @Override
     public List<Tree> children() {
-        ArrayList<Tree> r = new ArrayList<>();
-
-        r.addAll(getChildren());
-
-        return r;
+         return   getChildren().stream().collect(Collectors.toList());
     }
 
     @Override
@@ -62,6 +63,8 @@ public class PropertiesTree implements TopLevelTree {
     @CheckForNull
     @Override
     public Token firstCpdToken() {
-        return null;
+
+        return   null;
+
     }
 }

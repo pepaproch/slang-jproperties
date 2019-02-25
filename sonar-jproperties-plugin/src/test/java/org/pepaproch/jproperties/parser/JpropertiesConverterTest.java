@@ -48,6 +48,21 @@ public class JpropertiesConverterTest {
         assertEquals(2, parsedTree.children().size());
     }
 
+    @Test
+    public void parseC() {
+        Tree parsedTree = converter.parse("    #\n" +
+                "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
+                "#");
+        TreeVisitor<TreeContext> visitor = new TreeVisitor<>();
+        List<Tree> visited = new ArrayList<>();
+        visitor.register(Tree.class, (ctx, tree) -> visited.add(tree));
+        visitor.scan(new TreeContext(), parsedTree);
+
+        assertEquals(0, parsedTree.children().size());
+    }
+
+
+
 
 
 

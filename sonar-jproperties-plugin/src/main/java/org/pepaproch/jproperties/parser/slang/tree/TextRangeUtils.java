@@ -11,8 +11,9 @@ import java.util.stream.Stream;
 
 public class TextRangeUtils {
 
-    public static TextRange wholeRange(HasTextRange... l) {
-        List<HasTextRange> sorted = Stream.of(l).sorted(Comparator.comparing(e -> e.textRange().start())).collect(Collectors.toList());
+      public   static <T extends HasTextRange>  TextRange wholeRange(T... l) {
+
+        List<HasTextRange> sorted = Stream.of(l).filter(r-> r!=null).sorted(Comparator.comparing(e -> e.textRange().start())).collect(Collectors.toList());
         TextRange wholeRange = new TextRangeImpl(sorted.get(0).textRange().start(), sorted.get(sorted.size() - 1).textRange().end());
         return wholeRange;
     }

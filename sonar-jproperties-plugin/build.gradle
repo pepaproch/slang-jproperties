@@ -46,7 +46,7 @@ jar {
                 'Plugin-OrganizationUrl': 'http://pepaproch.com',
                 'Plugin-SourcesUrl': 'https://github.com/pepaproch/slang-jproperties',
                 'Plugin-Version': version,
-                'Sonar-Version': '7.4',
+                'Sonar-Version': '6.7',
                 'SonarLint-Supported': 'true',
                 'Version': "${version}",
         )
