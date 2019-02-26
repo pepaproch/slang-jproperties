@@ -47,7 +47,7 @@ public class SlangRulingTest {
     private static Orchestrator orchestrator;
     private static boolean keepSonarqubeRunning = "true".equals(System.getProperty("keepSonarqubeRunning"));
 
-    private static final Set<String> LANGUAGES = new HashSet<>(Arrays.asList("kotlin", "ruby", "scala" ,"jproperties" ));
+    private static final Set<String> LANGUAGES = new HashSet<>(Arrays.asList("kotlin", "ruby", "scala" ,"properties" ));
 
     @BeforeClass
     public static void setUp() {
@@ -162,7 +162,7 @@ public class SlangRulingTest {
     @Test
     public void test_properties() throws IOException {
         Map<String, String> properties = new HashMap<>();
-        properties.put("sonar.inclusions", "ruling/src/test/resources/sources/jproperties/**/*.properties, sources/**/*.properties");
+        properties.put("sonar.inclusions", "ruling/src/test/resources/sources/properties/**/*.properties, sources/**/*.properties");
         run_ruling_test("jpropertiesslang", properties);
     }
 
