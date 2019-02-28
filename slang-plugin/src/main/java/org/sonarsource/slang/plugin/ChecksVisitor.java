@@ -52,10 +52,11 @@ public class ChecksVisitor extends TreeVisitor<InputFileContext> {
     }
   }
 
-  public class ContextAdapter implements InitContext, CheckContext {
+  public class ContextAdapter implements InitContext, CheckContext
+  {
 
     public final RuleKey ruleKey;
-    private InputFileContext currentCtx;
+    public InputFileContext currentCtx;
 
     public ContextAdapter(RuleKey ruleKey) {
       this.ruleKey = ruleKey;

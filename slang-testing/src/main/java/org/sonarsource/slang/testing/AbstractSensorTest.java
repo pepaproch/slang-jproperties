@@ -66,6 +66,7 @@ public abstract class AbstractSensorTest {
         .setName(ruleKey)
         .activate();
     }
+
     context.setActiveRules(builder.build());
     return new CheckFactory(context.activeRules());
   }

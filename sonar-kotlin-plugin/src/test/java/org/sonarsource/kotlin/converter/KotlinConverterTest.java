@@ -92,9 +92,16 @@ public class KotlinConverterTest {
   @Test
   public void testWinEOL() {
     Tree tree = converter.parse(
-      "fun main(args: Array<String>) {\r\n" +
-        "\r\n" +
-        "}\r\n");
+            "fun main(args: Array<String>) {\r\n" +
+                    "\r\n" +
+                    "}\r\n");
+    assertThat(tree.children()).hasSize(1);
+  }
+
+  @Test
+  public void testCommentONLY() {
+    Tree tree = converter.parse(
+            "//coment\n//comment\nfun foo() { }");
     assertThat(tree.children()).hasSize(1);
   }
 

@@ -19,12 +19,15 @@ I consider property files as key value database where the key and the value are 
 Just because we are using StringLiteralTree  as a Tree type for the value part, we get some of the slang default rules as HardCodedIp and DuplicatedStringLiterals (more coming) for free. 
 These rules are pretty useful even for the properties files. 
 
-##Used generic Slang rules
+## Used generic Slang rules
 
 * ParsingError
 * HardCodedIp
 * DuplicatedStringLiterals
 * TodoCommentCheck
+
+## Reimplemented rules
+* DuplicatedKeysAcrossFiles
 
 For easier development process Slang repo was forked.
 

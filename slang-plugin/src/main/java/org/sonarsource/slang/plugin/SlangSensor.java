@@ -90,7 +90,7 @@ public abstract class SlangSensor implements Sensor {
       InputFileContext inputFileContext = new InputFileContext(sensorContext, inputFile);
       try {
         analyseFile(converter, inputFileContext, inputFile, visitors, statistics);
-      } catch (ParseException e) {
+      } catch (ParseException  e ) {
         logParsingError(inputFile, e);
         inputFileContext.reportAnalysisParseError(repositoryKey(), inputFile, e.getPosition());
       }
@@ -119,7 +119,8 @@ public abstract class SlangSensor implements Sensor {
     for (TreeVisitor<InputFileContext> visitor : visitors) {
       try {
         String visitorId = visitor.getClass().getSimpleName();
-        statistics.time(visitorId, () -> visitor.scan(inputFileContext, tree));
+        statistics.time(visitorId, () ->
+                visitor.scan(inputFileContext, tree));
       } catch (RuntimeException e) {
         inputFileContext.reportAnalysisError(e.getMessage(), null);
         LOG.error("Cannot analyse " + inputFile, e);
@@ -163,7 +164,7 @@ public abstract class SlangSensor implements Sensor {
     statistics.log();
   }
 
-  private List<TreeVisitor<InputFileContext>> visitors(SensorContext sensorContext, DurationStatistics statistics) {
+  protected List<TreeVisitor<InputFileContext>> visitors(SensorContext sensorContext, DurationStatistics statistics) {
     if (sensorContext.runtime().getProduct() == SonarProduct.SONARLINT) {
       return Collections.singletonList(new ChecksVisitor(checks(), statistics));
     } else {
