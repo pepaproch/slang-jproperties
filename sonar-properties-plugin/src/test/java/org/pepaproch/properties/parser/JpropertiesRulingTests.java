@@ -37,6 +37,7 @@ public class JpropertiesRulingTests extends JpSensorTestBase {
     @Test
     public void testDuplicatedStrings() {
         CheckFactory f = checkFactory(R_STRING_LITERAL_DUPLICATE_CHECK);
+
         addFile("triplicatedWiky.properties", JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE);
        executeAndConfirm(f,5);
     }

@@ -1,0 +1,20 @@
+{
+  "title": "Properties keys should not bee duplicated across several files",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "cwe"
+  ],
+  "standards": [
+    "CWE"
+  ],
+  "defaultSeverity": "Info",
+  "ruleSpecification": "",
+  "sqKey": "duplicatedCheck",
+  "scope": "All",
+  "securityStandards": {
+    "CWE": [
+      546
+    ]
+  }
+}

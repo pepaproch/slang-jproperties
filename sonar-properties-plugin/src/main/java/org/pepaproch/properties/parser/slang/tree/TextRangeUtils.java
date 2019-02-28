@@ -1,5 +1,7 @@
 package org.pepaproch.properties.parser.slang.tree;
 
+import org.sonar.api.batch.fs.internal.DefaultTextPointer;
+import org.sonar.api.batch.fs.internal.DefaultTextRange;
 import org.sonarsource.slang.api.HasTextRange;
 import org.sonarsource.slang.api.TextRange;
 import org.sonarsource.slang.impl.TextRangeImpl;
@@ -16,5 +18,10 @@ public class TextRangeUtils {
         List<HasTextRange> sorted = Stream.of(l).filter(r-> r!=null).sorted(Comparator.comparing(e -> e.textRange().start())).collect(Collectors.toList());
         TextRange wholeRange = new TextRangeImpl(sorted.get(0).textRange().start(), sorted.get(sorted.size() - 1).textRange().end());
         return wholeRange;
+    }
+
+    public static org.sonar.api.batch.fs.TextRange sonarTextRange(TextRange textRange) {
+          return  new DefaultTextRange(new DefaultTextPointer(textRange.start().line(), textRange.start().lineOffset()),new DefaultTextPointer(textRange.end().line(),textRange.end().lineOffset()));
+
     }
 }

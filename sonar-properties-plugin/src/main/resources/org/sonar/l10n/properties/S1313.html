@@ -24,16 +24,6 @@
 <ul>
     <li> make the IP address configurable.</li>
 </ul>
-<h2>Noncompliant Code Example</h2>
-<pre>
-val ip = "192.168.12.42"
-val socket = ServerSocket(ip, 6667)
-</pre>
-<h2>Compliant Solution</h2>
-<pre>
-val ip = System.getenv("myapplication.ip")
-val socket = ServerSocket(ip, 6667)
-</pre>
 <h2>Exceptions</h2>
 <p>No issue is reported for the following cases because they are not considered sensitive:</p>
 <ul>

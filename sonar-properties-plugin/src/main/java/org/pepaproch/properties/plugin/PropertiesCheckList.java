@@ -1,6 +1,7 @@
 package org.pepaproch.properties.plugin;
 
 import org.pepaproch.properties.checks.DummyCheck;
+import org.pepaproch.properties.checks.DuplicatedKeysVisitor;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class PropertiesCheckList {
 
         return Collections.unmodifiableList(Arrays.asList(
                 DummyCheck.class,
+                DuplicatedKeysVisitor.class,
                 HardcodedIpCheck.class,
                 HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,

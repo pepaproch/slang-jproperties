@@ -89,8 +89,6 @@ public abstract class SlangSensor implements Sensor {
       }
       InputFileContext inputFileContext = new InputFileContext(sensorContext, inputFile);
       try {
-        System.out.println("PROCESS::: " + inputFile.filename());
-
         analyseFile(converter, inputFileContext, inputFile, visitors, statistics);
       } catch (ParseException  e ) {
         logParsingError(inputFile, e);
@@ -109,8 +107,6 @@ public abstract class SlangSensor implements Sensor {
     String content;
     try {
       content = inputFile.contents();
-      System.out.println(inputFile.filename());
-      System.out.println(content);
     } catch (IOException e) {
       throw new ParseException("Cannot read " + inputFile);
     }
@@ -168,7 +164,7 @@ public abstract class SlangSensor implements Sensor {
     statistics.log();
   }
 
-  private List<TreeVisitor<InputFileContext>> visitors(SensorContext sensorContext, DurationStatistics statistics) {
+  protected List<TreeVisitor<InputFileContext>> visitors(SensorContext sensorContext, DurationStatistics statistics) {
     if (sensorContext.runtime().getProduct() == SonarProduct.SONARLINT) {
       return Collections.singletonList(new ChecksVisitor(checks(), statistics));
     } else {

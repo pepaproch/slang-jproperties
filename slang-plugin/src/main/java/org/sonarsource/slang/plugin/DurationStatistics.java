@@ -32,7 +32,7 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
-class DurationStatistics {
+public class DurationStatistics {
 
   private static final Logger LOG = Loggers.get(DurationStatistics.class);
 

@@ -66,9 +66,34 @@ public class PropertiesSensorTest extends AbstractSensorTest {
 
     }
 
- String parseError = "#\n" +
-         "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
-         "#";
+
+    @Test
+    public void testProjectTest() {
+
+        InputFile f = createInputFile("sub/onlycomments_file2" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "dummy=dummykey\n" +
+                        "notdummykey=77.75.77.53");
+        context.fileSystem().add(f);
+
+
+        InputFile f1 = createInputFile("onlycomments_file1" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "dummy=dummykey\n" +
+                        "notdummykey=77.75.77.53");
+        context.fileSystem().add(f1);
+
+        CheckFactory checkFactory = checkFactory("duplicatedCheck");
+
+        Sensor jpropertiesSensor = new PropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new PropertiesLanguage(new MapSettings().asConfig()));
+        jpropertiesSensor.execute(context);
+        Collection<Issue> issues = context.allIssues();
+
+
+        assertThat(issues).hasSize(2);
+    }
+
+    String parseError = "#\n" +
+            "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
+            "#";
 
 
     @Override

@@ -42,20 +42,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SlangRulingTest {
 
     private static final String SQ_VERSION_PROPERTY = "sonar.runtimeVersion";
-    private static final String DEFAULT_SQ_VERSION = "6.7";
-
+    private static final String DEFAULT_SQ_VERSION = "7.6";
+    private static final Set<String> LANGUAGES = new HashSet<>(Arrays.asList("kotlin", "ruby", "scala", "properties"));
     private static Orchestrator orchestrator;
     private static boolean keepSonarqubeRunning = "true".equals(System.getProperty("keepSonarqubeRunning"));
-
-    private static final Set<String> LANGUAGES = new HashSet<>(Arrays.asList("kotlin", "ruby", "scala" ,"properties" ));
+    private static boolean litsEnabled = false;
 
     @BeforeClass
     public static void setUp() {
         OrchestratorBuilder builder = Orchestrator.builderEnv()
-                .setSonarVersion(System.getProperty(SQ_VERSION_PROPERTY, DEFAULT_SQ_VERSION))
-                .addPlugin(MavenLocation.of("org.sonarsource.java", "sonar-java-plugin", "5.9.2.16552"))
-                .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin", "sonar-lits-plugin", "0.7.0.961"));
+                .setSonarVersion(System.getProperty(SQ_VERSION_PROPERTY, DEFAULT_SQ_VERSION));
+        if (litsEnabled) {
 
+            builder.addPlugin(MavenLocation.of("org.sonarsource.java", "sonar-java-plugin", "5.9.2.16552"))
+                    .addPlugin(MavenLocation.of("org.sonarsource.sonar-lits-plugin", "sonar-lits-plugin", "0.7.0.961"));
+        }
         addLanguagePlugins(builder);
 
         orchestrator = builder.build();
@@ -75,7 +76,6 @@ public class SlangRulingTest {
         scalaRulesConfiguration.add("S1451", "isRegularExpression", "true");
 
         ProfileGenerator.RulesConfiguration propsRulesConfiguration = new ProfileGenerator.RulesConfiguration();
-
 
 
         File kotlinProfile = ProfileGenerator.generateProfile(SlangRulingTest.orchestrator.getServer().getUrl(), "kotlin", "kotlin", kotlinRulesConfiguration, Collections.emptySet());
@@ -104,6 +104,14 @@ public class SlangRulingTest {
 
             builder.addPlugin(pluginLocation);
         });
+    }
+
+    @AfterClass
+    public static void after() {
+        if (keepSonarqubeRunning) {
+            // keep server running, use CTRL-C to stop it
+            new Scanner(System.in).next();
+        }
     }
 
     @Test
@@ -159,6 +167,7 @@ public class SlangRulingTest {
         properties.put("sonar.inclusions", "sources/scala/**/*.scala, ruling/src/test/resources/sources/scala/**/*.scala");
         run_ruling_test("scala", properties);
     }
+
     @Test
     public void test_properties() throws IOException {
         Map<String, String> properties = new HashMap<>();
@@ -188,29 +197,25 @@ public class SlangRulingTest {
                 .setDebugLogs(true)
                 .setProperties(properties)
                 .setScannerVersion("2.8")
-                .setProperty("dump.old", FileLocation.of("src/test/resources/expected/" + language).getFile().getAbsolutePath())
-                .setProperty("dump.new", actualDirectory.getAbsolutePath())
-                .setProperty("lits.differences", litsDifferencesFile.getAbsolutePath() )
-                .setProperty("sonar.cpd.skip", "true")
+                 .setProperty("sonar.cpd.skip", "true")
                 .setProperty("sonar.scm.disabled", "true")
                 .setProperty("sonar.language", language)
-
                 .setEnvironmentVariable("SONAR_RUNNER_OPTS", "-Xmx1024m");
+                if(litsEnabled) {
+                build.setProperty("dump.old", FileLocation.of("src/test/resources/expected/" + language).getFile().getAbsolutePath())
+                            .setProperty("dump.new", actualDirectory.getAbsolutePath())
+                            .setProperty("lits.differences", litsDifferencesFile.getAbsolutePath());
+                }
+
+
+
 
 
         orchestrator.executeBuild(build);
 
-     String litsDifference = new String(Files.readAllBytes(litsDifferencesFile.toPath()));
+        String litsDifference = new String(Files.readAllBytes(litsDifferencesFile.toPath()));
         assertThat(litsDifference).isEmpty();
 
-    }
-
-    @AfterClass
-    public static void after() {
-        if (keepSonarqubeRunning) {
-            // keep server running, use CTRL-C to stop it
-            new Scanner(System.in).next();
-        }
     }
 
 }
