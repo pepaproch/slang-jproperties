@@ -1,6 +1,8 @@
 
 # SonarQube Properties plugin (Slang)
 
+[![CircleCI](https://circleci.com/gh/pepaproch/slang-jproperties.svg?style=svg)](https://circleci.com/gh/pepaproch/slang-jproperties)
+
 this is a rewrite of https://github.com/racodond/sonar-jproperties-plugin using SLang a sslr
 
 ## Properties 
