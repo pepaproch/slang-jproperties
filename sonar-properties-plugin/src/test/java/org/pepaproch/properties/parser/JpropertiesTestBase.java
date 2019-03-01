@@ -22,6 +22,8 @@ public class JpropertiesTestBase {
                     "path=c:\\wiki\\templates\n" +
                     "# However, some editors will handle this automatically";
 
+    public static String MISSING_VALUE_EXAMPLE = "key=";
+
     public static String HARDCODED_IP = "hardcoded=77.75.77.39\n" +
             "nothardcoded=127.0.0.1\n" +
             "hardcoded=192.168.12.42";

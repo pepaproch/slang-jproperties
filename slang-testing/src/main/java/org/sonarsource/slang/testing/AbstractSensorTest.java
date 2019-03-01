@@ -65,6 +65,7 @@ public abstract class AbstractSensorTest {
       builder.create(RuleKey.of(repositoryKey(), ruleKey))
         .setName(ruleKey)
         .activate();
+
     }
 
     context.setActiveRules(builder.build());

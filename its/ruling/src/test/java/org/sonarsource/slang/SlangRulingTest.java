@@ -76,6 +76,7 @@ public class SlangRulingTest {
         scalaRulesConfiguration.add("S1451", "isRegularExpression", "true");
 
         ProfileGenerator.RulesConfiguration propsRulesConfiguration = new ProfileGenerator.RulesConfiguration();
+        propsRulesConfiguration.add("duplicatedCheck" ,"threshold" , "2");
 
 
         File kotlinProfile = ProfileGenerator.generateProfile(SlangRulingTest.orchestrator.getServer().getUrl(), "kotlin", "kotlin", kotlinRulesConfiguration, Collections.emptySet());

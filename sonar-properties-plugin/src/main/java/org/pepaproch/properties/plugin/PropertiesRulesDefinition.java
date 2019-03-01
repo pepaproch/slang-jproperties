@@ -20,8 +20,8 @@ public class PropertiesRulesDefinition implements RulesDefinition {
     public void define(Context context) {
         NewRepository repository = context.createRepository(PropertiesPlugin.REPOSITORY_KEY, PropertiesLanguage.JPROPERTIES_LANG_NAME).setName(PropertiesPlugin.REPOSITORY_KEY);
         RuleMetadataLoader ruleMetadataLoader = new RuleMetadataLoader(RESOURCE_FOLDER, PropertiesProfileDefinition.PROFILE_PATH, sonarRuntime);
-        List<Class> checks = PropertiesCheckList.checks();
-        ruleMetadataLoader.addRulesByAnnotatedClass(repository, checks);
+        ruleMetadataLoader.addRulesByAnnotatedClass(repository, PropertiesCheckList.checks());
+        ruleMetadataLoader.addRulesByAnnotatedClass(repository,  PropertiesCheckList.visitors());
         repository.done();
     }
 }

@@ -1,8 +1,10 @@
 package org.pepaproch.properties.plugin;
 
 import org.pepaproch.properties.checks.DuplicatedKeysVisitor;
+import org.pepaproch.properties.checks.TokenLocations;
 import org.pepaproch.properties.parser.slang.PropertiesConverter;
 import org.pepaproch.properties.parser.slang.tree.TextRangeUtils;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.batch.rule.CheckFactory;
 import org.sonar.api.batch.rule.Checks;
@@ -38,11 +40,14 @@ public class PropertiesSensor extends SlangSensor {
         ActiveRule rule = this.ctx.activeRules().find(RuleKey.of(repositoryKey(), "duplicatedCheck"));
 
         if(rule!=null) {
-            Map<String, LinkedList<PropertiesContext.TokenLocations>> duplications = ctxp.getDuplications().duplications();
+            String treshold = rule.param("treshold");
+            Integer integer = treshold==null ? 1 : Integer.valueOf(treshold);
+
+            Map<String, LinkedList<TokenLocations<InputFile>>> duplications = ctxp.getDuplications().duplications(integer);
             duplications.keySet().stream().forEach((k) -> {
                 LOG.info("KEY P: " + k +  " " + duplications.get(k).get(0).module.uri() + " " + duplications.get(k).get(0).location.start().line());
                 NewIssue newIssue = this.ctx.newIssue().forRule(rule.ruleKey());
-                LinkedList<PropertiesContext.TokenLocations> tokenLocations = duplications.get(k);
+                LinkedList<TokenLocations<InputFile>> tokenLocations = duplications.get(k);
                 NewIssueLocation at = newIssue.newLocation().on(tokenLocations.get(0).module).at(TextRangeUtils.sonarTextRange(tokenLocations.get(0).location));
                 newIssue.at(at);
                 tokenLocations.stream().skip(1).forEach((l) -> {

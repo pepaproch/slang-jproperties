@@ -63,7 +63,16 @@ public class PropsConverterTest {
 
 
 
+    @Test
+    public void parseMisingValue() {
+        Tree parsedTree = converter.parse("key=");
+        TreeVisitor<TreeContext> visitor = new TreeVisitor<>();
+        List<Tree> visited = new ArrayList<>();
+        visitor.register(Tree.class, (ctx, tree) -> visited.add(tree));
+        visitor.scan(new TreeContext(), parsedTree);
 
+        assertEquals(1, parsedTree.children().size());
+    }
 
 
 }

@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JpropertiesRulingTests extends JpSensorTestBase {
 
+    private static final String R_DUPLICATED_KEYS_IN_FILE = "duplicatedKeys";
     private PropertiesSensor sensor;
 
     @Before
@@ -43,6 +44,14 @@ public class JpropertiesRulingTests extends JpSensorTestBase {
     }
 
     @Test
+    public void testMisingValueDuplication() {
+        CheckFactory f = checkFactory(R_STRING_LITERAL_DUPLICATE_CHECK);
+
+        addFile("triplicatedWiky.properties", JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.MISSING_VALUE_EXAMPLE + JpropertiesTestBase.MISSING_VALUE_EXAMPLE  + JpropertiesTestBase.MISSING_VALUE_EXAMPLE );
+        executeAndConfirm(f,5);
+    }
+
+    @Test
     public void testHardcodedIp() {
         CheckFactory f = checkFactory(R_HARDCODED_IP_CHECK);
         addFile("ip.properties", JpropertiesTestBase.HARDCODED_IP);
@@ -65,6 +74,21 @@ public class JpropertiesRulingTests extends JpSensorTestBase {
         executeAndConfirm(f,1);
 
     }
+
+    @Test
+    public void testDuplicatedKys() {
+        CheckFactory f = checkFactory(R_DUPLICATED_KEYS_IN_FILE);
+        addFile("ip.properties", JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE);
+        executeAndConfirm(f,6);
+    }
+
+    @Test
+    public void testDuplicatedKeysMissingValue() {
+        CheckFactory f = checkFactory(R_DUPLICATED_KEYS_IN_FILE);
+        addFile("ip.properties", JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.WIKY_PROP_EXAMPLE + JpropertiesTestBase.MISSING_VALUE_EXAMPLE);
+        executeAndConfirm(f,6);
+    }
+
 
     private void executeAndConfirm( CheckFactory f , int expected) {
 

@@ -4,14 +4,19 @@ package org.pepaproch.properties.plugin;
 import org.junit.Test;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.rule.CheckFactory;
+import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
+import org.sonar.api.batch.rule.internal.NewActiveRule;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.issue.Issue;
 import org.sonar.api.config.internal.MapSettings;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.resources.Language;
+import org.sonar.api.rule.RuleKey;
 import org.sonarsource.slang.testing.AbstractSensorTest;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -75,21 +80,54 @@ public class PropertiesSensorTest extends AbstractSensorTest {
                         "notdummykey=77.75.77.53");
         context.fileSystem().add(f);
 
+        InputFile f1 = createInputFile("onlycomments_file1" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "dummy=dummykey\n" +
+                        "notdummykey=77.75.77.53");
+        context.fileSystem().add(f1);
+
+        CheckFactory checkFactory = checkFactory("duplicatedCheck", "treshold", "1");
+
+
+        Sensor jpropertiesSensor = new PropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new PropertiesLanguage(new MapSettings().asConfig()));
+        jpropertiesSensor.execute(context);
+        Collection<Issue> issues = context.allIssues();
+        assertThat(issues).hasSize(2);
+
+
+    }
+
+
+    @Test
+    public void testProjectTest1() {
+
+        InputFile f = createInputFile("sub/onlycomments_file2" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "dummy=dummykey\n" +
+                        "notdummykey=77.75.77.53");
+        context.fileSystem().add(f);
 
         InputFile f1 = createInputFile("onlycomments_file1" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
                 "dummy=dummykey\n" +
                         "notdummykey=77.75.77.53");
         context.fileSystem().add(f1);
 
-        CheckFactory checkFactory = checkFactory("duplicatedCheck");
+
+        InputFile f2 = createInputFile("onlycomments_file1" + PropertiesLanguage.JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE,
+                "dummy=dummykey\n" +
+                        "notdummykey=77.75.77.53");
+        context.fileSystem().add(f2);
+
+        CheckFactory checkFactory = checkFactory("duplicatedCheck", "treshold", "3");
 
         Sensor jpropertiesSensor = new PropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new PropertiesLanguage(new MapSettings().asConfig()));
         jpropertiesSensor.execute(context);
         Collection<Issue> issues = context.allIssues();
+        assertThat(issues).hasSize(0);
 
 
-        assertThat(issues).hasSize(2);
     }
+
+
+
 
     String parseError = "#\n" +
             "# Copyright (C) 2009-2018 Lightbend Inc. <https://www.lightbend.com>\n" +
@@ -104,5 +142,31 @@ public class PropertiesSensorTest extends AbstractSensorTest {
     @Override
     protected Language language() {
         return new PropertiesLanguage(new MapSettings().asConfig());
+    }
+
+    protected CheckFactory checkFactory(String ruleKey, Map<String, String> setting) {
+        ActiveRulesBuilder builder = new ActiveRulesBuilder();
+        NewActiveRule newActiveRule = builder.create(RuleKey.of(repositoryKey(), ruleKey))
+                .setName(ruleKey);
+        setting.keySet().stream().forEach((k) -> {
+            newActiveRule.setParam(k, setting.get(k));
+        });
+
+        newActiveRule.activate();
+        context.setActiveRules(builder.build());
+        return new CheckFactory(context.activeRules());
+    }
+
+    protected CheckFactory checkFactory(String ruleKey, String paramName, String paramValue) {
+        Map<String, String> m = new HashMap() {{
+            put(paramName, paramValue);
+        }};
+        return checkFactory(ruleKey, m);
+    }
+
+
+    private void addMultipleFiles () {
+
+
     }
 }
