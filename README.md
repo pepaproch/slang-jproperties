@@ -29,7 +29,42 @@ These rules are pretty useful even for the properties files.
 * TodoCommentCheck
 
 ## Reimplemented rules
-* DuplicatedKeysAcrossFiles
+
+
+
+| Rule                                          | Implemented | Note |
+|:----------------------------------------------|-------------|------|
+| BOMCheck|                                      |N/A|
+| CommentContainsPatternChecker|R|
+| CommentConventionCheck||
+| CommentedOutCodeCheck|G|
+| CommentRegularExpressionCheck |    |
+| DuplicatedKeysAcrossFilesCheck | R|
+| DuplicatedKeysCheck |R|
+| DuplicatedValuesCheck |G|
+| EmptyElementCheck |    |
+| EndLineCharactersCheck |    |
+| FileKeyTree |    |
+| FileNameCheck |    |
+| FixmeTagPresenceCheck |G|
+| HardCodedCredentialsCheck |R|
+| IndentationCheck |    |
+| KeyNamingConventionCheck |    |
+| KeyRegularExpressionCheck |    |
+| LineLengthCheck ||
+| MissingNewlineAtEndOfFileCheck |    |
+| MissingTranslationsCheck |    |
+| MissingTranslationsInDefaultCheck |    |
+| NoPropertiesCheck |    |
+| ParsingErrorCheck |G|
+| SeparatorConventionCheck |    |
+| TabCharacterCheck |    |
+| TodoTagPresenceCheck |G|
+| TooManyKeysCheck |    |
+| ValueRegularExpressionCheck|
+
+
+## New rules 
 
 For easier development process Slang repo was forked.
 

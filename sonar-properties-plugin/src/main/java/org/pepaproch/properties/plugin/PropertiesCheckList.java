@@ -20,10 +20,13 @@ public class PropertiesCheckList {
         return Collections.unmodifiableList(Arrays.asList(
                 DummyCheck.class,
                 DuplicatedKeysCheck.class,
+                CommentedCodeCheck.class,
                 HardcodedIpCheck.class,
-                HardcodedCredentialsCheck.class,
+                org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
                 TodoCommentCheck.class,
+                FixMeCommentCheck.class,
+                TooLongLineCheck.class,
                 ParsingErrorCheck.class));
     }
 
