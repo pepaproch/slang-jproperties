@@ -1,6 +1,6 @@
 package org.pepaproch.properties.parser;
 
-public class JpropertiesTestBase {
+public class PropertiesExampleS {
 
     public static String WIKY_PROP_EXAMPLE =
             "# You are reading the \".properties\" entry.\n" +
@@ -23,10 +23,6 @@ public class JpropertiesTestBase {
                     "# However, some editors will handle this automatically";
 
     public static String MISSING_VALUE_EXAMPLE = "key=";
-
-    public static String HARDCODED_IP = "hardcoded=77.75.77.39\n" +
-            "nothardcoded=127.0.0.1\n" +
-            "hardcoded=192.168.12.42";
 
     public static String WIKY_PROP_TODO_COMENT =
             "# You are reading the \".properties\" entry.\n" +

@@ -27,7 +27,7 @@ public class PropsConverterTest {
 
     @Test
     public void parse() {
-        Tree parsedTree = converter.parse(JpropertiesTestBase.WIKY_PROP_EXAMPLE);
+        Tree parsedTree = converter.parse(PropertiesExampleS.WIKY_PROP_EXAMPLE);
         TreeVisitor<TreeContext> visitor = new TreeVisitor<>();
         List<Tree> visited = new ArrayList<>();
         visitor.register(Tree.class, (ctx, tree) -> visited.add(tree));

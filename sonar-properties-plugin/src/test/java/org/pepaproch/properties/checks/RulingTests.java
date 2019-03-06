@@ -5,7 +5,14 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
-        HardcodedCredentialsCheckTest.class
+        HardcodedCredentialsCheckTest.class,
+        DuplicatedKeysCheckTest.class,
+        DuplicatedProjectKeysVisitorTest.class,
+        StringLiteralDuplicatedCheckTest.class,
+        ParrsingErrorCheckTest.class,
+        HardcodedIPCheckTest.class,
+        TodoMeCommentCheckTest.class,
+        FixMeCommentCheckTest.class
 })
 public class RulingTests {
 }

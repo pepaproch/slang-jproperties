@@ -7,6 +7,7 @@ import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SlangCheck;
 
 import java.util.List;
+
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,7 +18,7 @@ public class HardcodedCredentialsCheck implements SlangCheck {
 
     private final String ISSUE_MEESAGE = "\"%s\" detected in this key, review this potentially hardcoded credential.";
     private static final String DEFAULT_VALUE = "password,pwd,username";
-    private static final String DEFAULT_ENCRYPTED_CREDENTIALS_TO_IGNORE = "ENC(";
+    private static final String DEFAULT_ENCRYPTED_CREDENTIALS_TO_IGNORE = "";
     private List<Pattern> patterns ;
 
 
@@ -42,14 +43,17 @@ public class HardcodedCredentialsCheck implements SlangCheck {
     @Override
     public void initialize(InitContext init) {
         init.register(PropTree.class, (ctx, tree) -> {
-            patterns().map(p-> p.matcher(tree.key.value())).filter(m-> m.find() && !tree.value.content().startsWith(DEFAULT_ENCRYPTED_CREDENTIALS_TO_IGNORE)).map( m-> m.group(0)).forEach( s-> {
-                ctx.reportIssue(tree.key.textRange(),  String.format(ISSUE_MEESAGE, s));
-            });
+            patterns().map(p-> p.matcher(tree.key.value())).filter(matcher-> matcher.find()
+                    && (encryptedCredentialsToIgnore.trim().isEmpty()
+                    || tree.value.content().startsWith(encryptedCredentialsToIgnore))).map( m-> m.group(0))
+                    .forEach( s-> ctx.reportIssue(tree.key.textRange(),  String.format(ISSUE_MEESAGE, s)));
 
         });
 
-
     }
+
+
+
     private Stream<Pattern> patterns() {
         if(patterns == null) {
             patterns = Stream.of(credentialWords.split(",")).map(s-> Pattern.compile(s.trim())).collect(Collectors.toList());

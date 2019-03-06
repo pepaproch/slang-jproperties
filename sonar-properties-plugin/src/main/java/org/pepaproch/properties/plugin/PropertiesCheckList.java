@@ -2,7 +2,7 @@ package org.pepaproch.properties.plugin;
 
 import org.pepaproch.properties.checks.DummyCheck;
 import org.pepaproch.properties.checks.DuplicatedKeysCheck;
-import org.pepaproch.properties.checks.DuplicatedKeysVisitor;
+import org.pepaproch.properties.checks.DuplicatedProjectKeysVisitor;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class PropertiesCheckList {
 
     public static List<Class> visitors() {
         return Collections.unmodifiableList(Arrays.asList(
-                DuplicatedKeysVisitor.class
+                DuplicatedProjectKeysVisitor.class
      ));
     }
 

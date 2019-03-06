@@ -12,7 +12,7 @@ import org.sonarsource.slang.visitors.TreeVisitor;
 
 
 @Rule(key = "duplicatedCheck")
-public class DuplicatedKeysVisitor extends TreeVisitor<InputFileContext>   {
+public class DuplicatedProjectKeysVisitor extends TreeVisitor<InputFileContext>   {
 
     private static final int DEFAULT_THRESHOLD = 1;
     @RuleProperty(
@@ -27,7 +27,7 @@ public class DuplicatedKeysVisitor extends TreeVisitor<InputFileContext>   {
 
 
 
-    public DuplicatedKeysVisitor(PropertiesContext projectContext) {
+    public DuplicatedProjectKeysVisitor(PropertiesContext projectContext) {
         this.projectContext = projectContext;
         projectContext.duplicationTreshold = threshold;
         register(PropKeyTree.class , (ctx, tree ) -> {

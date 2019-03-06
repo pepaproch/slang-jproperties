@@ -1,12 +1,9 @@
 package org.pepaproch.properties.plugin;
 
 
-import org.pepaproch.properties.checks.DuplicatedKeysVisitor;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
-
-import java.util.List;
 
 public class PropertiesRulesDefinition implements RulesDefinition {
     public static final String RESOURCE_FOLDER = "org/sonar/l10n/properties";

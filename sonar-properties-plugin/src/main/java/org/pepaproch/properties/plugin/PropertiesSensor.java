@@ -1,6 +1,6 @@
 package org.pepaproch.properties.plugin;
 
-import org.pepaproch.properties.checks.DuplicatedKeysVisitor;
+import org.pepaproch.properties.checks.DuplicatedProjectKeysVisitor;
 import org.pepaproch.properties.checks.TokenLocations;
 import org.pepaproch.properties.parser.slang.PropertiesConverter;
 import org.pepaproch.properties.parser.slang.tree.TextRangeUtils;
@@ -39,19 +39,19 @@ public class PropertiesSensor extends SlangSensor {
     Consumer<PropertiesContext> f = (ctxp) -> {
         ActiveRule rule = this.ctx.activeRules().find(RuleKey.of(repositoryKey(), "duplicatedCheck"));
 
-        if(rule!=null) {
+        if (rule != null) {
             String treshold = rule.param("treshold");
-            Integer integer = treshold==null ? 1 : Integer.valueOf(treshold);
+            Integer integer = treshold == null ? 1 : Integer.valueOf(treshold);
 
             Map<String, LinkedList<TokenLocations<InputFile>>> duplications = ctxp.getDuplications().duplications(integer);
             duplications.keySet().stream().forEach((k) -> {
-                LOG.info("KEY P: " + k +  " " + duplications.get(k).get(0).module.uri() + " " + duplications.get(k).get(0).location.start().line());
+                LOG.info("KEY P: " + k + " " + duplications.get(k).get(0).module.uri() + " " + duplications.get(k).get(0).location.start().line());
                 NewIssue newIssue = this.ctx.newIssue().forRule(rule.ruleKey());
                 LinkedList<TokenLocations<InputFile>> tokenLocations = duplications.get(k);
                 NewIssueLocation at = newIssue.newLocation().on(tokenLocations.get(0).module).at(TextRangeUtils.sonarTextRange(tokenLocations.get(0).location));
                 newIssue.at(at);
                 tokenLocations.stream().skip(1).forEach((l) -> {
-                    LOG.info("KEY S: " + k +  l.module.uri() + " " + l.location.start().line());
+                            LOG.info("KEY S: " + k + l.module.uri() + " " + l.location.start().line());
                             //secondary
                             newIssue.addLocation(newIssue.newLocation().on(l.module).at(TextRangeUtils.sonarTextRange(l.location)).message("Key was used before"));
 
@@ -61,8 +61,8 @@ public class PropertiesSensor extends SlangSensor {
 
 
             });
-        }else  {
-            LOG.info("Duplicated is not activae");
+        } else {
+            LOG.debug("Duplicated is not activated");
         }
     };
 
@@ -88,7 +88,7 @@ public class PropertiesSensor extends SlangSensor {
         List<TreeVisitor<InputFileContext>> visitors = super.visitors(sensorContext, statistics);
         return Collections.unmodifiableList(
                 Stream.concat(visitors.stream(),
-                        Stream.of(new DuplicatedKeysVisitor(projectContext))).collect(Collectors.toList())
+                        Stream.of(new DuplicatedProjectKeysVisitor(projectContext))).collect(Collectors.toList())
         );
 
 

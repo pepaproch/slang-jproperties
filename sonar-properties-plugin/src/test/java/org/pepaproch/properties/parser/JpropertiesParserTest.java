@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 
-public class JpropertiesParserTest extends JpropertiesTestBase {
+
+public class JpropertiesParserTest extends PropertiesExampleS {
 
 
     @Test

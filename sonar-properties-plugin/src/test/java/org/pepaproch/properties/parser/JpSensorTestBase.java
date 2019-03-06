@@ -18,12 +18,14 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+
+
 public class JpSensorTestBase extends AbstractSensorTest {
 
-    public static final String R_HARDCODED_IP_CHECK = "S1313";
-    public static final String R_STRING_LITERAL_DUPLICATE_CHECK = "S1192";
-    public static final String R_TODO_COMMENT_CHECK = "S1135";
     public static final String R_PARSING_ERROR = "S1135";
+
+
+    public static final String R_HARDCODED_IP_CHECK = "S1313";
 
     @Override
     protected String repositoryKey() {
@@ -38,7 +40,7 @@ public class JpSensorTestBase extends AbstractSensorTest {
 
     protected PropertiesSensor sensor(CheckFactory f) {
         return new PropertiesSensor(f, new NoSonarFilter(), fileLinesContextFactory, (PropertiesLanguage) language());
-    }
+}
 
     private InputFile createInputFile(String relativePath, String content, Charset charsets) {
 

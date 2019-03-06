@@ -41,7 +41,7 @@ public class PropertiesConverter implements ASTConverter {
 
     @Override
     public void terminate() {
-        LOG.info("TERMINATE");
+
 
     }
 }
