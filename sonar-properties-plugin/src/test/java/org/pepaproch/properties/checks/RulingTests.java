@@ -2,6 +2,7 @@ package org.pepaproch.properties.checks;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.sonarsource.slang.checks.TooLongLineCheck;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
@@ -13,6 +14,7 @@ import org.junit.runners.Suite;
         HardcodedIPCheckTest.class,
         TodoMeCommentCheckTest.class,
         TooManyLinesOfCodeFileCheckTest.class,
+        TooLongLineCheckTest.class,
         FixMeCommentCheckTest.class
 })
 public class RulingTests {

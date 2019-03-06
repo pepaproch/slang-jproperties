@@ -27,9 +27,9 @@ These rules are pretty useful even for the properties files.
 
  *TODO will be implemented
  
-*G will use generic rule
+*G use generic rule
 
-*R  will be reimplemented as in original plugin
+*R reimplemented as in original plugin
 
 ? Not sure
 
@@ -53,7 +53,7 @@ These rules are pretty useful even for the properties files.
 | IndentationCheck |TODO R|
 | KeyNamingConventionCheck |TODO R|
 | KeyRegularExpressionCheck |TODO R|
-| LineLengthCheck |TODO G|
+| LineLengthCheck |G|S103|
 | MissingNewlineAtEndOfFileCheck |TODO R|
 | MissingTranslationsCheck |TODO|
 | MissingTranslationsInDefaultCheck |TODO |
@@ -62,7 +62,7 @@ These rules are pretty useful even for the properties files.
 | SeparatorConventionCheck | TODO R|
 | TabCharacterCheck |TODO R|
 | TodoTagPresenceCheck |G|
-| TooManyKeysCheck |TODO R|
+| TooManyKeysCheck |G| S104|
 | ValueRegularExpressionCheck|TODO R
 
 
