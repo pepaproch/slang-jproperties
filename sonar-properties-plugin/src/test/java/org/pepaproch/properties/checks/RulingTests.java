@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         ParrsingErrorCheckTest.class,
         HardcodedIPCheckTest.class,
         TodoMeCommentCheckTest.class,
+        TooManyLinesOfCodeFileCheckTest.class,
         FixMeCommentCheckTest.class
 })
 public class RulingTests {

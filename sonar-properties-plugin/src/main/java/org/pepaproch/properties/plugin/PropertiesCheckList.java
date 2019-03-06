@@ -28,6 +28,7 @@ public class PropertiesCheckList {
                 TodoCommentCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,
+                TooManyLinesOfCodeFileCheck.class,
                 ParsingErrorCheck.class,
                 EmptyValueCheck.class));
     }
