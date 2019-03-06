@@ -21,47 +21,49 @@ I consider property files as key value database where the key and the value are 
 Just because we are using StringLiteralTree  as a Tree type for the value part, we get some of the slang default rules as HardCodedIp and DuplicatedStringLiterals (more coming) for free. 
 These rules are pretty useful even for the properties files. 
 
-## Used generic Slang rules
 
-* ParsingError
-* HardCodedIp
-* DuplicatedStringLiterals
-* TodoCommentCheck
 
 ## Reimplemented rules
 
+ *TODO will be implemented
+ 
+*G will use generic rule
 
+*R  will be reimplemented as in original plugin
+
+? Not sure
 
 | Rule                                          | Implemented | Note |
 |:----------------------------------------------|-------------|------|
 | BOMCheck|                                      |N/A|
-| CommentContainsPatternChecker|P|
-| CommentConventionCheck|P|
+| CommentContainsPatternChecker|TODO|
+| CommentConventionCheck|TODO|
 | CommentedOutCodeCheck|G|
-| CommentRegularExpressionCheck | P |
+| CommentRegularExpressionCheck | TODO|
 | DuplicatedKeysAcrossFilesCheck | R|
 | DuplicatedKeysCheck |R|
 | DuplicatedValuesCheck |G|
-| EmptyElementCheck |P|
-| EndLineCharactersCheck |    |
-| FileKeyTree |    |
-| FileNameCheck |    |
+| DuplicatedStringLiterals|G||
+| EmptyElementCheck |R|
+| EndLineCharactersCheck |TODO|
+| FileKeyTree |?|
+| FileNameCheck | TODO R|
 | FixmeTagPresenceCheck |G|
 | HardCodedCredentialsCheck |R|
-| IndentationCheck |    |
-| KeyNamingConventionCheck |    |
-| KeyRegularExpressionCheck |    |
-| LineLengthCheck ||
-| MissingNewlineAtEndOfFileCheck |    |
-| MissingTranslationsCheck |    |
-| MissingTranslationsInDefaultCheck |    |
-| NoPropertiesCheck |    |
+| IndentationCheck |TODO R|
+| KeyNamingConventionCheck |TODO R|
+| KeyRegularExpressionCheck |TODO R|
+| LineLengthCheck |TODO G|
+| MissingNewlineAtEndOfFileCheck |TODO R|
+| MissingTranslationsCheck |TODO|
+| MissingTranslationsInDefaultCheck |TODO |
+| NoPropertiesCheck | TODO R|
 | ParsingErrorCheck |G|
-| SeparatorConventionCheck |    |
-| TabCharacterCheck |    |
+| SeparatorConventionCheck | TODO R|
+| TabCharacterCheck |TODO R|
 | TodoTagPresenceCheck |G|
-| TooManyKeysCheck |    |
-| ValueRegularExpressionCheck|
+| TooManyKeysCheck |TODO R|
+| ValueRegularExpressionCheck|TODO R
 
 
 ## New rules 
