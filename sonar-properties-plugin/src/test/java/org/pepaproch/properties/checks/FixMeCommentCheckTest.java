@@ -1,12 +1,12 @@
 package org.pepaproch.properties.checks;
 
 import org.junit.Test;
-import org.pepaproch.properties.parser.JpSensorTestBase;
+import org.pepaproch.properties.parser.SensorTestBase;
 import org.sonar.api.batch.rule.CheckFactory;
 
 import static org.junit.Assert.assertEquals;
 
-public class FixMeCommentCheckTest extends JpSensorTestBase {
+public class FixMeCommentCheckTest extends SensorTestBase {
 
     private final String rFixMeCommentCheck = "S1134";
     private final String wikyPropTodoComent = "# You are reading the \".properties\" entry.\n" +

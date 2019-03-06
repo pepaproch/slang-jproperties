@@ -1,13 +1,13 @@
 package org.pepaproch.properties.checks;
 
 import org.junit.Test;
-import org.pepaproch.properties.parser.JpSensorTestBase;
+import org.pepaproch.properties.parser.SensorTestBase;
 import org.pepaproch.properties.parser.PropertiesExampleS;
 import org.sonar.api.batch.rule.CheckFactory;
 
 import static org.junit.Assert.assertEquals;
 
-public class StringLiteralDuplicatedCheckTest extends JpSensorTestBase {
+public class StringLiteralDuplicatedCheckTest extends SensorTestBase {
     public static final String R_STRING_LITERAL_DUPLICATE_CHECK = "S1192";
 
     @Test

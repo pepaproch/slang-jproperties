@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 
-public class JpSensorTestBase extends AbstractSensorTest {
+public class SensorTestBase extends AbstractSensorTest {
 
     public static final String R_PARSING_ERROR = "S1135";
 

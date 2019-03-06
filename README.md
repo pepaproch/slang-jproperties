@@ -35,14 +35,14 @@ These rules are pretty useful even for the properties files.
 | Rule                                          | Implemented | Note |
 |:----------------------------------------------|-------------|------|
 | BOMCheck|                                      |N/A|
-| CommentContainsPatternChecker|R|
-| CommentConventionCheck||
+| CommentContainsPatternChecker|P|
+| CommentConventionCheck|P|
 | CommentedOutCodeCheck|G|
-| CommentRegularExpressionCheck |    |
+| CommentRegularExpressionCheck | P |
 | DuplicatedKeysAcrossFilesCheck | R|
 | DuplicatedKeysCheck |R|
 | DuplicatedValuesCheck |G|
-| EmptyElementCheck |    |
+| EmptyElementCheck |P|
 | EndLineCharactersCheck |    |
 | FileKeyTree |    |
 | FileNameCheck |    |

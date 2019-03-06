@@ -1,7 +1,7 @@
 package org.pepaproch.properties.checks;
 
 import org.junit.Test;
-import org.pepaproch.properties.parser.JpSensorTestBase;
+import org.pepaproch.properties.parser.SensorTestBase;
 import org.pepaproch.properties.parser.PropertiesExampleS;
 import org.sonar.api.batch.rule.CheckFactory;
 import org.sonar.api.batch.sensor.issue.Issue;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
 
-public class HardcodedCredentialsCheckTest extends JpSensorTestBase {
+public class HardcodedCredentialsCheckTest extends SensorTestBase {
 
     private final String ruleKey = "S2068";
 

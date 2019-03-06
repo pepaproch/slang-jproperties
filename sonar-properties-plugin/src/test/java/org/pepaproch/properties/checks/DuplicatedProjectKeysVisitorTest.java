@@ -1,7 +1,7 @@
 package org.pepaproch.properties.checks;
 
 import org.junit.Test;
-import org.pepaproch.properties.parser.JpSensorTestBase;
+import org.pepaproch.properties.parser.SensorTestBase;
 import org.pepaproch.properties.plugin.PropertiesLanguage;
 import org.pepaproch.properties.plugin.PropertiesSensor;
 import org.sonar.api.batch.fs.InputFile;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 
-public class DuplicatedProjectKeysVisitorTest extends JpSensorTestBase {
+public class DuplicatedProjectKeysVisitorTest extends SensorTestBase {
 
     @Test
     public void testProjectDuplicatedPropsInProject() {

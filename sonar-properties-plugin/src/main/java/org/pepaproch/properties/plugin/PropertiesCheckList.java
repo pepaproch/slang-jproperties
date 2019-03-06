@@ -3,6 +3,7 @@ package org.pepaproch.properties.plugin;
 import org.pepaproch.properties.checks.DummyCheck;
 import org.pepaproch.properties.checks.DuplicatedKeysCheck;
 import org.pepaproch.properties.checks.DuplicatedProjectKeysVisitor;
+import org.pepaproch.properties.checks.EmptyValueCheck;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -27,7 +28,8 @@ public class PropertiesCheckList {
                 TodoCommentCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,
-                ParsingErrorCheck.class));
+                ParsingErrorCheck.class,
+                EmptyValueCheck.class));
     }
 
     public static List<Class> visitors() {

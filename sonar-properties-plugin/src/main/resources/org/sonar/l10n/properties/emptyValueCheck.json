@@ -1,0 +1,16 @@
+{
+  "title": "Property with empty value should be removed",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "tags": [
+    "clumsy"
+  ],
+  "defaultSeverity": "Minor",
+  "ruleSpecification": "",
+  "sqKey": "empty-element",
+  "scope": "All"
+}

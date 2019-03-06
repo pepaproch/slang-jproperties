@@ -1,13 +1,13 @@
 package org.pepaproch.properties.checks;
 
 import org.junit.Test;
-import org.pepaproch.properties.parser.JpSensorTestBase;
+import org.pepaproch.properties.parser.SensorTestBase;
 import org.pepaproch.properties.parser.PropertiesExampleS;
 import org.sonar.api.batch.rule.CheckFactory;
 
 import static org.junit.Assert.*;
 
-public class DuplicatedKeysCheckTest extends JpSensorTestBase {
+public class DuplicatedKeysCheckTest extends SensorTestBase {
 
     private static final String R_DUPLICATED_KEYS_IN_FILE = "duplicatedKeys";
     @Test
