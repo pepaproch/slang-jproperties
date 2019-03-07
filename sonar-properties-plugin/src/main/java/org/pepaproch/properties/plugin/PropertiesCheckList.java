@@ -19,6 +19,7 @@ public class PropertiesCheckList {
                 DummyCheck.class,
                 DuplicatedKeysCheck.class,
                 CommentedCodeCheck.class,
+                CommentConventionCheck.class,
                 HardcodedIpCheck.class,
                 org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
@@ -28,7 +29,7 @@ public class PropertiesCheckList {
                 TooManyLinesOfCodeFileCheck.class,
                 ParsingErrorCheck.class,
                 EmptyValueCheck.class,
-                FileNameCheck.class));
+                FileNameCheck.class ));
     }
 
     public static List<Class> visitors() {

@@ -9,6 +9,7 @@ import org.sonarsource.slang.checks.TooLongLineCheck;
         HardcodedCredentialsCheckTest.class,
         DuplicatedKeysCheckTest.class,
         DuplicatedProjectKeysVisitorTest.class,
+        CommentConventionCheckTest.class,
         StringLiteralDuplicatedCheckTest.class,
         ParrsingErrorCheckTest.class,
         HardcodedIPCheckTest.class,

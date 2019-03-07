@@ -37,7 +37,7 @@ These rules are pretty useful even for the properties files.
 |:----------------------------------------------|-------------|------|
 | BOMCheck|                                      |N/A|
 | CommentContainsPatternChecker|TODO|
-| CommentConventionCheck|TODO|
+| CommentConventionCheck|R|
 | CommentedOutCodeCheck|G|
 | CommentRegularExpressionCheck | TODO|
 | DuplicatedKeysAcrossFilesCheck | R|
@@ -47,7 +47,7 @@ These rules are pretty useful even for the properties files.
 | EmptyElementCheck |R|
 | EndLineCharactersCheck |TODO|
 | FileKeyTree |?|
-| FileNameCheck | TODO R|
+| FileNameCheck |R|
 | FixmeTagPresenceCheck |G|
 | HardCodedCredentialsCheck |R|
 | IndentationCheck |TODO R|
