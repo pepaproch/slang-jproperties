@@ -15,7 +15,8 @@ import org.sonarsource.slang.checks.TooLongLineCheck;
         TodoMeCommentCheckTest.class,
         TooManyLinesOfCodeFileCheckTest.class,
         TooLongLineCheckTest.class,
-        FixMeCommentCheckTest.class
+        FixMeCommentCheckTest.class,
+        FileNameCheckTest.class
 })
 public class RulingTests {
 }

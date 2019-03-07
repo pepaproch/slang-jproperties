@@ -2,6 +2,6 @@
   "name": "Sonar way",
   "ruleKeys": [
     "dummyCheck",
-    "S1313", "S1192", "S1313" , "S2068" ,"S1135" ,"ParsingError" , "duplicatedCheck" ,"duplicatedKeys" ,"S125" , "S1134" ,"S1135" , "S103" ,"S104"
+    "S1313", "S1192", "S1313" , "S2068" ,"S1135" ,"ParsingError" , "duplicatedCheck" ,"duplicatedKeys" ,"S125" , "S1134" ,"S1135" , "S103" ,"S104", "S1578"
   ]
 }
