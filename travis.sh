@@ -4,6 +4,6 @@ set -euo pipefail
   echo "Building slang"
 
   
-  ./gradlew build
+  ./gradlew build -x sonar-scala-plugin:check  --info
 
 
