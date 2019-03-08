@@ -1,37 +1,28 @@
 language: java
 sudo: false
 jdk: oraclejdk8
-
-# blocklist
 branches:
   except:
   - public_master
-
 git:
   submodules: false
-
 install: true
-
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - "$HOME/.gradle/caches/"
-    - "$HOME/.gradle/wrapper/"
-    - "$HOME/.sonar"
-    - '$HOME/jvm'
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.sonar"
+  - "$HOME/jvm"
 notifications:
   email: true
-
 addons:
-    sonarcloud:
-      organization: "pepaproch-github" # the key of the org you chose at step #3
-      token:
-        secure: "ZzmP3x226olT0315ObFySngvIIrbp83UqaXpVaOuwdEIueKGDfbtX5Jn/eX0fEfJRpdd1JLoL+m0hMCe7nORpJnk5JzAZYYGOMUhwhSKWrT2BcomfKO4J7fwRb29BkA7VqOLZ16BECsJeF3Wm/9XLvhKRVfTW74iKhMPPuQZgKmw4xPAkpe09C2UJgHT6cNfcjr30k9bPGlbxWkBb32bpOusDumo3ccS9zrzrnfcR9CDLBYFKBiPBlzQkKwCgafLUZsYYBhyLOQruS7IIGUCexjFdC5k4bGdpsTPoYSzbOd7T8fYM17KTEHNQ5/Rw8d1MfpDNdwKErzMFrDWsZcISi9ewqGiGy9n2egOJV3/A+7tMhMjxVOVOoGNbLWdUPo1uFY9uAF5p9YJOu+JibTry2I118maMugPgK4mG4S/uVemf82QSP4AlzmJ6rGrlK0j3kYPQYD+JVirAZvyfkuvoi+zP3DvsytQI1DqQlpYxgEz1JaRcq6zbg5SGI8x7eA1xJO8peFCBd+DPie2T6jpzg6i7AvbjctG5l1nRqaYdP8ZLcQ5Ihmz+u9EyWCrv9+cg7uvifr5E7ZzmXkt8qUGKPafChWOtjL4wpQoPH9B9uCAsa4rUx9SIyi4j/zkwi+OS3hpCmGi9ZRGaiZN980iA2X0XXVs3T2UFTSQjP8o2WI="
-
-
+  sonarcloud:
+    organization: pepaproch-github
+    token:
+      secure: eBk55fULjNfed8hNl8fIJNxJ7yriBT5KeBPGxHFwaKCFOlAJcJIb/c6fuHGLjsz16BNh+g9jxxi6JlbUGbDB5RfqLORrd9lwLVTcpaQGHMXO7jM8q+kNADhHMhyJKvG71pEJfY6cJYEPuG+K199MBqk3KWNTr73Ith5TtapbqljdLysqQ7xfnIZ5svtv7gM6Ckx5dDSxYpz2eIZnh8qRHiGbAvJ4JpqU/DeJCnLHMkQCYUUZ5GN5pkohg6Wd36EJHwJKytdSzDOwOIHHu2L9AWTG6pICWSAYKnL+v+RG+HmHG6fsiB0CT+MHEYZLquJ8nWpTrI2qTYOii/gaCneQuPxg7ufVZqJ5r3b9Czqv4DhwrgT4uFhGgZQQnShEx+39uaydVLG6TZyZ+0iLOo/myAGKWAfWbzTCxx6Wcxys+bEluo/UvIO/4T1Mw4noNZy1dNiDYELYkjeJWlupres75jyzT+3KxmyzPr2jq3VFBBjK1U3Q7bfVUjHtUHTSsZ0WLi+yuRDSMIR+mGNiALJ3aVs91/nEPVWEpLGzQA0a9ehAiB+/YiBKbWSsa6lQWGDSJOQIXgLEs4zKG+2wT5Cy5eVHIHOMZnxnl3Y5I+LrLAfcYyVMeHPPkYX+C6FDEKJSMz+cQrUXEYL50//9DOYoJXYsT4A7D+6btijmjr9OhTo=
 
 script: "./travis.sh"
+
