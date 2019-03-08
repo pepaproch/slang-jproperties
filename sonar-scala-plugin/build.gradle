@@ -1,6 +1,6 @@
 plugins {
     id "scala"
-    id("org.scoverage") version "2.5.0"
+    id "org.scoverage" version "2.5.0"
     id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
@@ -9,16 +9,6 @@ ext {
     scalaVersion = '2.12.7'
     scalaBinaryVersion = '2.12'
     kotlinVersion = '1.2.41'
-}
-
-repositories {
-    jcenter()
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
-    
 }
 
 // compile scala before java
