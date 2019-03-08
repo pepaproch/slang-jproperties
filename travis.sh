@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ "${TRAVIS_REPO_SLUG}" == "SonarSource/slang" ];then
   echo "Building slang"
   
   export INITIAL_VERSION=$(cat gradle.properties | grep version | awk -F= '{print $2}')
@@ -18,8 +17,5 @@ if [ "${TRAVIS_REPO_SLUG}" == "SonarSource/slang" ];then
     -Dsonar.analysis.repository=$TRAVIS_REPO_SLUG \
     -Dsonar.organization=sonarsource
 
-else
-  echo "Building slang-enterprise"
-  ./private/private-travis.sh
-fi
+
 
