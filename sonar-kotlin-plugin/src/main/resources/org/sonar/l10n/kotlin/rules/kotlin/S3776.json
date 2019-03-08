@@ -11,7 +11,7 @@
   "tags": [
     "brain-overload"
   ],
-  "defaultSeverity": "Info",
+  "defaultSeverity": "Critical",
   "ruleSpecification": "RSPEC-3776",
   "sqKey": "S3776",
   "scope": "All"

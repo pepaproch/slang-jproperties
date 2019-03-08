@@ -92,16 +92,9 @@ public class KotlinConverterTest {
   @Test
   public void testWinEOL() {
     Tree tree = converter.parse(
-            "fun main(args: Array<String>) {\r\n" +
-                    "\r\n" +
-                    "}\r\n");
-    assertThat(tree.children()).hasSize(1);
-  }
-
-  @Test
-  public void testCommentONLY() {
-    Tree tree = converter.parse(
-            "//coment\n//comment\nfun foo() { }");
+      "fun main(args: Array<String>) {\r\n" +
+        "\r\n" +
+        "}\r\n");
     assertThat(tree.children()).hasSize(1);
   }
 
@@ -321,7 +314,7 @@ public class KotlinConverterTest {
     assertThat(noModifierFunction.modifiers()).isEmpty();
     assertTree(noModifierFunction.returnType()).isNull();
     assertThat(noModifierFunction.formalParameters()).hasSize(2);
-    assertThat(noModifierFunction.formalParameters().get(0)).isInstanceOf(NativeTree.class);
+    assertThat(noModifierFunction.formalParameters().get(0)).isInstanceOf(ParameterTree.class);
     assertTree(noModifierFunction.body()).isBlock();
 
     FunctionDeclarationTree emptyLambdaFunction = (FunctionDeclarationTree) kotlinStatement("{ }").children().get(0);
@@ -345,6 +338,21 @@ public class KotlinConverterTest {
     assertTree(aIntParam1.identifier()).hasTextRange(1, 22, 1, 23);
     assertTree(aStringParam).isInstanceOf(ParameterTree.class);
     assertTree(aIntParamWithInitializer).hasTextRange(1, 14, 1, 24);
+  }
+
+  @Test
+  public void testFunctionDeclarationWithDefaultValue() {
+    FunctionDeclarationTree func = (FunctionDeclarationTree) kotlin(
+        "fun function1(p1: Int = 1, p2: String, p3: String = \"def\") {}");
+
+    assertThat(func.formalParameters()).hasSize(3);
+    assertTree(func).hasParameterNames("p1", "p2", "p3");
+    ParameterTree p1 = (ParameterTree) func.formalParameters().get(0);
+    ParameterTree p2 = (ParameterTree) func.formalParameters().get(1);
+    ParameterTree p3 = (ParameterTree) func.formalParameters().get(2);
+    assertTree(p1.defaultValue()).isLiteral("1");
+    assertTree(p2.defaultValue()).isNull();
+    assertTree(p3.defaultValue()).isLiteral("\"def\"");
   }
 
   @Test
@@ -517,10 +525,15 @@ public class KotlinConverterTest {
     assertTree(getCondition(cases, 0)).isNotEquivalentTo(getCondition(cases, 4));
     assertTree(getCondition(cases, 1)).isEquivalentTo(getCondition(cases, 5));
 
-    NativeTree emptyWhen = (NativeTree) kotlinStatement("when {}");
-    assertTree(emptyWhen).hasChildren(0);
-    assertTree(emptyWhen).isEquivalentTo(kotlinStatement("when {}"));
-    assertTree(emptyWhen).isNotEquivalentTo(kotlinStatement("when (x) {}"));
+    Tree emptyWhen = kotlinStatement("when {}");
+    assertTree(emptyWhen).isInstanceOf(MatchTree.class);
+    MatchTree emptyMatchTree = (MatchTree) emptyWhen;
+    assertTree(emptyMatchTree).hasChildren(0);
+    assertTree(emptyMatchTree.expression()).isNull();
+    assertThat(emptyMatchTree.cases()).isEmpty();
+    assertTree(emptyMatchTree).isEquivalentTo(kotlinStatement("when {}"));
+    assertTree(emptyMatchTree).isNotEquivalentTo(kotlinStatement("when (x) {}"));
+    assertTree(emptyMatchTree).isNotEquivalentTo(kotlinStatement("when {1 -> true}"));
   }
 
   @Test

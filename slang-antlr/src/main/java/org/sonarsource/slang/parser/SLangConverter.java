@@ -343,10 +343,16 @@ public class SLangConverter implements ASTConverter {
     public Tree visitFormalParameter(SLangParser.FormalParameterContext ctx) {
       IdentifierTree tree = (IdentifierTree) visit(ctx.variableDeclaratorId().identifier());
       Tree type = null;
+      Tree defaultValue = null;
+      List<Tree> modifiers = list(ctx.parameterModifier());
+
       if (ctx.simpleType() != null) {
         type = new IdentifierTreeImpl(meta(ctx.simpleType()), ctx.simpleType().getText());
       }
-      return new ParameterTreeImpl(meta(ctx), tree, type);
+      if(ctx.expression() != null) {
+        defaultValue = visit(ctx.expression());
+      }
+      return new ParameterTreeImpl(meta(ctx), tree, type, defaultValue, modifiers);
     }
 
     @Override

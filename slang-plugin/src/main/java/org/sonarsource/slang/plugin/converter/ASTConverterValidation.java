@@ -19,6 +19,7 @@
  */
 package org.sonarsource.slang.plugin.converter;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,8 +29,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.sonar.api.config.Configuration;
 import org.sonar.api.internal.google.common.annotations.VisibleForTesting;
 import org.sonar.api.utils.log.Logger;
@@ -53,6 +52,8 @@ public class ASTConverterValidation implements ASTConverter {
   private static final Logger LOG = Loggers.get(ASTConverterValidation.class);
 
   private static final Pattern PUNCTUATOR_PATTERN = Pattern.compile("[^0-9A-Za-z]++");
+
+  private static final Set<String> ALLOWED_MISPLACED_TOKENS_OUTSIDE_PARENT_RANGE = new HashSet<>(Collections.singleton("implicit"));
 
   private final ASTConverter wrapped;
 
@@ -95,7 +96,6 @@ public class ASTConverterValidation implements ASTConverter {
   public void terminate() {
     List<String> errors = errors();
     if (!errors.isEmpty()) {
-      LOG.error("CUST: ");
       LOG.error("AST Converter Validation:\n  [AST ERROR] " + String.join("\n  [AST ERROR] ", errors));
     }
     wrapped.terminate();
@@ -173,14 +173,18 @@ public class ASTConverterValidation implements ASTConverter {
     Set<Token> parentTokens = new HashSet<>(tree.metaData().tokens());
     Map<Token, Tree> childByToken = new HashMap<>();
     for (Tree child : tree.children()) {
-      if (child != null && child.metaData() != null) {
+      if (child != null && child.metaData() != null && !isAllowedMisplacedTree(child)) {
         assertChildRangeIsInsideParentRange(tree, child);
         assertChildTokens(parentTokens, childByToken, tree, child);
       }
     }
-
     parentTokens.removeAll(childByToken.keySet());
     assertUnexpectedTokenKind(tree, parentTokens);
+  }
+
+  private static boolean isAllowedMisplacedTree(Tree tree) {
+    List<Token> tokens = tree.metaData().tokens();
+    return tokens.size() == 1 && ALLOWED_MISPLACED_TOKENS_OUTSIDE_PARENT_RANGE.contains(tokens.get(0).text());
   }
 
   private void assertUnexpectedTokenKind(Tree tree, Set<Token> tokens) {
@@ -196,6 +200,7 @@ public class ASTConverterValidation implements ASTConverter {
       unexpectedTokens = tokens.stream()
         .filter(token -> token.type() != Token.Type.KEYWORD)
         .filter(token -> !PUNCTUATOR_PATTERN.matcher(token.text()).matches())
+        .filter(token -> !ALLOWED_MISPLACED_TOKENS_OUTSIDE_PARENT_RANGE.contains(token.text()))
         .collect(Collectors.toList());
     }
     if (!unexpectedTokens.isEmpty()) {
@@ -203,13 +208,14 @@ public class ASTConverterValidation implements ASTConverter {
         .sorted(Comparator.comparing(token -> token.textRange().start()))
         .map(Token::text)
         .collect(Collectors.joining("', '"));
-      raiseError("Unexpected tokens in " + kind(tree)  , ": '" + tokenList + "'", tree.textRange().start());
+      raiseError("Unexpected tokens in " + kind(tree), ": '" + tokenList + "'", tree.textRange().start());
     }
   }
 
   private void assertTokensAreInsideRange(Tree tree) {
     TextRange parentRange = tree.metaData().textRange();
     tree.metaData().tokens().stream()
+      .filter(token -> !ALLOWED_MISPLACED_TOKENS_OUTSIDE_PARENT_RANGE.contains(token.text()))
       .filter(token -> !token.textRange().isInside(parentRange))
       .findFirst()
       .ifPresent(token -> raiseError(
@@ -292,7 +298,6 @@ public class ASTConverterValidation implements ASTConverter {
     }
 
     private void assertEqualTo(String expectedCode) {
-
       String[] actualLines = lines(this.code.toString());
       String[] expectedLines = lines(expectedCode);
       for (int i = 0; i < actualLines.length && i < expectedLines.length; i++) {

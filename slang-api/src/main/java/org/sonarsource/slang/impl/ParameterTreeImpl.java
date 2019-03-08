@@ -19,12 +19,12 @@
  */
 package org.sonarsource.slang.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import org.sonarsource.slang.api.IdentifierTree;
 import org.sonarsource.slang.api.ParameterTree;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
@@ -33,11 +33,23 @@ public class ParameterTreeImpl extends BaseTreeImpl implements ParameterTree {
 
   private final IdentifierTree identifier;
   private final Tree type;
+  private final Tree defaultValue;
+  private final List<Tree> modifiers;
 
-  public ParameterTreeImpl(TreeMetaData metaData, IdentifierTree identifier, @Nullable Tree type) {
+  public ParameterTreeImpl(TreeMetaData metaData, IdentifierTree identifier, @Nullable Tree type, @Nullable Tree defaultValue, List<Tree> modifiers) {
     super(metaData);
     this.identifier = identifier;
     this.type = type;
+    this.defaultValue = defaultValue;
+    this.modifiers = modifiers;
+  }
+
+  public ParameterTreeImpl(TreeMetaData metaData, IdentifierTree identifier, @Nullable Tree type, @Nullable Tree defaultValue) {
+    this(metaData, identifier, type, defaultValue, Collections.emptyList());
+  }
+
+  public ParameterTreeImpl(TreeMetaData metaData, IdentifierTree identifier, @Nullable Tree type) {
+    this(metaData, identifier, type, null);
   }
 
   @Override
@@ -51,13 +63,29 @@ public class ParameterTreeImpl extends BaseTreeImpl implements ParameterTree {
     return type;
   }
 
+  @CheckForNull
+  @Override
+  public Tree defaultValue() {
+    return defaultValue;
+  }
+
+  @Override
+  public List<Tree> modifiers() {
+    return modifiers;
+  }
+
   @Override
   public List<Tree> children() {
+    List<Tree> children = new ArrayList<>();
+    children.addAll(modifiers);
+    children.add(identifier);
     if (type != null) {
-      return Arrays.asList(identifier, type);
-    } else {
-      return Collections.singletonList(identifier);
+      children.add(type);
     }
+    if (defaultValue != null) {
+      children.add(defaultValue);
+    }
+    return children;
   }
 
 }

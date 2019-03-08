@@ -52,7 +52,11 @@ formalParameters
   ;
 
 formalParameter
-  :  simpleType? variableDeclaratorId
+  :  parameterModifier* simpleType? variableDeclaratorId ('=' expression)?
+  ;
+
+parameterModifier
+  : nativeExpression
   ;
 
 lastFormalParameter

@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
+
 import org.jruby.RubySymbol;
 import org.sonarsource.ruby.converter.impl.RubyPartialExceptionHandlingTree;
 import org.sonarsource.slang.api.AssignmentExpressionTree;
@@ -417,21 +418,24 @@ public class RubyVisitor {
     return createNativeTree(node, children);
   }
 
+  private Tree assignmentOrDeclaration(AstNode node, IdentifierTree identifier, Tree rhs) {
+    return assignmentOrDeclaration(metaData(node), identifier, rhs);
+  }
+
   /**
-   *
    * @return if this is the first time we see this identifier in current scope we create {@link org.sonarsource.slang.api.VariableDeclarationTree}
    * otherwise {@link AssignmentExpressionTree} is created
    */
-  private Tree assignmentOrDeclaration(AstNode node, IdentifierTree identifier, Tree rhs) {
+  private Tree assignmentOrDeclaration(TreeMetaData metaData, IdentifierTree identifier, Tree rhs) {
     if (isLocalVariable(identifier) && localVariables.peek().add(identifier.name())) {
       return new VariableDeclarationTreeImpl(
-        metaData(node),
+        metaData,
         identifier,
         null,
         rhs, false);
     } else {
       return new AssignmentExpressionTreeImpl(
-        metaData(node),
+        metaData,
         AssignmentExpressionTree.Operator.EQUAL,
         identifier,
         rhs);
@@ -465,11 +469,38 @@ public class RubyVisitor {
   }
 
   private Tree createFromMasgn(AstNode node, List<?> children) {
-    return new AssignmentExpressionTreeImpl(
-      metaData(node),
-      AssignmentExpressionTree.Operator.EQUAL,
-      (Tree) children.get(0),
-      (Tree) children.get(1));
+    List<IdentifierTree> lhsChild = getChildIfArray((Tree) children.get(0))
+        .stream()
+        .filter(child -> child instanceof IdentifierTree)
+        .map(IdentifierTree.class::cast)
+        .collect(Collectors.toList());
+
+    List<Tree> rhsChild = getChildIfArray((Tree) children.get(1));
+
+    if(lhsChild.isEmpty() || rhsChild.isEmpty() || lhsChild.size() != rhsChild.size()) {
+      return new AssignmentExpressionTreeImpl(
+          metaData(node),
+          AssignmentExpressionTree.Operator.EQUAL,
+          (Tree) children.get(0),
+          (Tree) children.get(1));
+    } else {
+      List<Tree> assignments = new ArrayList<>();
+      for (int i = 0; i < lhsChild.size(); i++) {
+        IdentifierTree id = lhsChild.get(i);
+        assignments.add(assignmentOrDeclaration(id.metaData(), id, rhsChild.get(i)));
+      }
+      return createNativeTree(node, assignments);
+    }
+  }
+
+  private static List<Tree> getChildIfArray(Tree node) {
+    if(node instanceof NativeTree) {
+      NativeTree nativeNode = (NativeTree) node;
+      if(nativeNode.nativeKind().equals(new RubyNativeKind("array"))) {
+        return nativeNode.children();
+      }
+    }
+    return Collections.emptyList();
   }
 
   private Tree createFromVar(AstNode node, List<?> children) {
@@ -511,14 +542,12 @@ public class RubyVisitor {
       return createNativeTree(node, children);
     }
     IdentifierTree identifierTree = identifierFromSymbol(node, (RubySymbol) children.get(0));
-    ParameterTreeImpl parameterTree = new ParameterTreeImpl(metaData(node), identifierTree, null);
+
+    Tree defaultValue = null;
     if ("optarg".equals(node.type()) || "kwoptarg".equals(node.type())) {
-      List<Tree> nativeChildren = new ArrayList<>();
-      nativeChildren.add(parameterTree);
-      nativeChildren.add((Tree) children.get(1));
-      return createNativeTree(node, nativeChildren);
+      defaultValue = (Tree) children.get(1);
     }
-    return parameterTree;
+    return new ParameterTreeImpl(metaData(node), identifierTree, null, defaultValue);
   }
 
   private Tree createCaseTree(AstNode node, List<?> children) {
@@ -747,8 +776,18 @@ public class RubyVisitor {
 
   private Tree createIfTree(AstNode node, List<?> children) {
     Optional<Token> mainKeyword = lookForTokenByAttribute(node, KEYWORD_ATTRIBUTE);
-    if (!mainKeyword.isPresent() || mainKeyword.get().text().equals("unless")) {
-      // Ternary operator and "unless" are not considered as "IfTree" for now
+    if (!mainKeyword.isPresent()) {
+      // "ternary"
+      Tree condition = (Tree) children.get(0);
+      Tree thenBranch = (Tree) children.get(1);
+      Tree elseBranch = (Tree) children.get(2);
+
+      Token ifToken = previousToken(thenBranch.textRange(), "?");
+      Token elseToken = previousToken(elseBranch.textRange(), ":");
+
+      return new IfTreeImpl(metaData(node), condition, thenBranch, elseBranch, ifToken, elseToken);
+    } else if (mainKeyword.get().text().equals("unless")) {
+      // "unless" are not considered as "IfTree" for now
       return createNativeTree(node, children);
     }
 
@@ -758,6 +797,13 @@ public class RubyVisitor {
     Tree elseBranch = getElseBranch(node, elseKeyword, (Tree) children.get(2));
 
     return new IfTreeImpl(metaData(node), (Tree) children.get(0), thenBranch, elseBranch, mainKeyword.get(), elseKeyword);
+  }
+
+  private Token previousToken(TextRange textRange, String expectedTokenValue) {
+    return metaDataProvider.previousToken(textRange, expectedTokenValue)
+      .orElseThrow(() -> new IllegalStateException(
+        String.format("Unable to locate token with value '%s' before position [Line:%d,Offset:%d].",
+          expectedTokenValue, textRange.start().line(), textRange.start().lineOffset())));
   }
 
   private Tree getThenBranch(AstNode node, Token mainKeyword, @Nullable Token elseKeyword, @Nullable Tree thenBranch) {

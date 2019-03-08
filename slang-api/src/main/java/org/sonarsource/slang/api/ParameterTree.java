@@ -19,6 +19,7 @@
  */
 package org.sonarsource.slang.api;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
 
 public interface ParameterTree extends Tree {
@@ -27,5 +28,10 @@ public interface ParameterTree extends Tree {
 
   @CheckForNull
   Tree type();
+
+  @CheckForNull
+  Tree defaultValue();
+
+  List<Tree> modifiers();
 
 }

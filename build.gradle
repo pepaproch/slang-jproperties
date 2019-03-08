@@ -16,10 +16,6 @@ allprojects {
     apply plugin: 'com.jfrog.artifactory'
     apply plugin: 'maven-publish'
 
-    jacoco {
-        toolVersion = "0.8.2"
-    }
-    
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             if (project.hasProperty('warn')) {
@@ -32,11 +28,12 @@ allprojects {
 
     ext {
         buildNumber = System.getProperty("buildNumber")
-        analyzerCommonsVersion = '1.9.0.327'
+        analyzerCommonsVersion = '1.10.2.456'
         sonarqubeVersion = '7.3'
-        orchestratorVersion = '3.21.0.1721'
-        sonarlintVersion = '4.0.1.2077'
-
+        orchestratorVersion = '3.22.0.1791'
+        sonarlintVersion = '4.2.0.2266'
+        sonarLinksCi = 'https://travis-ci.org/SonarSource/slang'
+        sonarLinksScm = 'https://github.com/SonarSource/slang'
 
         artifactsToPublish = ''
         artifactsToDownload = ''
@@ -57,8 +54,6 @@ allprojects {
         maven {
             url "https://repox.jfrog.io/repox/${repository}"
         }
-
-
     }
 }
 

@@ -50,7 +50,6 @@ public class KotlinPlugin implements Plugin {
 
   @Override
   public void define(Context context) {
-
     context.addExtensions(
       KotlinLanguage.class,
       KotlinSensor.class,

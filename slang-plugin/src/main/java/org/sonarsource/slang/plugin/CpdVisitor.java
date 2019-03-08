@@ -33,7 +33,9 @@ public class CpdVisitor extends TreeVisitor<InputFileContext> {
   public CpdVisitor() {
     register(TopLevelTree.class, (ctx, tree) -> {
       List<Token> tokens = tree.metaData().tokens();
+
       boolean foundFirstToken = (tree.firstCpdToken() == null);
+
       for (Token token : tokens) {
         foundFirstToken = foundFirstToken || (token == tree.firstCpdToken());
         if (foundFirstToken) {
@@ -46,7 +48,6 @@ public class CpdVisitor extends TreeVisitor<InputFileContext> {
 
   @Override
   protected void before(InputFileContext ctx, Tree root) {
-
     cpdTokens = ctx.sensorContext.newCpdTokens().onFile(ctx.inputFile);
   }
 

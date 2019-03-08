@@ -457,11 +457,7 @@ class KotlinTreeVisitor {
 
     IdentifierTree identifier = createIdentifierTree(getTreeMetaData(nameIdentifier), nameIdentifier.getText());
     Tree initializer = createElement(ktParameter.getDefaultValue());
-    ParameterTreeImpl parameterTree = new ParameterTreeImpl(metaData, identifier, type);
-    if (initializer != null) {
-      return createNativeTree(metaData, new KotlinNativeKind(ktParameter), Arrays.asList(parameterTree, initializer));
-    }
-    return parameterTree;
+    return new ParameterTreeImpl(metaData, identifier, type, initializer);
   }
 
   private Tree createVariableDeclaration(TreeMetaData metaData, KtProperty ktProperty) {
@@ -495,9 +491,6 @@ class KotlinTreeVisitor {
   private Tree createMatchTree(TreeMetaData metaData, KtWhenExpression element) {
     Tree subjectExpression = createElement(element.getSubjectExpression());
     List<Tree> whenExpressions = list(element.getEntries().stream());
-    if (subjectExpression == null) {
-      return createNativeTree(metaData, new KotlinNativeKind(element), whenExpressions);
-    }
     return new MatchTreeImpl(metaData,
       subjectExpression,
       whenExpressions.stream()
