@@ -39,4 +39,4 @@ jobs:
          key: v2-dependencies-{{ checksum "build.gradle" }}
 
       # run tests!
-      - run: ./gradlew build
+      - run: ./gradlew build -x sonar-scala-plugin:check  --info
