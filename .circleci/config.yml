@@ -40,4 +40,4 @@ jobs:
 
       # run tests!
 
-      - run: gradle build -x sonar-scala-plugin:check  --info
+      - run: gradle build
