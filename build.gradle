@@ -36,8 +36,7 @@ allprojects {
         sonarqubeVersion = '7.3'
         orchestratorVersion = '3.21.0.1721'
         sonarlintVersion = '4.0.1.2077'
-        sonarLinksCi = 'https://travis-ci.org/SonarSource/slang'
-        sonarLinksScm = 'https://github.com/SonarSource/slang'
+
 
         artifactsToPublish = ''
         artifactsToDownload = ''
@@ -57,7 +56,10 @@ allprojects {
         def repository = project.hasProperty('qa') ? 'sonarsource-qa' : 'sonarsource'
         maven {
             url "https://repox.sonarsource.com/${repository}"
+
         }
+
+
     }
 }
 

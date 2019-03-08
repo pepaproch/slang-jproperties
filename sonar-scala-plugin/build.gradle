@@ -1,11 +1,11 @@
 plugins {
     id "scala"
-    id "org.scoverage" version "2.5.0"
+    //id "org.scoverage" version "3.0.0"
     id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
 ext {
-    scoveragePluginVersion = '1.3.0'
+  //  scoveragePluginVersion = '1.3.1'
     scalaVersion = '2.12.7'
     scalaBinaryVersion = '2.12'
     kotlinVersion = '1.2.41'
@@ -14,7 +14,7 @@ ext {
 // compile scala before java
 tasks.compileScala.dependsOn.remove("compileJava")
 tasks.compileJava.dependsOn compileScala
-tasks.check.dependsOn reportScoverage
+//tasks.check.dependsOn reportScoverage
 
 sourceSets {
     main {
@@ -53,7 +53,7 @@ dependencies {
     testCompile 'org.assertj:assertj-core'
     testCompile 'org.mockito:mockito-core'
 
-    scoverage 'org.scoverage:scalac-scoverage-plugin_2.12:1.3.1', 'org.scoverage:scalac-scoverage-runtime_2.12:1.3.1'
+ //   scoverage 'org.scoverage:scalac-scoverage-plugin_2.12:1.3.1', 'org.scoverage:scalac-scoverage-runtime_2.12:1.3.1'
 }
 
 jar {
