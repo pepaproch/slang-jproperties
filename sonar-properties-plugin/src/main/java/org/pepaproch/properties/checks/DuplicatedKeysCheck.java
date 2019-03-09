@@ -4,7 +4,7 @@ import org.pepaproch.properties.parser.slang.tree.PropKeyTree;
 import org.pepaproch.properties.parser.slang.tree.PropTree;
 import org.pepaproch.properties.parser.slang.tree.PropsTree;
 import org.sonar.check.Rule;
-import org.sonar.check.RuleProperty;
+
 import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SecondaryLocation;

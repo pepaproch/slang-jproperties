@@ -17,6 +17,7 @@ import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonarsource.slang.api.ASTConverter;
+import org.sonarsource.slang.checks.CommentedCodeCheck;
 import org.sonarsource.slang.checks.api.SlangCheck;
 import org.sonarsource.slang.plugin.DurationStatistics;
 import org.sonarsource.slang.plugin.InputFileContext;
@@ -45,13 +46,11 @@ public class PropertiesSensor extends SlangSensor {
 
             Map<String, LinkedList<TokenLocations<InputFile>>> duplications = ctxp.getDuplications().duplications(integer);
             duplications.keySet().stream().forEach((k) -> {
-                LOG.info("KEY P: " + k + " " + duplications.get(k).get(0).module.uri() + " " + duplications.get(k).get(0).location.start().line());
                 NewIssue newIssue = this.ctx.newIssue().forRule(rule.ruleKey());
                 LinkedList<TokenLocations<InputFile>> tokenLocations = duplications.get(k);
                 NewIssueLocation at = newIssue.newLocation().on(tokenLocations.get(0).module).at(TextRangeUtils.sonarTextRange(tokenLocations.get(0).location));
                 newIssue.at(at);
                 tokenLocations.stream().skip(1).forEach((l) -> {
-                            LOG.info("KEY S: " + k + l.module.uri() + " " + l.location.start().line());
                             //secondary
                             newIssue.addLocation(newIssue.newLocation().on(l.module).at(TextRangeUtils.sonarTextRange(l.location)).message("Key was used before"));
 
@@ -69,7 +68,8 @@ public class PropertiesSensor extends SlangSensor {
     public PropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, PropertiesLanguage language) {
         super(noSonarFilter, fileLinesContextFactory, language);
         checks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-        checks.addAnnotatedChecks((Iterable<?>) PropertiesCheckList.checks());
+        checks.addAnnotatedChecks((Iterable<?>) PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT));
+        checks.addAnnotatedChecks(new CommentedCodeCheck(new PropertiesCodeVerifier()));
         projectContext = new PropertiesContext(this, f);
 
     }

@@ -4,12 +4,13 @@ import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PropTree implements Tree {
 
-    public Operator op;
+    public final Operator op;
 
     public final PropKeyTree key;
     public final PropValueTree value;
@@ -43,7 +44,7 @@ public class PropTree implements Tree {
 
     @Override
     public List<Tree> children() {
-       return  Stream.of(key,value).filter(i-> null!=i).collect(Collectors.toList());
+       return  Stream.of(key,value).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Rule(key = "comment-convention")
 public class CommentConventionCheck implements SlangCheck {
-    private static final String ISSUE_MESSAGE = "Use starting comment token '$s' instead.";
+    private static final String ISSUE_MESSAGE = "Use starting comment token '%s' instead.";
 
     @Override
     public void initialize(InitContext init) {
