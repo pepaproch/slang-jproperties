@@ -4,8 +4,8 @@ import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 import org.sonarsource.analyzer.commons.BuiltInQualityProfileJsonLoader;
 
 public class PropertiesProfileDefinition implements BuiltInQualityProfilesDefinition {
-    public static String PROFILE_NAME = "Sonar way";
-    public static String PROFILE_PATH = "org/sonar/l10n/properties/Sonar_way_profile.json";
+    public static final String PROFILE_NAME = "Sonar way";
+    public static final  String PROFILE_PATH = "org/sonar/l10n/properties/Sonar_way_profile.json";
 
 
     @Override

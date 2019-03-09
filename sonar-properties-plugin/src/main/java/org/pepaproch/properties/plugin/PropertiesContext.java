@@ -5,32 +5,34 @@ import org.pepaproch.properties.checks.ProjectCheck;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonarsource.slang.api.Token;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class PropertiesContext implements ProjectCheck {
 
-    private final Consumer<PropertiesContext> finishFunction;
+
     private final Duplications duplications;
-    public int duplicationTreshold;
+    public final PropertiesSensor propertiesSensor;
 
-    public PropertiesContext(PropertiesSensor propertiesSensor, Consumer<PropertiesContext> finishFunction) {
-        this.finishFunction = finishFunction;
+    public PropertiesContext(PropertiesSensor propertiesSensor) {
         duplications = new Duplications();
+        this.propertiesSensor = propertiesSensor;
     }
 
-     public  Duplications getDuplications() {
-         Duplications duplications = this.duplications;
-         return duplications;
+    public Duplications getDuplications() {
+        Duplications duplications = this.duplications;
+        return duplications;
     }
 
-    public void addToken(Token value, InputFile file) {
+    public void addDuplicationToken(Token value, InputFile file) {
         getDuplications().processToken(value, file);
     }
 
 
-
-    public void finish() {
-        finishFunction.accept(this);
+    @Override
+    public void finish(List<Consumer<PropertiesContext>> consumers) {
+        if(consumers!=null) {
+            consumers.stream().forEach(t -> t.accept(this));
+        }
     }
-
 }

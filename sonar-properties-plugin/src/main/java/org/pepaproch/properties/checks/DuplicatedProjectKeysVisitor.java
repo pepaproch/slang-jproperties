@@ -29,9 +29,8 @@ public class DuplicatedProjectKeysVisitor extends TreeVisitor<InputFileContext> 
 
     public DuplicatedProjectKeysVisitor(PropertiesContext projectContext) {
         this.projectContext = projectContext;
-        projectContext.duplicationTreshold = threshold;
         register(PropKeyTree.class , (ctx, tree ) -> {
-            projectContext.addToken(tree.metaData().tokens().get(0), ctx.inputFile);
+            projectContext.addDuplicationToken(tree.metaData().tokens().get(0), ctx.inputFile);
 
         } );
 
