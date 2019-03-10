@@ -1,7 +1,8 @@
 
 # SonarQube Properties plugin (Slang)
 
-[![CircleCI](https://circleci.com/gh/pepaproch/slang-jproperties.svg?style=svg)](https://circleci.com/gh/pepaproch/slang-jproperties)
+[![CircleCI](https://circleci.com/gh/pepaproch/slang-jproperties.svg?style=svg)](https://circleci.com/gh/pepaproch/slang-jproperties) 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pepaproch_slang-jproperties&metric=alert_status)](https://sonarcloud.io/dashboard?id=pepaproch_slang-jproperties)
 
 this is a rewrite of https://github.com/racodond/sonar-jproperties-plugin using SLang a sslr
 
@@ -36,17 +37,15 @@ These rules are pretty useful even for the properties files.
 | Rule                                          | Implemented | Note |
 |:----------------------------------------------|-------------|------|
 | BOMCheck|                                      |N/A|
-| CommentContainsPatternChecker|TODO|
 | CommentConventionCheck|R|
-| CommentedOutCodeCheck|G|
-| CommentRegularExpressionCheck | TODO|
+| CommentedOutCodeCheck|G||
+| CommentRegularExpressionCheck |R|Template|
 | DuplicatedKeysAcrossFilesCheck | R|
 | DuplicatedKeysCheck |R|
 | DuplicatedValuesCheck |G|
 | DuplicatedStringLiterals|G||
 | EmptyElementCheck |R|
-| EndLineCharactersCheck |TODO|
-| FileKeyTree |?|
+| EndLineCharactersCheck |R|
 | FileNameCheck |R|
 | FixmeTagPresenceCheck |G|
 | HardCodedCredentialsCheck |R|

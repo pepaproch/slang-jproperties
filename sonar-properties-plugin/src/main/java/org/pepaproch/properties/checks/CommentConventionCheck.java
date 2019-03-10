@@ -23,14 +23,14 @@ public class CommentConventionCheck implements SlangCheck {
                 List<Comment> collect = comments.stream().skip(1).
                         filter(c -> !c.text().trim().startsWith(text)).collect(Collectors.toList());
 
-                if (collect != null && !collect.isEmpty()) {
+
                     List<SecondaryLocation> secondaryLocations = collect.stream().skip(1).
                             map(c -> new SecondaryLocation(c.textRange(), String.format(ISSUE_MESSAGE, c.text().trim().substring(1, 2))))
                             .collect(Collectors.toList());
                     ctx.reportIssue(collect.get(0), ISSUE_MESSAGE, secondaryLocations);
-                }
 
-                comments.stream().filter((c) -> {
+
+                comments.stream().filter(c -> {
                     String comment = c.text();
                     if (comment.length() < 2) {
                         return true;
@@ -38,9 +38,7 @@ public class CommentConventionCheck implements SlangCheck {
                         return !Character.isWhitespace(comment.charAt(1));
 
                     }
-                }).forEach((c) -> {
-                    ctx.reportIssue(c.textRange(), "Add a whitespace after the starting comment token.");
-                });
+                }).forEach(c ->ctx.reportIssue(c.textRange(), "Add a whitespace after the starting comment token."));
             }
 
         });

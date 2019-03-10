@@ -26,6 +26,7 @@ public class PropertiesCheckList {
                 CommentedCodeCheck.class,
                 CommentConventionCheck.class,
                 CommentRegularExpressionCheck.class,
+                EndLineCharactersCheck.class,
                 HardcodedIpCheck.class,
                 org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
