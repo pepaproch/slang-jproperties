@@ -51,7 +51,7 @@ These rules are pretty useful even for the properties files.
 | HardCodedCredentialsCheck |R|
 | IndentationCheck |TODO R|
 | KeyNamingConventionCheck |TODO R|
-| KeyRegularExpressionCheck |TODO R|
+| KeyRegularExpressionCheck |R|
 | LineLengthCheck |G|S103|
 | MissingNewlineAtEndOfFileCheck |TODO R|
 | MissingTranslationsCheck |TODO|

@@ -31,12 +31,14 @@ public class PropertiesCheckList {
                 org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
                 TodoCommentCheck.class,
+                KeyRegularExpressionCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,
                 TooManyLinesOfCodeFileCheck.class,
                 ParsingErrorCheck.class,
                 EmptyValueCheck.class,
-                FileNameCheck.class ));
+                FileNameCheck.class,
+                ValueRegularExpressionCheck.class));
     }
 
     public static List<Class> checks(Predicate<Class> filter) {

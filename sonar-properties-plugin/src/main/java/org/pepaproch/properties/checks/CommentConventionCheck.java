@@ -19,15 +19,15 @@ public class CommentConventionCheck implements SlangCheck {
         init.register(PropsTree.class, (ctx, tree) -> {
             List<Comment> comments = tree.metaData().commentsInside();
             if (null != comments && !comments.isEmpty()) {
-                String text = comments.get(0).text().trim().substring(1, 2);
+                String text = comments.get(0).text().trim().substring(0, 1);
                 List<Comment> collect = comments.stream().skip(1).
                         filter(c -> !c.text().trim().startsWith(text)).collect(Collectors.toList());
 
-
                     List<SecondaryLocation> secondaryLocations = collect.stream().skip(1).
-                            map(c -> new SecondaryLocation(c.textRange(), String.format(ISSUE_MESSAGE, c.text().trim().substring(1, 2))))
+                            map(c -> new SecondaryLocation(c.textRange(), String.format(ISSUE_MESSAGE, text)))
                             .collect(Collectors.toList());
-                    ctx.reportIssue(collect.get(0), ISSUE_MESSAGE, secondaryLocations);
+
+                    ctx.reportIssue(collect.get(0),  String.format(ISSUE_MESSAGE, text, secondaryLocations));
 
 
                 comments.stream().filter(c -> {
