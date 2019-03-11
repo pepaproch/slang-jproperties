@@ -28,7 +28,7 @@ public class PropertiesLanguage extends AbstractLanguage {
     @Override
     public String[] getFileSuffixes() {
         String[] suffixes = configuration.getStringArray(JPROPERTIES_FILE_SUFFIXES_KEY);
-        if (null != suffixes || (null != suffixes  && suffixes.length == 0)) {
+        if (null != suffixes && suffixes.length == 0) {
             suffixes = JPROPERTIES_FILE_SUFFIXES_DEFAULT_VALUE.split(",");
         }
         return suffixes;

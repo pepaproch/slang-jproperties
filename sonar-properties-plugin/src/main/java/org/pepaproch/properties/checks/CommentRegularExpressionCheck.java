@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class CommentRegularExpressionCheck implements SlangCheck {
 
     private static final String DEFAULT_REGULAR_EXPRESSION = ".";
-    private Pattern pattern ;
+
     private static final String DEFAULT_MESSAGE = "Comment contains this disallowed pattern \"%s\".";
 
 
@@ -31,13 +31,11 @@ public class CommentRegularExpressionCheck implements SlangCheck {
 
     @Override
     public void initialize(InitContext init) {
-         pattern = Pattern.compile(regularExpression);
-         init.register(PropsTree.class, (ctx, tree) -> {
-
-             tree.metaData().commentsInside().stream().filter(c-> pattern.matcher(c.text()).find()).forEach(c-> {
-                 ctx.reportIssue(c, String.format(message , pattern.pattern()));
-
-             });
-         });
+        Pattern pattern;
+        pattern = Pattern.compile(regularExpression);
+        init.register(PropsTree.class, (ctx, tree) -> tree.metaData().commentsInside().stream()
+                .filter(c -> pattern.matcher(c.text()).find()).forEach(c ->
+                        ctx.reportIssue(c, String.format(message, pattern.pattern()))
+                ));
     }
 }

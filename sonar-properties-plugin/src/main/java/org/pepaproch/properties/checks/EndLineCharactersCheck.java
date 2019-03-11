@@ -6,11 +6,9 @@ import org.sonar.check.RuleProperty;
 import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SlangCheck;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -50,13 +48,12 @@ public class EndLineCharactersCheck implements SlangCheck {
     public void initialize(InitContext init) {
 
         Stream.of(PATTERNS.values()).filter(p -> !p.name().equalsIgnoreCase(endLineCharacters)).
-                forEach(e-> patternMap.add(e));
+                forEach(e -> patternMap.add(e));
 
         init.register(PropsTree.class, (ctx, tree) -> {
-            String s = ctx.fileContent();
-            boolean b = patternMap.stream().map(p -> p.pattern.matcher(s)).anyMatch(m -> m.find());
-            if(b){
-                ctx.reportFileIssue(String.format(ISSUE_MESSAGE,endLineCharacters));
+            boolean b = patternMap.stream().map(p -> p.pattern.matcher(ctx.fileContent())).anyMatch(Matcher::find);
+            if (b) {
+                ctx.reportFileIssue(String.format(ISSUE_MESSAGE, endLineCharacters));
             }
 
         });

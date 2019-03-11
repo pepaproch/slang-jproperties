@@ -20,8 +20,7 @@ public class PropertiesContext implements ProjectCheck {
     }
 
     public Duplications getDuplications() {
-        Duplications duplications = this.duplications;
-        return duplications;
+        return  this.duplications;
     }
 
     public void addDuplicationToken(Token value, InputFile file) {

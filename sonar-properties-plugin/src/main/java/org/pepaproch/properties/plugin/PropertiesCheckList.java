@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PropertiesCheckList {
-
-
     public static final Predicate<Class> FILTER_SPECIAL_INIT = c-> c != CommentedCodeCheck.class;
 
+    private PropertiesCheckList() {
+    }
 
     public static List<Class> checks() {
 

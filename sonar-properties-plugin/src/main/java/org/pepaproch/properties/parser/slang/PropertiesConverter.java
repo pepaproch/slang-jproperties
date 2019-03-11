@@ -3,8 +3,8 @@ package org.pepaproch.properties.parser.slang;
 import com.sonar.sslr.api.RecognitionException;
 import com.sonar.sslr.api.typed.ActionParser;
 import org.pepaproch.properties.parser.slang.tree.PropsTree;
-import org.pepaproch.properties.parser.sslr.PropertiesTreeFactory;
 import org.pepaproch.properties.parser.sslr.JpropertiesParser;
+import org.pepaproch.properties.parser.sslr.PropertiesTreeFactory;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonarsource.slang.api.ASTConverter;
@@ -39,9 +39,4 @@ public class PropertiesConverter implements ASTConverter {
         }
     }
 
-    @Override
-    public void terminate() {
-
-
-    }
 }

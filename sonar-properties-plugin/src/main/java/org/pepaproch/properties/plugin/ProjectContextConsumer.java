@@ -8,13 +8,15 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class ProjectContextConsumer implements Consumer<PropertiesContext> {
-
+    private static final Logger LOG = Loggers.get(PropertiesContext.class);
 
     private final SensorContext ctx;
 
@@ -31,23 +33,21 @@ public class ProjectContextConsumer implements Consumer<PropertiesContext> {
             Integer integer = treshold == null ? 1 : Integer.valueOf(treshold);
 
             Map<String, LinkedList<TokenLocations<InputFile>>> duplications = propertiesContext.getDuplications().duplications(integer);
-            duplications.keySet().stream().forEach((k) -> {
+            duplications.keySet().stream().forEach(k -> {
                 NewIssue newIssue = this.ctx.newIssue().forRule(rule.ruleKey());
                 LinkedList<TokenLocations<InputFile>> tokenLocations = duplications.get(k);
                 NewIssueLocation at = newIssue.newLocation().on(tokenLocations.get(0).module).at(TextRangeUtils.sonarTextRange(tokenLocations.get(0).location));
                 newIssue.at(at);
-                tokenLocations.stream().skip(1).forEach((l) -> {
-                            //secondary
-                            newIssue.addLocation(newIssue.newLocation().on(l.module).at(TextRangeUtils.sonarTextRange(l.location)).message("Key was used before"));
-
-                        }
+                //secondary issues
+                tokenLocations.stream().skip(1).forEach(l ->
+                        newIssue.addLocation(newIssue.newLocation().on(l.module).at(TextRangeUtils.sonarTextRange(l.location)).message("Key was used before"))
                 );
                 newIssue.save();
 
 
             });
         } else {
-          //  LOG.debug("Duplicated is not activated");
+              LOG.debug("Duplicated string literal is not activated");
         }
     }
 }

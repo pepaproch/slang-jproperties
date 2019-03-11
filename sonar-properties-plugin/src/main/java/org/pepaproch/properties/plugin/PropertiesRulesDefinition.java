@@ -6,7 +6,6 @@ import org.sonar.api.SonarRuntime;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
 
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 public class PropertiesRulesDefinition implements RulesDefinition {

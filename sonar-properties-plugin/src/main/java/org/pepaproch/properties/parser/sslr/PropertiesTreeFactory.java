@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,6 +20,14 @@ import java.util.stream.Stream;
 
 public class PropertiesTreeFactory {
 
+
+    private Function<Trivia, Comment> triviaToComment = (Trivia t) -> {
+        if (t.isComment()) {
+            return new PropComment(t.getToken().getOriginalValue(), commentRange(t));
+        }
+        return null;
+
+    };
 
     public PropertiesTreeFactory() {
     }
@@ -28,18 +37,14 @@ public class PropertiesTreeFactory {
         List<Comment> comentsTrivia = comments((PropSyntaxToken) eof);
 
 
-
-
         TreeMetaData treeMetaData = metaData(comentsTrivia, properties.or(Collections.emptyList()).toArray(new Tree[]{}));
         return new PropsTree(treeMetaData, byteOrderMark.orNull(), properties, eof);
     }
-
 
     public PropTree property(PropKeyTree key, PropSeparatorTree separator, Optional<PropValueTree> value) {
         TreeMetaData treeMetaData = metaData(null, key, separator, value.orNull());
         return new PropTree(treeMetaData, key, separator, value.orNull());
     }
-
 
     public PropKeyTree key(PropSyntaxToken key) {
         return new PropKeyTree(metaData(key), key);
@@ -53,18 +58,16 @@ public class PropertiesTreeFactory {
         JpropertiesLexicalGrammar t = null;
 
         switch (separator.text()) {
-            case ":": {
+            case ":":
                 t = JpropertiesLexicalGrammar.COLON_SEPARATOR;
                 break;
-            }
-            case "=": {
+
+            case "=":
                 t = JpropertiesLexicalGrammar.EQUALS_SEPARATOR;
                 break;
-            }
-            // ADD SPACE SEPARATOR
-            default: {
 
-            }
+            default:
+                break;
         }
 
         return new PropSeparatorTree(metaData(separator), separator, t);
@@ -74,17 +77,16 @@ public class PropertiesTreeFactory {
         List<HasTextRange> ranges = new ArrayList<>();
         ranges.add(token);
         List<Comment> triviasComments = comments(token);
-        ranges.addAll(token.trivias.stream().map(triviaToComent).collect(Collectors.toList()));
+        ranges.addAll(token.trivias.stream().map(triviaToComment).collect(Collectors.toList()));
         HasTextRange[] hasTextRanges = ranges.toArray(new HasTextRange[]{});
 
         return new TreeMetaDataProvider(triviasComments, Collections.singletonList(token)).metaData(TextRangeUtils.wholeRange(hasTextRanges));
 
     }
 
-
     private List<Comment> comments(PropSyntaxToken token) {
 
-        return token.trivias.stream().map(triviaToComent).collect(Collectors.toList());
+        return token.trivias.stream().map(triviaToComment).collect(Collectors.toList());
     }
 
     //TODO handle token better
@@ -94,7 +96,7 @@ public class PropertiesTreeFactory {
 
         List<Token> tokens = new ArrayList<>();
 
-        Stream.of(trees).filter(t -> t != null).forEach(t -> {
+        Stream.of(trees).filter(Objects::nonNull).forEach(t -> {
                     comments.addAll(t.metaData().commentsInside());
                     tokens.addAll(t.metaData().tokens());
                 }
@@ -103,26 +105,12 @@ public class PropertiesTreeFactory {
 
         List<HasTextRange> ranges = Stream.concat(
                 java.util.Optional.ofNullable(aditionalTokens).orElse(Collections.emptyList()).stream().map(ac -> (HasTextRange) ac),
-                        comments.stream().map(c -> (HasTextRange) c)).collect(Collectors.toList());
+                comments.stream().map(c -> (HasTextRange) c)).collect(Collectors.toList());
         ranges.addAll(tokens);
 
-
-        TreeMetaDataProvider provider = new TreeMetaDataProvider(comments, tokens);
-
-
-        return provider.metaData(TextRangeUtils.wholeRange(ranges.toArray(new HasTextRange[]{})));
+        return new TreeMetaDataProvider(comments, tokens).metaData(TextRangeUtils.wholeRange(ranges.toArray(new HasTextRange[]{})));
 
     }
-
-
-    private Function<Trivia, Comment> triviaToComent = (Trivia t) -> {
-        if (t.isComment()) {
-            return new PropComment(t.getToken().getOriginalValue(), commentRange(t));
-        }
-        return null;
-
-    };
-
 
     private TextRange commentRange(Trivia t) {
         return new TextRangeImpl(t.getToken().getLine(), t.getToken().getColumn(), t.getToken().getLine(), t.getToken().getOriginalValue().length());

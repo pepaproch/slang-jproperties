@@ -4,15 +4,13 @@ package org.pepaproch.properties.checks;
 import org.pepaproch.properties.parser.slang.tree.PropKeyTree;
 import org.pepaproch.properties.plugin.PropertiesContext;
 import org.sonar.check.Rule;
-
 import org.sonar.check.RuleProperty;
-
 import org.sonarsource.slang.plugin.InputFileContext;
 import org.sonarsource.slang.visitors.TreeVisitor;
 
 
 @Rule(key = "duplicatedCheck")
-public class DuplicatedProjectKeysVisitor extends TreeVisitor<InputFileContext>   {
+public class DuplicatedProjectKeysVisitor extends TreeVisitor<InputFileContext> {
 
     private static final int DEFAULT_THRESHOLD = 1;
     @RuleProperty(
@@ -25,20 +23,11 @@ public class DuplicatedProjectKeysVisitor extends TreeVisitor<InputFileContext> 
     PropertiesContext projectContext;
 
 
-
-
     public DuplicatedProjectKeysVisitor(PropertiesContext projectContext) {
         this.projectContext = projectContext;
-        register(PropKeyTree.class , (ctx, tree ) -> {
-            projectContext.addDuplicationToken(tree.metaData().tokens().get(0), ctx.inputFile);
-
-        } );
+        register(PropKeyTree.class, (ctx, tree) -> projectContext.addDuplicationToken(tree.metaData().tokens().get(0), ctx.inputFile));
 
     }
-
-
-
-
 
 
 }
