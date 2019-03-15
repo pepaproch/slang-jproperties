@@ -1,6 +1,9 @@
 package org.pepaproch.properties.plugin;
 
 import org.pepaproch.properties.checks.*;
+import org.pepaproch.properties.checks.project.DuplicatedProjectKeysRule;
+import org.pepaproch.properties.checks.project.MissingDefaultBundleCheck;
+import org.pepaproch.properties.checks.project.ProjectPropertiesVisitor;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -11,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PropertiesCheckList {
-    public static final Predicate<Class> FILTER_SPECIAL_INIT = c-> c != CommentedCodeCheck.class;
+    public static final Predicate<Class> FILTER_SPECIAL_INIT = c-> c != CommentedCodeCheck.class ;
 
     private PropertiesCheckList() {
     }
@@ -31,6 +34,7 @@ public class PropertiesCheckList {
                 org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
                 TodoCommentCheck.class,
+                MissingDefaultBundleCheck.class,
                 KeyRegularExpressionCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,
@@ -38,7 +42,9 @@ public class PropertiesCheckList {
                 ParsingErrorCheck.class,
                 EmptyValueCheck.class,
                 FileNameCheck.class,
-                ValueRegularExpressionCheck.class));
+                ValueRegularExpressionCheck.class,
+                DuplicatedProjectKeysRule.class
+                ));
     }
 
     public static List<Class> checks(Predicate<Class> filter) {
@@ -52,7 +58,7 @@ public class PropertiesCheckList {
 
     public static List<Class> visitors() {
         return Collections.unmodifiableList(Arrays.asList(
-                DuplicatedProjectKeysVisitor.class
+                ProjectPropertiesVisitor.class
      ));
     }
 

@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 
-public class DuplicatedProjectKeysVisitorTest extends SensorTestBase {
+public class DuplicatedProjectPropertiesVisitorTest extends SensorTestBase {
 
     @Test
     public void testProjectDuplicatedPropsInProject() {

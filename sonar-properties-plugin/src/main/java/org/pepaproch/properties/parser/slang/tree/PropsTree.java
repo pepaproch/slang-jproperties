@@ -4,10 +4,8 @@ import com.sonar.sslr.api.typed.Optional;
 import org.sonarsource.slang.api.*;
 
 import javax.annotation.CheckForNull;
-
 import java.util.Collections;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 public class PropsTree implements TopLevelTree {
@@ -36,13 +34,7 @@ public class PropsTree implements TopLevelTree {
         return metaData;
     }
 
-    public Token getByteOrderMark() {
-        return byteOrderMark;
-    }
 
-    public Token getEof() {
-        return eof;
-    }
 
     public List<PropTree> getChildren() {
         return children;

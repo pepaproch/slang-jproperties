@@ -12,7 +12,6 @@ public class PropValueTree extends StringLiteralTreeImpl {
 
 
     public PropValueTree(TreeMetaData metaData, PropSyntaxToken value) {
-        //TODO
         super(metaData, value.text(), value.text());
     }
 

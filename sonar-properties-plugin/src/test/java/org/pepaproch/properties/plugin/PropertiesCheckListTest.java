@@ -10,9 +10,6 @@ import static org.junit.Assert.*;
 
 public class PropertiesCheckListTest  {
 
-    @Test
-    public void checks() {
-    }
 
     @Test
     public void checks1() {
@@ -34,7 +31,5 @@ public class PropertiesCheckListTest  {
         assertEquals(1,checksb.size());
     }
 
-    @Test
-    public void visitors() {
-    }
+
 }

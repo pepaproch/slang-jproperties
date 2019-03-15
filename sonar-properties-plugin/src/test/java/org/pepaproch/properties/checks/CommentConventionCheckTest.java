@@ -7,13 +7,13 @@ import org.sonar.api.batch.sensor.issue.Issue;
 
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CommentConventionCheckTest extends SensorTestBase {
     @Test
     public void commentConvetionCheckTest() {
         CheckFactory f = checkFactory("comment-convention");
-        addFile("ip.properties", "key=value\n\r" +
+        addFile("ip.properties", "#\nkey=value\n\r" +
                 "#key=aaa\n" +
                 "!key2=jjj\n" +
                 "# keu=ssdasd\n" +

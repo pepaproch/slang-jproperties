@@ -12,13 +12,13 @@ import java.util.function.BiConsumer;
 public class DummyCheck implements SlangCheck {
 
 
-    BiConsumer<CheckContext, PropsTree> check = (CheckContext ctx, PropsTree tree) -> {
+    BiConsumer<CheckContext, PropsTree> check = (CheckContext ctx, PropsTree tree) ->
         tree.getChildren().stream().forEach(p -> {
             if (p.key.value().equalsIgnoreCase("dummy")) {
                 ctx.reportIssue(p.key.textRange(), "Dummy issue detected");
             }
         });
-    };
+
 
     @Override
     public void initialize(InitContext init) {

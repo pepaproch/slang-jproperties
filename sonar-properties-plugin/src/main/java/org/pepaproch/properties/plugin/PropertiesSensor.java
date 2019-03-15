@@ -1,6 +1,6 @@
 package org.pepaproch.properties.plugin;
 
-import org.pepaproch.properties.checks.DuplicatedProjectKeysVisitor;
+import org.pepaproch.properties.checks.project.ProjectPropertiesVisitor;
 import org.pepaproch.properties.parser.slang.PropertiesConverter;
 import org.sonar.api.batch.rule.CheckFactory;
 import org.sonar.api.batch.rule.Checks;
@@ -17,8 +17,10 @@ import org.sonarsource.slang.plugin.InputFileContext;
 import org.sonarsource.slang.plugin.SlangSensor;
 import org.sonarsource.slang.visitors.TreeVisitor;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,8 +32,10 @@ public class PropertiesSensor extends SlangSensor {
     public PropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, PropertiesLanguage language) {
         super(noSonarFilter, fileLinesContextFactory, language);
         checks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-        checks.addAnnotatedChecks((Iterable<?>) PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT));
-        checks.addAnnotatedChecks(new CommentedCodeCheck(new PropertiesCodeVerifier()));
+        Iterable<?> checks = PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT,
+                c -> SlangCheck.class.isAssignableFrom(c));
+        this.checks.addAnnotatedChecks(checks);
+        this.checks.addAnnotatedChecks(new CommentedCodeCheck(new PropertiesCodeVerifier()));
         projectContext = new PropertiesContext(this);
 
 
@@ -40,7 +44,8 @@ public class PropertiesSensor extends SlangSensor {
     @Override
     public void execute(SensorContext sensorContext) {
         super.execute(sensorContext);
-        projectContext.finish(Collections.singletonList(new ProjectContextConsumer(sensorContext)));
+        List<Consumer<PropertiesContext>> consumers = Collections.unmodifiableList(Arrays.asList(new ProjectContextDuplications(sensorContext), new ProjectContextTranslations(sensorContext)));
+        projectContext.finish(consumers);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class PropertiesSensor extends SlangSensor {
         List<TreeVisitor<InputFileContext>> visitors = super.visitors(sensorContext, statistics);
         return Collections.unmodifiableList(
                 Stream.concat(visitors.stream(),
-                        Stream.of(new DuplicatedProjectKeysVisitor(projectContext))).collect(Collectors.toList())
+                        Stream.of(new ProjectPropertiesVisitor(projectContext))).collect(Collectors.toList())
         );
 
 

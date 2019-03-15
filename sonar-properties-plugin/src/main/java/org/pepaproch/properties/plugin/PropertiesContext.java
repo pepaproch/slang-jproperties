@@ -1,9 +1,9 @@
 package org.pepaproch.properties.plugin;
 
-import org.pepaproch.properties.checks.Duplications;
-import org.pepaproch.properties.checks.ProjectCheck;
+import org.pepaproch.properties.checks.project.ProjectCheck;
+import org.pepaproch.properties.checks.project.PropertiesBucket;
+import org.pepaproch.properties.parser.slang.tree.PropTree;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonarsource.slang.api.Token;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,20 +11,20 @@ import java.util.function.Consumer;
 public class PropertiesContext implements ProjectCheck {
 
 
-    private final Duplications duplications;
+    private final PropertiesBucket<InputFile> projectProperties;
     public final PropertiesSensor propertiesSensor;
 
     public PropertiesContext(PropertiesSensor propertiesSensor) {
-        duplications = new Duplications();
+        projectProperties = new PropertiesBucket();
         this.propertiesSensor = propertiesSensor;
     }
 
-    public Duplications getDuplications() {
-        return  this.duplications;
+    public PropertiesBucket<InputFile> getProjectProperties() {
+        return  this.projectProperties;
     }
 
-    public void addDuplicationToken(Token value, InputFile file) {
-        getDuplications().processToken(value, file);
+    public void addPropertyTree(PropTree value, InputFile file) {
+        getProjectProperties().processItem(value, file);
     }
 
 

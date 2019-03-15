@@ -1,9 +1,9 @@
 package org.pepaproch.properties.checks;
 
+import org.pepaproch.properties.checks.project.PropertiesBucket;
 import org.pepaproch.properties.parser.slang.tree.PropTree;
 import org.pepaproch.properties.parser.slang.tree.PropsTree;
 import org.sonar.check.Rule;
-import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SecondaryLocation;
 import org.sonarsource.slang.checks.api.SlangCheck;
@@ -20,11 +20,11 @@ public class DuplicatedKeysCheck implements SlangCheck {
     @Override
     public void initialize(InitContext init) {
         init.register(PropsTree.class, (ctx, tree) -> {
-            Duplications<Token, String> duplications = new Duplications<>();
-            tree.declarations().stream().map(p -> (PropTree) p).forEach(
-                    (p) -> duplications.processToken(p.key.metaData().tokens().get(0), ctx.filename()));
+            PropertiesBucket<String> allProperties = new PropertiesBucket();
+            tree.declarations().stream().map(p -> (PropTree) p)
+                    .forEach(p -> allProperties.processItem(p, ctx.filename()));
 
-            Map<String, LinkedList<TokenLocations<String>>> locations = duplications.duplications();
+            Map<String, LinkedList<TokenLocations<String>>> locations = new DuplicationExtractor<>(allProperties.getProps()).duplications(1);
             if (locations.keySet().size() > 1) {
                 locations.keySet().forEach(k -> {
                             List<SecondaryLocation> secondaryLocations = new ArrayList<>();

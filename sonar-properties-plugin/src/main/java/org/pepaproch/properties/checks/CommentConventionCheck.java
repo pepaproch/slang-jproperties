@@ -26,14 +26,14 @@ public class CommentConventionCheck implements SlangCheck {
                     List<SecondaryLocation> secondaryLocations = collect.stream().skip(1).
                             map(c -> new SecondaryLocation(c.textRange(), String.format(ISSUE_MESSAGE, text)))
                             .collect(Collectors.toList());
-
-                    ctx.reportIssue(collect.get(0),  String.format(ISSUE_MESSAGE, text, secondaryLocations));
-
+                    if(!collect.isEmpty()) {
+                        ctx.reportIssue(collect.get(0), String.format(ISSUE_MESSAGE, text, secondaryLocations));
+                    }
 
                 comments.stream().filter(c -> {
                     String comment = c.text();
                     if (comment.length() < 2) {
-                        return true;
+                        return false;
                     } else {
                         return !Character.isWhitespace(comment.charAt(1));
 

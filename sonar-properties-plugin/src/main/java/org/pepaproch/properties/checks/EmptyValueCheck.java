@@ -8,7 +8,7 @@ import org.sonarsource.slang.checks.api.SlangCheck;
 @Rule(key="emptyValueCheck")
 public class EmptyValueCheck implements SlangCheck {
 
-    private final static String ISSUE_MESSAGE = "Property with empty value should be removed";
+    private  static final String ISSUE_MESSAGE = "Property with empty value should be removed";
 
     @Override
     public void initialize(InitContext init) {

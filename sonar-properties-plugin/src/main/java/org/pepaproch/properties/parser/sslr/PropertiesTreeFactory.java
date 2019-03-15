@@ -77,7 +77,7 @@ public class PropertiesTreeFactory {
         List<HasTextRange> ranges = new ArrayList<>();
         ranges.add(token);
         List<Comment> triviasComments = comments(token);
-        ranges.addAll(token.trivias.stream().map(triviaToComment).collect(Collectors.toList()));
+        ranges.addAll(token.getTrivias().stream().map(triviaToComment).collect(Collectors.toList()));
         HasTextRange[] hasTextRanges = ranges.toArray(new HasTextRange[]{});
 
         return new TreeMetaDataProvider(triviasComments, Collections.singletonList(token)).metaData(TextRangeUtils.wholeRange(hasTextRanges));
@@ -86,7 +86,7 @@ public class PropertiesTreeFactory {
 
     private List<Comment> comments(PropSyntaxToken token) {
 
-        return token.trivias.stream().map(triviaToComment).collect(Collectors.toList());
+        return token.getTrivias().stream().map(triviaToComment).collect(Collectors.toList());
     }
 
     //TODO handle token better

@@ -36,7 +36,7 @@ These rules are pretty useful even for the properties files.
 
 | Rule                                          | Implemented | Note |
 |:----------------------------------------------|-------------|------|
-| BOMCheck|                                      |N/A|
+| BOMCheck|                                      |N/A  ?|
 | CommentConventionCheck|R|
 | CommentedOutCodeCheck|G||
 | CommentRegularExpressionCheck |R|Template|
@@ -51,18 +51,18 @@ These rules are pretty useful even for the properties files.
 | HardCodedCredentialsCheck |R|
 | IndentationCheck |TODO R|
 | KeyNamingConventionCheck |TODO R|
-| KeyRegularExpressionCheck |R|
+| KeyRegularExpressionCheck |R| Template|
 | LineLengthCheck |G|S103|
 | MissingNewlineAtEndOfFileCheck |TODO R|
-| MissingTranslationsCheck |TODO|
-| MissingTranslationsInDefaultCheck |TODO |
+| MissingTranslationsCheck |TODO|**
+| MissingTranslationsInDefaultCheck |R|**
 | NoPropertiesCheck | TODO R|
 | ParsingErrorCheck |G|
 | SeparatorConventionCheck | TODO R|
 | TabCharacterCheck |TODO R|
 | TodoTagPresenceCheck |G|
 | TooManyKeysCheck |G| S104|
-| ValueRegularExpressionCheck|TODO R
+| ValueRegularExpressionCheck|R| Template
 
 
 ## New rules 

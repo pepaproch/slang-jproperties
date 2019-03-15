@@ -4,7 +4,7 @@ package org.pepaproch.properties.checks;
 import org.sonarsource.slang.api.HasTextRange;
 import org.sonarsource.slang.api.TextRange;
 
-public class TokenLocations <C> implements HasTextRange {
+public class TokenLocations<C>  implements HasTextRange {
     public final TextRange location;
     public final C module;
 

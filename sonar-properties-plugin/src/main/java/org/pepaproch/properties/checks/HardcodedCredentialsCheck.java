@@ -7,7 +7,6 @@ import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SlangCheck;
 
 import java.util.List;
-
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +15,7 @@ import java.util.stream.Stream;
 public class HardcodedCredentialsCheck implements SlangCheck {
 
 
-    private final String ISSUE_MEESAGE = "\"%s\" detected in this key, review this potentially hardcoded credential.";
+    private static final String ISSUE_MEESAGE = "\"%s\" detected in this key, review this potentially hardcoded credential.";
     private static final String DEFAULT_VALUE = "password,pwd,username";
     private static final String DEFAULT_ENCRYPTED_CREDENTIALS_TO_IGNORE = "";
     private List<Pattern> patterns ;

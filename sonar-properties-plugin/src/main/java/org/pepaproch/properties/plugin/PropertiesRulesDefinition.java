@@ -22,7 +22,6 @@ public class PropertiesRulesDefinition implements RulesDefinition {
 
         RuleMetadataLoader ruleMetadataLoader = new RMetadataLoader(RESOURCE_FOLDER, PropertiesProfileDefinition.PROFILE_PATH, sonarRuntime);
         ruleMetadataLoader.addRulesByAnnotatedClass(repository, PropertiesCheckList.checks());
-        ruleMetadataLoader.addRulesByAnnotatedClass(repository,  PropertiesCheckList.visitors());
         repository.done();
     }
 
