@@ -20,4 +20,16 @@ public class MissingDefaultBundleCheckTest  extends SensorTestBase {
         assertEquals(2, context.allIssues().size());
     }
 
+
+    @Test
+    public void testPresent() {
+        CheckFactory f = checkFactory("missing-default-bundle");
+        addFile("lang.properties", "key=value\n");
+        addFile("lang_cz.properties", "key=value\n");
+        addFile("lang_en.properties", "key=value\n");
+
+        sensor(f).execute(context);
+        assertEquals(0, context.allIssues().size());
+    }
+
 }

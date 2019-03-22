@@ -5,12 +5,10 @@ import com.sonar.sslr.api.TokenType;
 import com.sonar.sslr.api.Trivia;
 import com.sonar.sslr.api.typed.Input;
 import com.sonar.sslr.api.typed.NodeBuilder;
-import org.pepaproch.properties.parser.slang.tree.ShouldSkipToken;
 import org.pepaproch.properties.parser.slang.tree.PropSyntaxToken;
 import org.sonar.sslr.grammar.GrammarRuleKey;
 import org.sonarsource.slang.api.TextPointer;
 import org.sonarsource.slang.api.TextRange;
-import org.sonarsource.slang.api.Token;
 import org.sonarsource.slang.impl.TextPointerImpl;
 import org.sonarsource.slang.impl.TextRangeImpl;
 
@@ -26,7 +24,7 @@ public class PropertiesNodeBuilder implements NodeBuilder {
             }
         }
 
-        return new ShouldSkipToken(new TextRangeImpl(0, 0, 0, 0), "\"\"", Token.Type.OTHER);
+        return null;
 
 
     }

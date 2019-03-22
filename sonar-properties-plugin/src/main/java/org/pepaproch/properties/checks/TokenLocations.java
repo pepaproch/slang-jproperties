@@ -6,7 +6,7 @@ import org.sonarsource.slang.api.TextRange;
 
 public class TokenLocations<C>  implements HasTextRange {
     public final TextRange location;
-    public final C module;
+    private final C module;
 
     TokenLocations(TextRange location, C module) {
         this.location = location;
@@ -16,5 +16,9 @@ public class TokenLocations<C>  implements HasTextRange {
     @Override
     public TextRange textRange() {
         return location;
+    }
+
+    public C getModule() {
+        return module;
     }
 }

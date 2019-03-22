@@ -3,7 +3,7 @@ package org.pepaproch.properties.plugin;
 import org.pepaproch.properties.checks.*;
 import org.pepaproch.properties.checks.project.DuplicatedProjectKeysRule;
 import org.pepaproch.properties.checks.project.MissingDefaultBundleCheck;
-import org.pepaproch.properties.checks.project.ProjectPropertiesVisitor;
+import org.pepaproch.properties.checks.project.MissingInDefaultBundleCheck;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -35,6 +35,7 @@ public class PropertiesCheckList {
                 StringLiteralDuplicatedCheck.class,
                 TodoCommentCheck.class,
                 MissingDefaultBundleCheck.class,
+                MissingInDefaultBundleCheck.class,
                 KeyRegularExpressionCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,

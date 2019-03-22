@@ -1,12 +1,9 @@
 package org.pepaproch.properties.checks.project;
 
-import org.pepaproch.properties.plugin.PropertiesContext;
 
-import java.util.List;
-import java.util.function.Consumer;
+import org.pepaproch.properties.plugin.PostAnalyseCheks;
 
 public interface ProjectCheck {
 
-
-     void finish(List<Consumer<PropertiesContext>> consumers) ;
+    void accept(PostAnalyseCheks.PCheckContext pctx);
 }

@@ -1,4 +1,4 @@
-package org.pepaproch.properties.checks.project;
+package org.pepaproch.properties.plugin;
 
 import org.pepaproch.properties.parser.slang.tree.PropTree;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PropertiesBucket<C> {
+public class ProjectAllProperties<C> {
 
 
     private final Map<C, List<PropTree>>props = new HashMap();
@@ -24,7 +24,7 @@ public class PropertiesBucket<C> {
 
     }
 
-    public void processItem(List<PropTree> value, C groupComponent) {
+    public void processItems(List<PropTree> value, C groupComponent) {
         getProps().put(groupComponent, value);
 
     }

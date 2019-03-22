@@ -3,7 +3,10 @@ package org.pepaproch.properties.checks.project;
 import org.pepaproch.properties.parser.slang.tree.PropTree;
 import org.sonar.api.batch.fs.InputFile;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,39 +23,22 @@ public class LangBundlesExtractor {
     }
 
 
-    public Map<InputFile, Map<InputFile, List<PropTree>>> getBundles() {
-        Map<InputFile, Map<InputFile, List<PropTree>>> bundles = new HashMap<>();
-        props.forEach((inputFile, propTrees) -> {
-            if (hasLangBundleName(inputFile)) {
-                processHasLangExtension(inputFile, propTrees, bundles);
+    public List<LangBundle> getLangBundles() {
+        Map<String, LangBundle> bundleMap = new HashMap<>();
+
+        props.forEach((k, v) -> {
+            if (bundleMap.containsKey(LangBundle.defaultFileName(k))) {
+                LangBundle langBundle = bundleMap.get(LangBundle.defaultFileName(k));
+                langBundle.getBundleMembers().put(k, v);
             } else {
-                Map<InputFile, List<PropTree>> bundleMap = new LinkedHashMap<>();
-                bundleMap.put(inputFile, propTrees);
-                bundles.put(inputFile, bundleMap);
+                LangBundle langBundle = new LangBundle(LangBundle.defaultFileName(k));
+                langBundle.getBundleMembers().put(k, v);
+                bundleMap.put(langBundle.getBundleName(), langBundle);
             }
 
-
         });
-        return bundles.entrySet().stream().filter(e -> e.getValue().size() > 1).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-    }
-
-    private void processHasLangExtension(InputFile f, List<PropTree> props, Map<InputFile, Map<InputFile, List<PropTree>>> bundles) {
-        Optional<Map.Entry<InputFile, Map<InputFile, List<PropTree>>>> inputFileMapEntry = ownerBudle(f, bundles);
-        if (inputFileMapEntry.isPresent()) {
-            bundles.get(inputFileMapEntry.get().getKey()).put(f, props);
-        } else {
-            Map<InputFile, List<PropTree>> bundleMap = new LinkedHashMap<>();
-            bundleMap.put(f, props);
-            bundles.put(f, bundleMap);
-        }
-
-    }
-
-
-    private Optional<Map.Entry<InputFile, Map<InputFile, List<PropTree>>>> ownerBudle(InputFile f, Map<InputFile, Map<InputFile, List<PropTree>>> bundles) {
-        return bundles.entrySet().
-                stream().filter(ifi -> stripLang(stripExtension(ifi.getKey().filename())).equalsIgnoreCase(stripLang(stripExtension(f.filename())))).findFirst();
+        return bundleMap.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
 
     }
 

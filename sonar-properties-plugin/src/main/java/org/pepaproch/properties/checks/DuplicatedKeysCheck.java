@@ -1,8 +1,8 @@
 package org.pepaproch.properties.checks;
 
-import org.pepaproch.properties.checks.project.PropertiesBucket;
 import org.pepaproch.properties.parser.slang.tree.PropTree;
 import org.pepaproch.properties.parser.slang.tree.PropsTree;
+import org.pepaproch.properties.plugin.ProjectAllProperties;
 import org.sonar.check.Rule;
 import org.sonarsource.slang.checks.api.InitContext;
 import org.sonarsource.slang.checks.api.SecondaryLocation;
@@ -20,7 +20,7 @@ public class DuplicatedKeysCheck implements SlangCheck {
     @Override
     public void initialize(InitContext init) {
         init.register(PropsTree.class, (ctx, tree) -> {
-            PropertiesBucket<String> allProperties = new PropertiesBucket();
+            ProjectAllProperties<String> allProperties = new ProjectAllProperties();
             tree.declarations().stream().map(p -> (PropTree) p)
                     .forEach(p -> allProperties.processItem(p, ctx.filename()));
 
