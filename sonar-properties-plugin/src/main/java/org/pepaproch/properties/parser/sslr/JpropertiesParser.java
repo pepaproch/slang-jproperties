@@ -9,9 +9,11 @@ import java.nio.charset.StandardCharsets;
 
 public class JpropertiesParser {
 
+    private  JpropertiesParser() {
+    }
 
     public static ActionParser<PropsTree> create(PropertiesTreeFactory factory, PropertiesNodeBuilder propertiesNodeBuilder) {
-        return new ActionParser<PropsTree>(StandardCharsets.UTF_8,
+        return new ActionParser<>(StandardCharsets.UTF_8,
                 JpropertiesLexicalGrammar.createBuilder(),
                 JpropertiesGrammar.class,
                 factory,

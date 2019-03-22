@@ -25,9 +25,7 @@ public class MissingInDefaultBundleCheck  implements ProjectCheck {
             Map<InputFile, List<PropTree>> descendants = b.descendants();
               descendants.entrySet().forEach(d->{
                   List<PropTree> propTrees = missingKeysIn(inputFileListEntry.getValue(), d.getValue());
-                  propTrees.forEach(p->{
-                      pctx.reportIssue(inputFileListEntry.getKey(), String.format(ISSUE_MESSAGE, p.key.value()));
-                  });
+                  propTrees.forEach(p-> pctx.reportIssue(inputFileListEntry.getKey(), String.format(ISSUE_MESSAGE, p.key.value())));
 
               });
 

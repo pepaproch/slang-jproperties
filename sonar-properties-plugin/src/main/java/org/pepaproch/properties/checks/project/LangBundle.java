@@ -29,7 +29,7 @@ public class LangBundle {
 
     public static String defaultFileName(InputFile file) {
         String fileName = stripExtension(file.filename());
-        int i = fileName.lastIndexOf("_");
+        int i = fileName.lastIndexOf('_');
 
         return fileName.substring(0, i == -1 ? fileName.length() : i);
     }
@@ -47,8 +47,7 @@ public class LangBundle {
     }
 
     public Map<InputFile, List<PropTree>> descendants() {
-        Map<InputFile, List<PropTree>> collect = bundleMembers.entrySet().stream().filter(e -> !isDefaultBundleName(e.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return collect;
+        return bundleMembers.entrySet().stream().filter(e -> !isDefaultBundleName(e.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static String stripExtension(String fileName) {

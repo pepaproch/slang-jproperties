@@ -5,15 +5,12 @@ import com.sonar.sslr.api.typed.ActionParser;
 import org.pepaproch.properties.parser.slang.tree.PropsTree;
 import org.pepaproch.properties.parser.sslr.JpropertiesParser;
 import org.pepaproch.properties.parser.sslr.PropertiesTreeFactory;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonarsource.slang.api.ASTConverter;
 import org.sonarsource.slang.api.ParseException;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.impl.TextPointerImpl;
 
 public class PropertiesConverter implements ASTConverter {
-    private static final Logger LOG = Loggers.get(ASTConverter.class);
 
     final PropertiesTreeFactory factory;
     final PropertiesNodeBuilder nodeBUilder;

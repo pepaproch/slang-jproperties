@@ -41,13 +41,10 @@ public class HardcodedCredentialsCheck implements SlangCheck {
 
     @Override
     public void initialize(InitContext init) {
-        init.register(PropTree.class, (ctx, tree) -> {
-            patterns().map(p-> p.matcher(tree.key.value())).filter(matcher-> matcher.find()
-                    && (encryptedCredentialsToIgnore.trim().isEmpty()
-                    || tree.value.content().startsWith(encryptedCredentialsToIgnore))).map( m-> m.group(0))
-                    .forEach( s-> ctx.reportIssue(tree.key.textRange(),  String.format(ISSUE_MEESAGE, s)));
-
-        });
+        init.register(PropTree.class, (ctx, tree) -> patterns().map(p-> p.matcher(tree.key.value())).filter(matcher-> matcher.find()
+                && (encryptedCredentialsToIgnore.trim().isEmpty()
+                || tree.value.content().startsWith(encryptedCredentialsToIgnore))).map( m-> m.group(0))
+                .forEach( s-> ctx.reportIssue(tree.key.textRange(),  String.format(ISSUE_MEESAGE, s))));
 
     }
 

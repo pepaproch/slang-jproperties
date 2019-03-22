@@ -1,6 +1,5 @@
 package org.pepaproch.properties.checks;
 
-import org.pepaproch.properties.parser.slang.tree.PropKeyTree;
 import org.pepaproch.properties.parser.slang.tree.PropValueTree;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
@@ -15,7 +14,7 @@ public class ValueRegularExpressionCheck implements SlangCheck {
 
     private static final String DEFAULT_REGULAR_EXPRESSION = ".*";
     private static final String DEFAULT_MESSAGE = "The regular expression \"%s\" matches this key.";
-    private Pattern pattern;
+
 
     @RuleProperty(
             key = "regularExpression",
@@ -25,7 +24,7 @@ public class ValueRegularExpressionCheck implements SlangCheck {
 
     @Override
     public void initialize(InitContext init) {
-        pattern = Pattern.compile(regularExpression);
+         Pattern pattern = Pattern.compile(regularExpression);
         init.register(PropValueTree.class, (ctx, tree)->{
             if(pattern.matcher(tree.value()).find()) {
                 ctx.reportIssue(tree,String.format(DEFAULT_MESSAGE, pattern.pattern()));

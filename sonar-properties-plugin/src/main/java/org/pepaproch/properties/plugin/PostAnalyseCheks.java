@@ -8,10 +8,7 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonarsource.slang.api.TextRange;
-import org.sonarsource.slang.api.Tree;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +16,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class PostAnalyseCheks implements Consumer<PostAnalyseContext> {
-    private static final Logger LOG = Loggers.get(PostAnalyseCheks.class);
+
     private final SensorContext ctx;
 
 
@@ -32,9 +29,7 @@ public class PostAnalyseCheks implements Consumer<PostAnalyseContext> {
 
         Checks<ProjectCheck> pchecks = postAnalyseContext.propertiesSensor.pchecks();
 
-        pchecks.all().stream().forEach(c -> {
-            c.accept(new PCheckContext(postAnalyseContext, pchecks.ruleKey(c), ctx));
-        });
+        pchecks.all().stream().forEach(c -> c.accept(new PCheckContext(postAnalyseContext, pchecks.ruleKey(c), ctx)));
     }
 
 
@@ -52,40 +47,23 @@ public class PostAnalyseCheks implements Consumer<PostAnalyseContext> {
         }
 
 
-        public void reportIssue(InputFile file, TextRange range, String format, Map<InputFile, TextRange> secondary, String message) {
+        public void reportIssue(InputFile file, TextRange range, String primaryMessage, Map<InputFile, TextRange> secondary, String secondaryMessage) {
             NewIssue newIssue = sctx.newIssue().forRule(ruleKey);
-            newIssue.at(newIssue.newLocation().on(file).at(TextRangeUtils.sonarTextRange(range)).message(message));
-            List<NewIssueLocation> sl = secondary.entrySet().stream().map(e -> newIssue.newLocation().on(e.getKey()).at(TextRangeUtils.sonarTextRange(e.getValue()))).collect(Collectors.toList());
-            sl.forEach(sli -> newIssue.addLocation(sli));
+            newIssue.at(newIssue.newLocation().on(file).at(TextRangeUtils.sonarTextRange(range)).message(primaryMessage));
+            List<NewIssueLocation> sl = secondary.entrySet().stream().map(e -> newIssue.newLocation().message(secondaryMessage).on(e.getKey()).at(TextRangeUtils.sonarTextRange(e.getValue()))).collect(Collectors.toList());
+            sl.forEach(newIssue::addLocation);
             newIssue.addFlow(sl);
             newIssue.save();
 
         }
 
-        public void reportIssue(InputFile file, Tree tree, String message, List<NewIssueLocation> secondary) {
-            NewIssue newIssue = sctx.newIssue().forRule(ruleKey);
-            newIssue.at(newIssue.newLocation().on(file).at(TextRangeUtils.sonarTextRange(tree.textRange())).message(message));
-            secondary.forEach(nl -> newIssue.addLocation(nl));
-            newIssue.addFlow(secondary);
-            newIssue.save();
 
-        }
-
-
-        public void reportIssue(InputFile file,  String message) {
+        public void reportIssue(InputFile file, String message) {
             NewIssue newIssue = sctx.newIssue().forRule(ruleKey);
             newIssue.at(newIssue.newLocation().on(file).message(message));
             newIssue.save();
 
         }
-        public void reportIssue(InputFile file, Tree tree, String message) {
-            NewIssue newIssue = sctx.newIssue().forRule(ruleKey);
-            newIssue.at(newIssue.newLocation().on(file).at(TextRangeUtils.sonarTextRange(tree.textRange())).message(message));
-            newIssue.save();
-
-        }
-
-
 
 
         public PostAnalyseContext getPctx() {

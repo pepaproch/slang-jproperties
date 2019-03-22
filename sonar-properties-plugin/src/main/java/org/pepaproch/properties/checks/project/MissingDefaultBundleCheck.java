@@ -21,9 +21,7 @@ public class MissingDefaultBundleCheck implements ProjectCheck {
         new LangBundlesExtractor(pctx.getPctx().getProjectProperties().getProps()).getLangBundles().forEach(b -> {
             Optional<Map.Entry<InputFile, List<PropTree>>> inputFileListEntry = b.defaulBudleFile();
             if (!inputFileListEntry.isPresent()) {
-                b.getBundleMembers().entrySet().forEach((e) -> {
-                    pctx.reportIssue(e.getKey(), String.format(MissingDefaultBundleCheck.ISSUE_MESSAGE, b.getBundleName()));
-                });
+                b.getBundleMembers().entrySet().forEach(e -> pctx.reportIssue(e.getKey(), String.format(MissingDefaultBundleCheck.ISSUE_MESSAGE, b.getBundleName())));
 
             }
 

@@ -5,12 +5,8 @@ import org.sonar.api.batch.fs.InputFile;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.Locale.getAvailableLocales;
 
 public class LangBundlesExtractor {
 
@@ -38,28 +34,13 @@ public class LangBundlesExtractor {
 
         });
 
-        return bundleMap.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
+        return bundleMap.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
 
     }
 
 
-    private boolean hasLangBundleName(InputFile f) {
-        Locale[] availableLocales = getAvailableLocales();
-        return Stream.of(availableLocales).anyMatch(l -> stripExtension(f.filename()).endsWith(l.getLanguage()));
-
-    }
 
 
-    private String stripLang(String fileName) {
-        int i = fileName.lastIndexOf('_');
-        return i == -1 ? fileName : fileName.substring(0, i);
-
-    }
-
-    private String stripExtension(String fileName) {
-        int ie = fileName.lastIndexOf('.');
-        return fileName.substring(0, ie);
-    }
 
 
 }

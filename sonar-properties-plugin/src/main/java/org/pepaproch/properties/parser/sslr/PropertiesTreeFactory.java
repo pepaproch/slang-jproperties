@@ -29,8 +29,7 @@ public class PropertiesTreeFactory {
 
     };
 
-    public PropertiesTreeFactory() {
-    }
+
 
     public PropsTree properties(Optional<Token> byteOrderMark, Optional<List<PropTree>> properties, Token eof) {
 

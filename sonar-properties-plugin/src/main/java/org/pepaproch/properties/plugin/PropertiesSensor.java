@@ -7,8 +7,6 @@ import org.sonar.api.batch.rule.Checks;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.FileLinesContextFactory;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 import org.sonarsource.slang.api.ASTConverter;
 import org.sonarsource.slang.api.CodeVerifier;
 import org.sonarsource.slang.checks.CommentedCodeCheck;
@@ -27,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PropertiesSensor extends SlangSensor {
-    private static final Logger LOG = Loggers.get(PropertiesSensor.class);
     private final PostAnalyseContext projectContext;
     private final Checks<SlangCheck> checks;
     private final Checks<ProjectCheck> pchecks;
@@ -35,13 +32,9 @@ public class PropertiesSensor extends SlangSensor {
     public PropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, PropertiesLanguage language) {
         super(noSonarFilter, fileLinesContextFactory, language);
         checks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-        Iterable<?> checks = PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT,
-                c -> SlangCheck.class.isAssignableFrom(c));
-        this.checks.addAnnotatedChecks(checks);
-        pchecks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-
-        Iterable<Class> pchecks = PropertiesCheckList.checks(ProjectCheck.class::isAssignableFrom);
-        this.pchecks.addAnnotatedChecks(pchecks);
+        this.checks.addAnnotatedChecks(    ( Iterable<Class> )  PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT, SlangCheck.class::isAssignableFrom));
+        this.pchecks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
+        this.pchecks.addAnnotatedChecks(( Iterable<Class> ) PropertiesCheckList.checks(ProjectCheck.class::isAssignableFrom));
         this.checks.addAnnotatedChecks(new CommentedCodeCheck(new PropertiesCodeVerifier()));
         projectContext = new PostAnalyseContext(this);
 

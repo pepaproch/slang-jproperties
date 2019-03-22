@@ -14,7 +14,7 @@ public class KeyRegularExpressionCheck implements SlangCheck {
 
     private static final String DEFAULT_REGULAR_EXPRESSION = ".*";
     private static final String DEFAULT_MESSAGE = "The regular expression \"%s\" matches this key.";
-    private Pattern pattern;
+
 
     @RuleProperty(
             key = "regularExpression",
@@ -24,7 +24,7 @@ public class KeyRegularExpressionCheck implements SlangCheck {
 
     @Override
     public void initialize(InitContext init) {
-        pattern = Pattern.compile(regularExpression);
+      Pattern  pattern = Pattern.compile(regularExpression);
         init.register(PropKeyTree.class, (ctx,tree)->{
             if(pattern.matcher(tree.value()).find()) {
                 ctx.reportIssue(tree,String.format(DEFAULT_MESSAGE, pattern.pattern()));
