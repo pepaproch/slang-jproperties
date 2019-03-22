@@ -1,4 +1,4 @@
-package org.pepaproch.properties.checks;
+package org.pepaproch.properties.checks.project;
 
 import com.sonar.sslr.api.typed.ActionParser;
 import org.mockito.Mockito;

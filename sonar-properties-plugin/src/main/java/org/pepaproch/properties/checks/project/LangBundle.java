@@ -23,7 +23,7 @@ public class LangBundle {
     public static boolean isDefaultBundleName(InputFile f) {
         String fileName = stripExtension(f.filename());
         int i = fileName.lastIndexOf('/');
-        String substring = fileName.substring(0, i == -1 ? fileName.length() : i);
+        String substring = fileName.substring(i == -1 ? 0 : i);
         return !substring.contains("_");
     }
 

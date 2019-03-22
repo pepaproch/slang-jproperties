@@ -1,10 +1,8 @@
-package org.pepaproch.properties.checks;
+package org.pepaproch.properties.checks.project;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import org.pepaproch.properties.checks.project.LangBundle;
-import org.pepaproch.properties.checks.project.LangBundlesExtractor;
 
 import java.util.List;
 
