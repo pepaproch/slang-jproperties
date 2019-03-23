@@ -6,6 +6,8 @@ import org.mockito.Mockito;
 import org.pepaproch.properties.parser.SensorTestBase;
 import org.sonar.api.batch.fs.InputFile;
 
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
@@ -21,6 +23,7 @@ public class LangBundleTest extends SensorTestBase {
          inputFile = Mockito.mock(InputFile.class);
          when(inputFile.filename()).thenReturn("/lang/bundle/lang_cz.properties");
          bundle = new LangBundle(LangBundle.defaultFileName(inputFile));
+         bundle.getBundleMembers().put(inputFile, Collections.emptyList());
      }
 
     @Test
