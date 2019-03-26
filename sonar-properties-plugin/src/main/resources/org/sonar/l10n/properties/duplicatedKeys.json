@@ -1,6 +1,6 @@
 {
-  "title": "Keys should not be duplicated",
-  "type": "CODE_SMELL",
+  "title": "Duplicated keys should be removed",
+  "type": "BUG",
   "status": "ready",
   "remediation": {
     "func": "Linear with offset",
@@ -9,10 +9,8 @@
     "linearFactor": "2min"
   },
   "tags": [
-    "design"
+    "bug"
   ],
   "defaultSeverity": "Critical",
-  "ruleSpecification": "RSPEC-1192",
-  "sqKey": "S1192",
   "scope": "Main"
 }

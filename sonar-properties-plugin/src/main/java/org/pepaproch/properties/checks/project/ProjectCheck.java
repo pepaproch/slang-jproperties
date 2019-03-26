@@ -6,4 +6,6 @@ import org.pepaproch.properties.plugin.PostAnalyseCheks;
 public interface ProjectCheck {
 
     void accept(PostAnalyseCheks.PCheckContext pctx);
+
+
 }

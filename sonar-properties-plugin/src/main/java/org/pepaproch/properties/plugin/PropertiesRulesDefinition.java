@@ -1,6 +1,7 @@
 package org.pepaproch.properties.plugin;
 
 
+import org.pepaproch.properties.checks.CheckList;
 import org.pepaproch.properties.checks.RuleTemplate;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.server.rule.RulesDefinition;
@@ -21,7 +22,7 @@ public class PropertiesRulesDefinition implements RulesDefinition {
         NewRepository repository = context.createRepository(PropertiesPlugin.REPOSITORY_KEY, PropertiesLanguage.JPROPERTIES_LANG_NAME).setName(PropertiesPlugin.REPOSITORY_KEY);
 
         RuleMetadataLoader ruleMetadataLoader = new RMetadataLoader(RESOURCE_FOLDER, PropertiesProfileDefinition.PROFILE_PATH, sonarRuntime);
-        ruleMetadataLoader.addRulesByAnnotatedClass(repository, PropertiesCheckList.checks());
+        ruleMetadataLoader.addRulesByAnnotatedClass(repository, CheckList.checks());
         repository.done();
     }
 

@@ -13,8 +13,8 @@ simple sslr parser [JpropertiesPlugin](https://docs.sonarqube.org/display/PLUG/S
 
     properties{TopLevelTree}[
     ?comment{Coment},
-    property [ key{LiteralTree}, sep {}, val {StringLiterealTree} ] ,
-    property [ key{LiteralTree}, sep {}, val {StringLiterealTree} ] ,
+    property [ key{IdentifierTree}, sep {}, val {StringLiterealTree} ] ,
+    property [ key{IdentifierTree}, sep {}, val {StringLiterealTree} ] ,
     ]
 
 I consider property files as key value database where the key and the value are both "String type".
@@ -50,18 +50,18 @@ These rules are pretty useful even for the properties files.
 | FixmeTagPresenceCheck |G|
 | HardCodedCredentialsCheck |R|
 | IndentationCheck |TODO R|
-| KeyNamingConventionCheck |TODO R|
+| KeyNamingConventionCheck |R|
 | KeyRegularExpressionCheck |R| Template|
 | LineLengthCheck |G|S103|
-| MissingNewlineAtEndOfFileCheck |TODO R|
-| MissingTranslationsCheck |TODO|**
+| MissingNewlineAtEndOfFileCheck |TR|
+| MissingTranslationsCheck |R|**
 | MissingTranslationsInDefaultCheck |R|**
-| NoPropertiesCheck | TODO R|
+| NoPropertiesCheck |R|
 | ParsingErrorCheck |G|
 | SeparatorConventionCheck | TODO R|
-| TabCharacterCheck |TODO R|
-| TodoTagPresenceCheck |G|
-| TooManyKeysCheck |G| S104|
+| TabCharacterCheck |G|S105
+| TodoTagPresenceCheck |G|S104
+| TooManyKeysCheck |G| |
 | ValueRegularExpressionCheck|R| Template
 
 

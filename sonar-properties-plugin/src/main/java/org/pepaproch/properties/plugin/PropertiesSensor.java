@@ -1,5 +1,6 @@
 package org.pepaproch.properties.plugin;
 
+import org.pepaproch.properties.checks.CheckList;
 import org.pepaproch.properties.checks.project.ProjectCheck;
 import org.pepaproch.properties.parser.slang.PropertiesConverter;
 import org.sonar.api.batch.rule.CheckFactory;
@@ -32,9 +33,9 @@ public class PropertiesSensor extends SlangSensor {
     public PropertiesSensor(CheckFactory checkFactory, NoSonarFilter noSonarFilter, FileLinesContextFactory fileLinesContextFactory, PropertiesLanguage language) {
         super(noSonarFilter, fileLinesContextFactory, language);
         checks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-        this.checks.addAnnotatedChecks(    ( Iterable<Class> )  PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT, SlangCheck.class::isAssignableFrom));
+        this.checks.addAnnotatedChecks(    ( Iterable<Class> )  CheckList.checks(CheckList.FILTER_SPECIAL_INIT, SlangCheck.class::isAssignableFrom));
         this.pchecks = checkFactory.create(PropertiesPlugin.REPOSITORY_KEY);
-        this.pchecks.addAnnotatedChecks(( Iterable<Class> ) PropertiesCheckList.checks(ProjectCheck.class::isAssignableFrom));
+        this.pchecks.addAnnotatedChecks(( Iterable<Class> ) CheckList.checks(ProjectCheck.class::isAssignableFrom));
         this.checks.addAnnotatedChecks(new CommentedCodeCheck(new PropertiesCodeVerifier()));
         projectContext = new PostAnalyseContext(this);
 

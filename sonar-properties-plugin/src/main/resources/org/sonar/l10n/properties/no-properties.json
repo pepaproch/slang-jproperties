@@ -1,16 +1,14 @@
 {
-  "title": "Tabulation characters should not be used",
+  "title": "Files not defining any properties should be removed",
   "type": "CODE_SMELL",
   "status": "ready",
   "remediation": {
     "func": "Constant\/Issue",
-    "constantCost": "2min"
+    "constantCost": "1min"
   },
   "tags": [
     "convention"
   ],
   "defaultSeverity": "Minor",
-  "ruleSpecification": "RSPEC-105",
-  "sqKey": "S105",
-  "scope": "All"
+  "ruleSpecification": ""
 }

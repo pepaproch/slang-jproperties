@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@Rule(key = "duplicatedCheck")
+@Rule(key = "duplicated-keys-across-project")
 public class DuplicatedProjectKeysRule implements ProjectCheck {
     private static final String ISSUE_MESSAGE = "The key %s is duplicated in other files";
     private static final int DEFAULT_THRESHOLD = 1;

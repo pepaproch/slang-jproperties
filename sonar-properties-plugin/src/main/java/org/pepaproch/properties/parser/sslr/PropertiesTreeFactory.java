@@ -5,8 +5,7 @@ import com.sonar.sslr.api.Trivia;
 import com.sonar.sslr.api.typed.Optional;
 import org.pepaproch.properties.parser.slang.tree.*;
 import org.sonarsource.slang.api.*;
-import org.sonarsource.slang.impl.TextRangeImpl;
-import org.sonarsource.slang.impl.TreeMetaDataProvider;
+import org.sonarsource.slang.impl.*;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,7 +22,11 @@ public class PropertiesTreeFactory {
 
     private Function<Trivia, Comment> triviaToComment = (Trivia t) -> {
         if (t.isComment()) {
-            return new PropComment(t.getToken().getOriginalValue(), commentRange(t));
+            String text = t.getToken().getOriginalValue();
+            String contentText = text.substring(1);
+            TextRangeImpl textRange = new TextRangeImpl(t.getToken().getLine(), t.getToken().getColumn(), t.getToken().getLine(), t.getToken().getOriginalValue().length());
+            TextRangeImpl contentRange = new TextRangeImpl(t.getToken().getLine(), t.getToken().getColumn()+1, t.getToken().getLine(), t.getToken().getOriginalValue().length());
+            return new CommentImpl(text,contentText,textRange, contentRange);
         }
         return null;
 
@@ -32,25 +35,22 @@ public class PropertiesTreeFactory {
 
 
     public PropsTree properties(Optional<Token> byteOrderMark, Optional<List<PropTree>> properties, Token eof) {
-
         List<Comment> comentsTrivia = comments((PropSyntaxToken) eof);
-
-
         TreeMetaData treeMetaData = metaData(comentsTrivia, properties.or(Collections.emptyList()).toArray(new Tree[]{}));
         return new PropsTree(treeMetaData, byteOrderMark.orNull(), properties, eof);
     }
 
-    public PropTree property(PropKeyTree key, PropSeparatorTree separator, Optional<PropValueTree> value) {
+    public PropTree property(IdentifierTree key, PropSeparatorTree separator, Optional<StringLiteralTree> value) {
         TreeMetaData treeMetaData = metaData(null, key, separator, value.orNull());
         return new PropTree(treeMetaData, key, separator, value.orNull());
     }
 
-    public PropKeyTree key(PropSyntaxToken key) {
-        return new PropKeyTree(metaData(key), key);
+    public IdentifierTree key(PropSyntaxToken key) {
+        return new IdentifierTreeImpl(metaData(key), key.text());
     }
 
-    public PropValueTree value(PropSyntaxToken value) {
-        return new PropValueTree(metaData(value), value);
+    public StringLiteralTree value(PropSyntaxToken value) {
+        return new StringLiteralTreeImpl(metaData(value), value.text() ,value.text());
     }
 
     public PropSeparatorTree separator(PropSyntaxToken separator) {
@@ -111,9 +111,6 @@ public class PropertiesTreeFactory {
 
     }
 
-    private TextRange commentRange(Trivia t) {
-        return new TextRangeImpl(t.getToken().getLine(), t.getToken().getColumn(), t.getToken().getLine(), t.getToken().getOriginalValue().length());
-    }
 
 
 }

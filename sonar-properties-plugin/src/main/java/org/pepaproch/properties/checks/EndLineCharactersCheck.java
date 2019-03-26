@@ -47,7 +47,7 @@ public class EndLineCharactersCheck implements SlangCheck {
     @Override
     public void initialize(InitContext init) {
 
-        Stream.of(PATTERNS.values()).filter(p -> !p.name().equalsIgnoreCase(endLineCharacters)).
+        Stream.of(PATTERNS.values()).filter(p -> p.name().equalsIgnoreCase(endLineCharacters)).
                 forEach(e -> patternMap.add(e));
 
         init.register(PropsTree.class, (ctx, tree) -> {

@@ -2,14 +2,13 @@ package org.pepaproch.properties.checks;
 
 import org.junit.Test;
 import org.pepaproch.properties.parser.SensorTestBase;
-import org.pepaproch.properties.plugin.PropertiesCheckList;
 import org.sonar.api.batch.rule.CheckFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CommentRegularExpressionCheckTest extends SensorTestBase {
 
@@ -28,7 +27,7 @@ public class CommentRegularExpressionCheckTest extends SensorTestBase {
     
     @Test
     public void testChekListFilter() {
-        List<Class> checks = PropertiesCheckList.checks(PropertiesCheckList.FILTER_SPECIAL_INIT);
+        List<Class> checks = CheckList.checks(CheckList.FILTER_SPECIAL_INIT);
         System.out.println("s");
 
     }

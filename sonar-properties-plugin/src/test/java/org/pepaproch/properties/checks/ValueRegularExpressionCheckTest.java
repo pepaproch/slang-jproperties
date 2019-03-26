@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class ValueRegularExpressionCheckTest extends SensorTestBase {
 
     @Test
-    public void keyRegularTest() {
+    public void valueRegularTest() {
         Map<String,String> param = new HashMap<>();
         param.put("regularExpression" , ".*vole.*");
         CheckFactory f = checkFactory("value-regular-expression" ,param);

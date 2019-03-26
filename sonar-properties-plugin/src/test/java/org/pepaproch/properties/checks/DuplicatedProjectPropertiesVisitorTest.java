@@ -32,7 +32,7 @@ public class DuplicatedProjectPropertiesVisitorTest extends SensorTestBase {
                         "notdummykey=77.75.77.53");
         context.fileSystem().add(f1);
 
-        CheckFactory checkFactory = checkFactory("duplicatedCheck", "treshold", "1");
+        CheckFactory checkFactory = checkFactory("duplicated-keys-across-project", "treshold", "1");
 
 
         Sensor jpropertiesSensor = new PropertiesSensor(checkFactory, new NoSonarFilter(), fileLinesContextFactory, new PropertiesLanguage(new MapSettings().asConfig()));

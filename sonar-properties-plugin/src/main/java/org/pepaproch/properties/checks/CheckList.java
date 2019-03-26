@@ -1,9 +1,10 @@
-package org.pepaproch.properties.plugin;
+package org.pepaproch.properties.checks;
 
-import org.pepaproch.properties.checks.*;
 import org.pepaproch.properties.checks.project.DuplicatedProjectKeysRule;
 import org.pepaproch.properties.checks.project.MissingDefaultBundleCheck;
 import org.pepaproch.properties.checks.project.MissingInDefaultBundleCheck;
+import org.pepaproch.properties.checks.project.MissingInDescendantBundleCheck;
+import org.pepaproch.properties.plugin.ProjectPropertiesVisitor;
 import org.sonarsource.slang.checks.*;
 
 import java.util.Arrays;
@@ -13,10 +14,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PropertiesCheckList {
+public class CheckList {
     public static final Predicate<Class> FILTER_SPECIAL_INIT = c-> c != CommentedCodeCheck.class ;
 
-    private PropertiesCheckList() {
+    private CheckList() {
     }
 
     public static List<Class> checks() {
@@ -30,21 +31,26 @@ public class PropertiesCheckList {
                 CommentConventionCheck.class,
                 CommentRegularExpressionCheck.class,
                 EndLineCharactersCheck.class,
+                EndFileNewLineCheck.class,
                 HardcodedIpCheck.class,
                 org.pepaproch.properties.checks.HardcodedCredentialsCheck.class,
                 StringLiteralDuplicatedCheck.class,
                 TodoCommentCheck.class,
                 MissingDefaultBundleCheck.class,
                 MissingInDefaultBundleCheck.class,
+                MissingInDescendantBundleCheck.class,
                 KeyRegularExpressionCheck.class,
                 FixMeCommentCheck.class,
                 TooLongLineCheck.class,
                 TooManyLinesOfCodeFileCheck.class,
+                KeyNamingConventionCheck.class,
+                TabsCheck.class,
                 ParsingErrorCheck.class,
                 EmptyValueCheck.class,
                 FileNameCheck.class,
                 ValueRegularExpressionCheck.class,
-                DuplicatedProjectKeysRule.class
+                DuplicatedProjectKeysRule.class,
+                NoPropertiesCheck.class
                 ));
     }
 

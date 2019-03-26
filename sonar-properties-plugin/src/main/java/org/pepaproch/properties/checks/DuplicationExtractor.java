@@ -23,12 +23,12 @@ public  class DuplicationExtractor<C> {
 
         props.entrySet().forEach(e ->
              e.getValue().forEach(i-> {
-                 if (map.containsKey(i.key.value())) {
-                     map.get(i.key.value()).add(new TokenLocations<>(i.key.textRange(),  e.getKey()));
+                 if (map.containsKey(i.key.identifier())) {
+                     map.get(i.key.identifier()).add(new TokenLocations<>(i.key.textRange(),  e.getKey()));
                  } else {
                      LinkedList<TokenLocations<C>> tokenLocations = new LinkedList<>();
                      tokenLocations.add(new TokenLocations(i.key.textRange(), e.getKey()));
-                     map.put(i.key.value(), tokenLocations);
+                     map.put(i.key.identifier(), tokenLocations);
 
                  }
 

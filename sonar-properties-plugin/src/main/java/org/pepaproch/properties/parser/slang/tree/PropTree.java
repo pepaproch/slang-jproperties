@@ -1,5 +1,7 @@
 package org.pepaproch.properties.parser.slang.tree;
 
+import org.sonarsource.slang.api.IdentifierTree;
+import org.sonarsource.slang.api.StringLiteralTree;
 import org.sonarsource.slang.api.Tree;
 import org.sonarsource.slang.api.TreeMetaData;
 
@@ -12,11 +14,11 @@ public class PropTree implements Tree {
 
     public final Operator op;
 
-    public final PropKeyTree key;
-    public final PropValueTree value;
+    public final IdentifierTree key;
+    public final StringLiteralTree value;
     public final TreeMetaData md;
 
-    public PropTree(TreeMetaData md, PropKeyTree key, PropSeparatorTree separator, PropValueTree value) {
+    public PropTree(TreeMetaData md, IdentifierTree key, PropSeparatorTree separator, StringLiteralTree value) {
 
         this.key = key;
         this.value = value;
