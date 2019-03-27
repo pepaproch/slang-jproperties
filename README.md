@@ -49,7 +49,7 @@ These rules are pretty useful even for the properties files.
 | FileNameCheck |R|
 | FixmeTagPresenceCheck |G|
 | HardCodedCredentialsCheck |R|
-| IndentationCheck |TODO R|
+| IndentationCheck |N/A ?|
 | KeyNamingConventionCheck |R|
 | KeyRegularExpressionCheck |R| Template|
 | LineLengthCheck |G|S103|
