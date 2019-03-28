@@ -11,17 +11,14 @@ import java.util.stream.Collectors;
 public class PropsTree implements TopLevelTree {
 
 
-    private final Token byteOrderMark;
-    private final Token eof;
+
     private final List<PropTree> children;
     private final TreeMetaData metaData;
 
 
-    public PropsTree(TreeMetaData metaData, Token byteOrderMark, Optional<List<PropTree>> children, Token eof) {
+    public PropsTree(TreeMetaData metaData,  Optional<List<PropTree>> children) {
         this.metaData = metaData;
         this.children = children.or(Collections.emptyList());
-        this.eof = eof;
-        this.byteOrderMark = byteOrderMark;
     }
 
     @Override

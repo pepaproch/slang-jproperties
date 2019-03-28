@@ -53,12 +53,12 @@ These rules are pretty useful even for the properties files.
 | KeyNamingConventionCheck |R|
 | KeyRegularExpressionCheck |R| Template|
 | LineLengthCheck |G|S103|
-| MissingNewlineAtEndOfFileCheck |TR|
+| MissingNewlineAtEndOfFileCheck |R|
 | MissingTranslationsCheck |R|**
 | MissingTranslationsInDefaultCheck |R|**
 | NoPropertiesCheck |R|
 | ParsingErrorCheck |G|
-| SeparatorConventionCheck | TODO R|
+| SeparatorConventionCheck |R|
 | TabCharacterCheck |G|S105
 | TodoTagPresenceCheck |G|S104
 | TooManyKeysCheck |G| |

@@ -21,14 +21,14 @@ public class FileNameCheck implements SlangCheck {
             defaultValue = DEFAULT,
             description = "Regular expression that file names should match. See http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html for detailed regular expression syntax.")
     private String format = DEFAULT;
-    private String ISSUE_MESSAGE = "Rename this file to match the regular expression: " + format;
+    private static final String ISSUE_MESSAGE = "Rename this file to match the regular expression: %s";
 
     @Override
     public void initialize(InitContext init) {
         init.register(PropsTree.class, (ctx, tree) -> {
 
             if (!matches(ctx.filename())) {
-                ctx.reportFileIssue(ISSUE_MESSAGE);
+                ctx.reportFileIssue(String.format(ISSUE_MESSAGE, pattern));
             }
         });
     }

@@ -50,7 +50,8 @@ public class CheckList {
                 FileNameCheck.class,
                 ValueRegularExpressionCheck.class,
                 DuplicatedProjectKeysRule.class,
-                NoPropertiesCheck.class
+                NoPropertiesCheck.class,
+                SeparatorConventionCheck.class
                 ));
     }
 

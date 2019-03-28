@@ -37,7 +37,7 @@ public class PropertiesTreeFactory {
     public PropsTree properties(Optional<Token> byteOrderMark, Optional<List<PropTree>> properties, Token eof) {
         List<Comment> comentsTrivia = comments((PropSyntaxToken) eof);
         TreeMetaData treeMetaData = metaData(comentsTrivia, properties.or(Collections.emptyList()).toArray(new Tree[]{}));
-        return new PropsTree(treeMetaData, byteOrderMark.orNull(), properties, eof);
+        return new PropsTree(treeMetaData,  properties);
     }
 
     public PropTree property(IdentifierTree key, PropSeparatorTree separator, Optional<StringLiteralTree> value) {
@@ -88,7 +88,7 @@ public class PropertiesTreeFactory {
         return token.getTrivias().stream().map(triviaToComment).collect(Collectors.toList());
     }
 
-    //TODO handle token better
+
     private <T extends Tree> TreeMetaData metaData(@Nullable List<Comment> aditionalTokens, T... trees) {
 
         List<Comment> comments = java.util.Optional.ofNullable(aditionalTokens).orElse(new ArrayList<>());

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class PropTree implements Tree {
 
-    public final Operator op;
+    public final PropSeparatorTree separator;
 
     public final IdentifierTree key;
     public final StringLiteralTree value;
@@ -23,30 +23,15 @@ public class PropTree implements Tree {
         this.key = key;
         this.value = value;
         this.md = md;
-
-        switch (separator.token.text()) {
-            case ":":
-                op = Operator.COLON;
-                break;
-            case "=":
-                op = Operator.EQUALS;
-                break;
-            default:
-                op = null;
-                break;
-        }
+        this.separator = separator;
     }
 
-    enum Operator {
-        EQUALS,
-        SPACE,
-        COLON
-    }
+
 
 
     @Override
     public List<Tree> children() {
-       return  Stream.of(key,value).filter(Objects::nonNull).collect(Collectors.toList());
+       return  Stream.of(key,separator,value).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PropSeparatorTree implements Tree {
 
-    final Token token;
+    private final Token token;
     final JpropertiesLexicalGrammar separator;
     final TreeMetaData metaData;
 
@@ -29,5 +29,9 @@ public class PropSeparatorTree implements Tree {
     @Override
     public TreeMetaData metaData() {
         return metaData;
+    }
+
+    public Token getToken() {
+        return token;
     }
 }

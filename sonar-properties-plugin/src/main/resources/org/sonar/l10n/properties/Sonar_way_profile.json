@@ -23,6 +23,7 @@
     "missing-in-descendant-bundle",
     "empty-line-end-of-file",
     "no-properties",
-    "key-naming-convention"
+    "key-naming-convention",
+    "separator-convention"
   ]
 }
